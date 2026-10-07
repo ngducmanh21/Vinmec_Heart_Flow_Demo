@@ -1,0 +1,169 @@
+{
+  "case": "0225_H_AO_COA",
+  "modality": "MR",
+  "source": "cardiovascular_demo_2026-10-07/0225_H_AO_COA.vti",
+  "sourceArray": {
+    "type": "Int16",
+    "name": "Scalars_",
+    "byteOrder": "LittleEndian"
+  },
+  "plane": "coronal x-z view at fixed source y index",
+  "imageAxisOrder": "source x increases left-to-right; source z increases toward the top of the PNG",
+  "display": {
+    "format": "8-bit RGB PNG",
+    "palette": "navy-cyan intensity display only; colors do not represent a segmentation",
+    "window": {
+      "min": 0,
+      "max": 6500,
+      "clipping": "saturate"
+    },
+    "resampling": "nearest-neighbor 2x export from source 300x280 to 600x560"
+  },
+  "registrationStatus": "MR source preview only; no MR-to-P001 registration or mask is asserted",
+  "defaultIndex": 4,
+  "slices": [
+    {
+      "file": "coronal/mr-y-070.png",
+      "index": 70,
+      "rawY": -11.100700378,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-080.png",
+      "index": 80,
+      "rawY": -9.900700378000002,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-090.png",
+      "index": 90,
+      "rawY": -8.700700378000002,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-100.png",
+      "index": 100,
+      "rawY": -7.500700378000001,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-110.png",
+      "index": 110,
+      "rawY": -6.300700378000002,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-120.png",
+      "index": 120,
+      "rawY": -5.100700378000003,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-130.png",
+      "index": 130,
+      "rawY": -3.9007003780000016,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-140.png",
+      "index": 140,
+      "rawY": -2.7007003780000005,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-150.png",
+      "index": 150,
+      "rawY": -1.5007003780000012,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-160.png",
+      "index": 160,
+      "rawY": -0.30070037800000193,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    },
+    {
+      "file": "coronal/mr-y-170.png",
+      "index": 170,
+      "rawY": 0.8992996219999974,
+      "sourceDimensions": [
+        300,
+        280
+      ],
+      "outputDimensions": [
+        600,
+        560
+      ]
+    }
+  ]
+}

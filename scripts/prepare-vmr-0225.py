@@ -255,6 +255,83 @@ def write_gray_png(path: Path, values: tuple[int, ...], width: int, height: int,
     path.write_bytes(png)
 
 
+def coronal_palette(value: int) -> bytes:
+    """Map MR intensity to a blue/cyan display palette, never a tissue label."""
+    stops = (
+        (0.00, (5, 12, 48)),
+        (0.16, (11, 30, 87)),
+        (0.35, (20, 66, 125)),
+        (0.56, (28, 117, 165)),
+        (0.78, (53, 179, 187)),
+        (1.00, (159, 234, 211)),
+    )
+    t = min(1.0, max(0.0, value / 6500.0))
+    for (start, first), (end, second) in zip(stops, stops[1:]):
+        if t <= end:
+            blend = (t - start) / (end - start)
+            return bytes(round(a + (b - a) * blend) for a, b in zip(first, second))
+    return bytes(stops[-1][1])
+
+
+def write_coronal_png(path: Path, voxels: memoryview, y_index: int, width: int, height: int, depth: int) -> None:
+    """Export an actual x-z reslice at one source y index (superior at top)."""
+    expanded_palette = [coronal_palette(value) * 2 for value in range(6501)]
+    rows: list[bytes] = []
+    for z_index in range(depth - 1, -1, -1):
+        start = z_index * width * height + y_index * width
+        row = b"".join(expanded_palette[min(6500, max(0, voxels[start + x]))] for x in range(width))
+        rows.extend((row, row))
+    raw = b"".join(b"\x00" + row for row in rows)
+    png = bytearray(b"\x89PNG\r\n\x1a\n")
+    png += png_chunk(b"IHDR", struct.pack(">IIBBBBB", width * 2, depth * 2, 8, 2, 0, 0, 0))
+    png += png_chunk(b"IDAT", zlib.compress(raw, level=6))
+    png += png_chunk(b"IEND", b"")
+    path.write_bytes(png)
+
+
+def write_coronal_slices() -> dict[str, object]:
+    """Expose coronal MR views without claiming a CT scan or mask."""
+    arrays = vtk_appended_arrays(SOURCE / "0225_H_AO_COA.vti")
+    payload = arrays["Scalars_"][1]
+    width, height, depth = 300, 240, 280
+    if len(payload) != width * height * depth * 2:
+        raise ValueError("MR volume payload does not match the declared dimensions")
+    voxels = memoryview(payload).cast("h")
+    selected = list(range(70, 171, 10))
+    coronal_dir = OUT / "coronal"
+    coronal_dir.mkdir(parents=True, exist_ok=True)
+    entries = []
+    for index in selected:
+        filename = f"coronal/mr-y-{index:03d}.png"
+        write_coronal_png(OUT / filename, voxels, index, width, height, depth)
+        entries.append({
+            "file": filename,
+            "index": index,
+            "rawY": -19.500700378 + index * 0.12,
+            "sourceDimensions": [width, depth],
+            "outputDimensions": [width * 2, depth * 2],
+        })
+    metadata: dict[str, object] = {
+        "case": "0225_H_AO_COA",
+        "modality": "MR",
+        "source": "cardiovascular_demo_2026-10-07/0225_H_AO_COA.vti",
+        "sourceArray": {"type": "Int16", "name": "Scalars_", "byteOrder": "LittleEndian"},
+        "plane": "coronal x-z view at fixed source y index",
+        "imageAxisOrder": "source x increases left-to-right; source z increases toward the top of the PNG",
+        "display": {
+            "format": "8-bit RGB PNG",
+            "palette": "navy-cyan intensity display only; colors do not represent a segmentation",
+            "window": {"min": 0, "max": 6500, "clipping": "saturate"},
+            "resampling": "nearest-neighbor 2x export from source 300x280 to 600x560",
+        },
+        "registrationStatus": "MR source preview only; no MR-to-P001 registration or mask is asserted",
+        "defaultIndex": selected.index(110),
+        "slices": entries,
+    }
+    (OUT / "coronal.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    return metadata
+
+
 def write_slices() -> dict[str, object]:
     arrays = vtk_appended_arrays(SOURCE / "0225_H_AO_COA.vti")
     payload = arrays["Scalars_"][1]
@@ -325,18 +402,25 @@ def copy_provenance() -> None:
         "0225_H_AO_COA.vti.hdr",
         "image_information.xml",
     ):
-        shutil.copy2(SOURCE / filename, OUT / filename)
+        if filename in {"0225_H_AO_COA.vti.hdr", "image_information.xml"}:
+            # The tracked web copies use one final newline. Keep regeneration
+            # byte-stable even though the source XML files have an extra one.
+            (OUT / filename).write_bytes((SOURCE / filename).read_bytes().rstrip(b"\n") + b"\n")
+        else:
+            shutil.copy2(SOURCE / filename, OUT / filename)
 
 
 def main() -> None:
     copy_provenance()
     surface = write_surface()
     slices = write_slices()
+    coronal = write_coronal_slices()
     print(
         json.dumps(
             {
                 "surface": {"vertices": surface["counts"]["vertices"], "triangles": surface["counts"]["triangles"]},
                 "slices": [entry["index"] for entry in slices["slices"]],
+                "coronal": [entry["index"] for entry in coronal["slices"]],
                 "output": str(OUT),
             },
             indent=2,

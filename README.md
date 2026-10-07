@@ -12,6 +12,7 @@ Website dùng trình tự nghiên cứu bốn bước từ tài liệu `Slides.p
 Khu tương tác riêng đi từ ảnh nguồn đến mô hình và các câu hỏi dòng chảy:
 
 - **Ảnh đến mô hình:** bộ CT P-3/0227 có 9 lát, contour và P007 cùng ca; có thể duyệt CT, bật contour và xoay model 3D. `npm run verify:geometry` kiểm tra vị trí contour với mesh. Tab MR 0225 là ca **khác**, không phủ P001 lên MR khi chưa kiểm chứng registration.
+- **MR coronal bổ sung:** 11 lát mặt phẳng đứng được trích thật từ volume MR ca 0225, có hai ảnh nguồn để so sánh khi kéo qua volume. Màu xanh là thang hiển thị cường độ, không phải mask. Bề mặt P001 được xem ở khung 3D riêng; chưa có căn chỉnh không gian MR–P001. Các view CT và MR axial trước đây vẫn dùng được.
 - **Áp lực và vận tốc:** phát lại video CFD và metadata thật của ca MR 0225. Dùng thang màu và thời gian thuộc chính video này.
 - **Câu hỏi ứng dụng:** can thiệp và van/thiết bị được ghi là hướng phát triển.
 - **Hẹp mạch:** mô hình SVG tương tác, tham khảo [Gosling et al. (2019)](https://doi.org/10.1016/j.jcmg.2018.01.019). Phần trăm hiển thị là thang đồ họa quy ước, không giải CFD hay tính FFR.
@@ -34,7 +35,7 @@ Các asset web đã có trong `public/vmr-0225/`, nên bản clone mới chạy 
 npm run prepare:case
 ```
 
-Script dùng Python standard library, đọc VTI/VTP và xuất ảnh PNG cùng `surface.bin`. File MP4 và frame metadata đã được đặt sẵn trong `public/vmr-0225/`; metadata công khai đã bỏ các đường dẫn máy cục bộ. `scripts/verify-registration.mjs` thuộc flow cũ P-3 và không kiểm tra căn chỉnh của ca 0225.
+Script dùng Python standard library, đọc VTI/VTP và xuất ảnh MR axial/coronal PNG cùng `surface.bin`. File MP4 và frame metadata đã được đặt sẵn trong `public/vmr-0225/`; metadata công khai đã bỏ các đường dẫn máy cục bộ. `scripts/verify-registration.mjs` chỉ kiểm tra contour CT P-3 với P007, không kiểm tra căn chỉnh của ca 0225.
 
 ## Nguồn và quyền sử dụng
 

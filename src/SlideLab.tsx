@@ -9,6 +9,7 @@ const AneurysmDemo = lazy(() => import('./AneurysmDemo'))
 
 const modules = [
   { key: 'image', label: 'Ảnh → mô hình', status: 'CT P-3 · ca riêng', icon: ScanLine },
+  { key: 'coronal', label: 'MR coronal', status: 'Ảnh nguồn ca 0225', icon: Layers3 },
   { key: 'fields', label: 'Áp lực & vận tốc', status: 'Video ca 0225', icon: Activity },
   { key: 'questions', label: 'Câu hỏi dòng chảy', status: 'Bản đồ ứng dụng', icon: CircleHelp },
   { key: 'stenosis', label: 'Hẹp mạch', status: 'Minh họa', icon: Layers3 },
@@ -70,7 +71,7 @@ export default function SlideLab() {
         <div>
           <span className="slide-lab__eyebrow"><i /> KHÁM PHÁ MÔ HÌNH</span>
           <h2 id="slide-lab-title">Từ lát ảnh đến câu hỏi dòng chảy</h2>
-          <p>Duyệt bộ CT P-3 và video CFD ca MR 0225 như <strong>hai ca riêng</strong>, rồi thử mô hình hẹp mạch và phình mạch để hiểu các câu hỏi dòng chảy. Hai mô hình minh họa không tính FFR, không dự đoán vỡ phình mạch và không dùng dữ liệu bệnh nhân 0225.</p>
+          <p>CT P-3 thuộc <strong>một ca riêng</strong>; ảnh MR coronal và video CFD thuộc ca 0225. Hai mô hình hẹp mạch và phình mạch ở phía sau chỉ minh họa câu hỏi dòng chảy: không dùng dữ liệu của các ca này, không tính FFR và không dự đoán vỡ phình mạch.</p>
         </div>
       </div>
 
@@ -97,6 +98,7 @@ export default function SlideLab() {
         </div>
         <div className="slide-lab__content">
           {active === 'image' && <Suspense fallback={<div className="slide-lab__loading">Đang tải ảnh và hình học…</div>}><ImageStackDemo /></Suspense>}
+          {active === 'coronal' && <Suspense fallback={<div className="slide-lab__loading">Đang tải các lát MR coronal…</div>}><ImageStackDemo initialSource="mr-coronal" /></Suspense>}
           {active === 'fields' && <div className="slide-lab__fields">
             <div className="slide-lab__notice"><Activity size={17} /><p>Panel dưới phát <strong>video CFD đã lưu của ca 0225</strong>: áp lực bề mặt ở trái và đường dòng vận tốc ở phải. Thang màu và thông số theo metadata của video này.</p></div>
             <Suspense fallback={<div className="slide-lab__loading">Đang tải video CFD…</div>}><SimulationVideo active title="Áp lực bề mặt và đường dòng · ca 0225" /></Suspense>
@@ -106,7 +108,7 @@ export default function SlideLab() {
           {active === 'aneurysm' && <Suspense fallback={<div className="slide-lab__loading">Đang tải minh họa phình mạch…</div>}><AneurysmDemo /></Suspense>}
         </div>
         <div className="slide-lab__footer">
-          <span>{active === 'image' ? 'CT P-3 · CA RIÊNG' : active === 'fields' ? 'VIDEO CA 0225' : active === 'questions' ? 'BẢN ĐỒ ỨNG DỤNG' : 'MINH HỌA ĐỊNH TÍNH'}</span>
+          <span>{active === 'image' ? 'CT P-3 · CA RIÊNG' : active === 'coronal' ? 'MR CORONAL · CA 0225' : active === 'fields' ? 'VIDEO CA 0225' : active === 'questions' ? 'BẢN ĐỒ ỨNG DỤNG' : 'MINH HỌA ĐỊNH TÍNH'}</span>
           <div>
             <button type="button" disabled={index === 0} onClick={() => move(-1)}><ArrowLeft size={14} /> Trước</button>
             <button type="button" disabled={index === modules.length - 1} onClick={() => move(1)}>Tiếp <ArrowRight size={14} /></button>

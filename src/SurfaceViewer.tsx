@@ -156,7 +156,7 @@ function CameraRig({ geometry, metadataBounds, resetKey }: { geometry: THREE.Buf
   return <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={.08} minDistance={.05} maxDistance={100} enablePan={false} rotateSpeed={.72} />
 }
 
-function SurfaceMesh({ geometry, onPin }: { geometry: THREE.BufferGeometry; onPin: (point: THREE.Vector3) => void }) {
+function SurfaceMesh({ geometry, onPin, tone }: { geometry: THREE.BufferGeometry; onPin: (point: THREE.Vector3) => void; tone: 'default' | 'orange' }) {
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
     // R3F exposes the pointer travel in pixels. Ignore a drag release so orbiting
     // the model does not accidentally leave a probe behind.
@@ -166,7 +166,7 @@ function SurfaceMesh({ geometry, onPin }: { geometry: THREE.BufferGeometry; onPi
   }
 
   return <mesh geometry={geometry} castShadow receiveShadow onClick={handleClick}>
-    <meshStandardMaterial color="#8bbec7" roughness={.44} metalness={.06} side={THREE.DoubleSide} />
+    <meshStandardMaterial color={tone === 'orange' ? '#e0a166' : '#8bbec7'} roughness={.44} metalness={.06} side={THREE.DoubleSide} />
   </mesh>
 }
 
@@ -196,7 +196,7 @@ function pinCoordinates(pin: SurfacePin) {
   return `x ${formatCoordinate(pin.point.x)} · y ${formatCoordinate(pin.point.y)} · z ${formatCoordinate(pin.point.z)}`
 }
 
-export default function SurfaceViewer({ active = true }: { active?: boolean }) {
+export default function SurfaceViewer({ active = true, tone = 'default', showPins = true }: { active?: boolean; tone?: 'default' | 'orange'; showPins?: boolean }) {
   const [resource, setResource] = useState<SurfaceResource | null>(null)
   const [metadata, setMetadata] = useState<SurfaceMetadata | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -287,8 +287,8 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
         <ambientLight intensity={1.15} />
         <directionalLight position={[2.8, 3.5, 4]} intensity={2.4} color="#f5fdff" castShadow />
         <directionalLight position={[-3, -1, -2]} intensity={.9} color="#65b4c1" />
-        <SurfaceMesh geometry={resource.geometry} onPin={addPin} />
-        {pins.map((pin, index) => <SurfacePinMarker key={pin.id} point={pin.point} number={index + 1} radius={pinRadius} selected={pin.id === selectedPinId} onSelect={() => setSelectedPinId(pin.id)} />)}
+        <SurfaceMesh geometry={resource.geometry} onPin={showPins ? addPin : () => undefined} tone={tone} />
+        {showPins && pins.map((pin, index) => <SurfacePinMarker key={pin.id} point={pin.point} number={index + 1} radius={pinRadius} selected={pin.id === selectedPinId} onSelect={() => setSelectedPinId(pin.id)} />)}
         <CameraRig geometry={resource.geometry} metadataBounds={metadataBounds} resetKey={resetKey} />
       </Canvas>}
       {!resource && !error && <div className="surface-viewer__message" role="status">Đang tải bề mặt P001.vtp…</div>}
@@ -303,7 +303,7 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
         <RotateCcw size={14} aria-hidden="true" />
         <span>Đặt lại góc nhìn</span>
       </button>
-      <aside className="surface-viewer__pin-panel" aria-label="Điểm ghim hình học" aria-live="polite">
+      {showPins && <aside className="surface-viewer__pin-panel" aria-label="Điểm ghim hình học" aria-live="polite">
         <div className="surface-viewer__pin-heading">
           <span className="surface-viewer__pin-marker" aria-hidden="true" />
           <span>ĐIỂM GHIM HÌNH HỌC</span>
@@ -327,7 +327,7 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
         {pinNotice && <p className="surface-viewer__pin-notice" role="status">{pinNotice}</p>}
         <p className="surface-viewer__pin-disclaimer">Tọa độ chỉ mô tả hình học đã chuẩn hóa; không có FFRCT, áp lực hoặc xếp hạng tổn thương tại điểm.</p>
         {pins.length > 0 && <button type="button" className="surface-viewer__pin-clear" onClick={clearPins}>Xoá tất cả điểm</button>}
-      </aside>
+      </aside>}
     </div>
   </section>
 }
