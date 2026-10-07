@@ -1,6 +1,15 @@
-# CardioFlow Lab — VMR 0225_H_AO_COA
+# CardioFlow Lab — Valve Closure & VMR 0225
 
-Demo web cục bộ cho ca coarctation of aorta `0225_H_AO_COA`. Flow hiện tại dựa trên thư mục `cardiovascular_demo_2026-10-07/`:
+Demo web cục bộ có hai tuyến nội dung độc lập:
+
+- **Valve support & closure:** minh họa tương tác định tính về van ba lá, dây chằng nâng đỡ, mép lá khép kín và tình huống sa lá van khi mất nâng đỡ. Phần này dựa trên chủ đề nghiên cứu của [Kamensky và cộng sự (2018), Hình 15–16](https://yan.cee.illinois.edu/files/2021/08/1-s2.0-S0045782517307120-main.pdf), nhưng hình minh họa trên web do project tạo mới. Đây không phải mesh, trường biến dạng MIPE hay nghiệm fluid–structure interaction của bài báo.
+- **VMR 0225_H_AO_COA:** ca động mạch chủ có ảnh MR, bề mặt P001 và video CFD từ folder được cung cấp. Ca này không chứa dữ liệu van.
+
+Các kiểu tương tác trong showcase được tham khảo từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/): mô hình 3D, màu để đọc trường sinh lý, điểm thăm dò và so sánh các tình huống. Demo này không tính FFRCT, không có CCTA mạch vành và không sử dụng các tuyên bố hiệu quả lâm sàng của HeartFlow.
+
+Trên web, phần van có chế độ **bình thường / sa lá van / so sánh**, thanh pha đóng, phát chuyển động, lớp màu định tính và các điểm chú giải lá van, dây chằng, vòng van, vùng tiếp áp. Phần ca 0225 có thể ghim một điểm trên P001 để đọc tọa độ hình học; áp lực và vận tốc chỉ được đọc theo **toàn frame video**, không được gán cho điểm ghim.
+
+Flow dữ liệu ca `0225_H_AO_COA` dựa trên thư mục `cardiovascular_demo_2026-10-07/`:
 
 1. **Ảnh MR:** duyệt các lát trích từ volume `0225_H_AO_COA.vti`. [Báo cáo ca](public/vmr-0225/0225_H_AO_COA.pdf) xác nhận phương thức ảnh là **MR**, không phải CT.
 2. **Bề mặt mạch:** xoay mô hình PolyData `P001.vtp` cùng ca. Bề mặt này là đầu vào hình học được mô tả cho lưới CFD của video. File `0225_H_AO_COA_lumen_smooth.step` được cung cấp để tải về như một CAD solid xấp xỉ; STEP không được biểu diễn là mesh dùng trong video.

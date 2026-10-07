@@ -89,6 +89,84 @@
   background: #163944e8;
 }
 
+.surface-viewer__pin-panel {
+  position: absolute;
+  left: 13px;
+  bottom: 12px;
+  display: grid;
+  gap: 7px;
+  width: min(300px, calc(100% - 150px));
+  padding: 10px 11px;
+  border: 1px solid #e7c57675;
+  border-radius: 5px;
+  background: #0d2631ed;
+  color: #e5f2f2;
+  box-shadow: 0 7px 22px #07121966;
+}
+
+.surface-viewer__pin-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #f7d687;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .75px;
+  line-height: 1.2;
+}
+
+.surface-viewer__pin-marker {
+  display: inline-block;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f7c76a;
+  box-shadow: 0 0 0 3px #f7c76a2e;
+}
+
+.surface-viewer__pin-space {
+  color: #86b3b8;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .65px;
+  line-height: 1.2;
+}
+
+.surface-viewer__pin-coordinates {
+  color: #f2fbf9;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15px;
+  line-height: 1.35;
+}
+
+.surface-viewer__pin-panel p {
+  margin: 0;
+  color: #a9c6c9;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.surface-viewer__pin-clear {
+  justify-self: start;
+  min-height: 25px;
+  padding: 0 8px;
+  border: 1px solid #a7d1d159;
+  border-radius: 3px;
+  background: #163944b8;
+  color: #d8ecef;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.surface-viewer__pin-clear:hover {
+  border-color: #f0ce80;
+  background: #30515a;
+  color: #fff6dc;
+}
+
 .surface-viewer__message {
   position: absolute;
   inset: 0;
@@ -126,5 +204,10 @@
     width: 30px;
     justify-content: center;
     padding: 0;
+  }
+
+  .surface-viewer__pin-panel {
+    right: 50px;
+    width: auto;
   }
 }

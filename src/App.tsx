@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { Activity, ArrowDownRight, ArrowLeft, ArrowRight, Box, Check, ExternalLink, FileDown, FileText, Play, RotateCcw, ScanLine } from 'lucide-react'
 import MRViewer from './MRViewer'
-import SurfaceViewer from './SurfaceViewer'
-import SimulationVideo from './SimulationVideo'
+import ValveShowcase from './ValveShowcase'
+import FeatureBridge from './FeatureBridge'
 import vinUniversityLogo from './assets/vinuniversity-logo.png'
+import './ShowcaseLayout.css'
+
+const SurfaceViewer = lazy(() => import('./SurfaceViewer'))
+const SimulationVideo = lazy(() => import('./SimulationVideo'))
 
 const stages = [
   { number: '01', short: 'Ảnh MR', label: 'Ảnh giải phẫu', icon: ScanLine },
@@ -42,15 +46,24 @@ export default function App() {
   const [stage, setStage] = useState(0)
 
   return <div className="app-shell">
-    <header className="topbar"><div className="brand"><img src={vinUniversityLogo} alt="VinUniversity"/><div><strong>CardioFlow <em>Lab</em></strong><small>VASCULAR RESEARCH VIEWER</small></div></div><div className="header-case"><span>ACTIVE CASE</span><strong>0225_H_AO_COA</strong></div><button className="reset-button" type="button" onClick={() => setStage(0)}><RotateCcw size={15}/> Bắt đầu lại</button></header>
+    <header className="topbar"><div className="brand"><img src={vinUniversityLogo} alt="VinUniversity"/><div><strong>CardioFlow <em>Lab</em></strong><small>INTERACTIVE RESEARCH SHOWCASE</small></div></div><div className="header-case"><span>SHOWCASE TRACKS</span><strong>VALVE · VMR 0225</strong></div><a className="reset-button" href="#valve-lab"><Activity size={15}/> Xem van ba lá</a></header>
 
     <main>
-      <section className="hero"><div><div className="hero-kicker"><span/> MỘT CA DỮ LIỆU · BA GÓC NHÌN</div><h1>Từ ảnh MR đến <span>dòng chảy trong động mạch chủ.</span></h1><p>Đi qua ảnh nguồn, hình học lòng mạch và video mô phỏng của ca coarctation <strong>0225_H_AO_COA</strong>. Mỗi bước dùng đúng asset trong thư mục bạn cung cấp.</p><div className="hero-tags"><span>MR SOURCE</span><span>P001 SURFACE</span><span>CFD VIDEO</span></div></div><div className="hero-index"><span>CASE STUDY</span><strong>0225</strong><small>VMR · AORTA / COA</small></div></section>
+      <nav className="showcase-nav" aria-label="Đi đến phần showcase"><a href="#valve-lab"><Activity size={14}/> Van ba lá</a><a href="#feature-lab"><Box size={14}/> Tính năng tương tác</a><a href="#case-flow"><ScanLine size={14}/> Ca MR / CFD 0225</a></nav>
+
+      <section id="valve-lab" className="valve-chapter"><div className="valve-hero"><div className="valve-hero-copy"><div className="valve-hero-kicker"><i/> FEATURED RESEARCH VISUALIZATION · VALVE SUPPORT & CLOSURE</div><h1>Điều gì thay đổi khi <span>nâng đỡ van không còn đủ?</span></h1><p>Khám phá cơ chế đóng của van ba lá: dây chằng giữ lá van, các mép lá áp sát nhau và một vùng có thể sa lên khi mất nâng đỡ. Mô hình tương tác dưới đây là minh họa định tính dựa trên nghiên cứu, không phải dữ liệu ca 0225.</p><div className="valve-hero-actions"><a href="#valve-interactive">Khám phá đóng van <ArrowRight size={15}/></a><a href="#feature-lab">Xem tính năng <ArrowRight size={15}/></a></div></div><div className="valve-hero-side" aria-hidden="true"><div className="valve-orbit"><span/></div><div className="valve-orbit-label">LEAFLETS · CHORDAE · COAPTATION</div></div></div><div id="valve-interactive"><ValveShowcase/></div></section>
+
+      <div className="showcase-context"><div><strong>Van ba lá · minh họa</strong>So sánh khép kín bình thường và sa lá van từ tài liệu nghiên cứu công bố.</div><div><strong>VMR 0225 · dữ liệu có thật</strong>Ảnh MR, bề mặt động mạch chủ P001 và video CFD thuộc ca coarctation.</div><div><strong>FFRCT · tham chiếu tính năng</strong>Các kiểu tương tác được tham khảo từ trang HeartFlow; folder hiện không có CCTA hay kết quả FFRCT.</div></div>
+
+      <section id="feature-lab" className="feature-chapter"><FeatureBridge/></section>
+
+      <div className="case-chapter-title"><div><span>VMR 0225 · ORIGINAL DATA TRACK</span><h2>Ca động mạch chủ MR → hình học → CFD</h2></div><p>Dữ liệu ca này độc lập với mô hình van minh họa phía trên. Các giá trị theo frame đến từ video và metadata được cung cấp.</p></div>
+      <section id="case-flow" className="hero"><div><div className="hero-kicker"><span/> MỘT CA DỮ LIỆU · BA GÓC NHÌN</div><h1>Từ ảnh MR đến <span>dòng chảy trong động mạch chủ.</span></h1><p>Đi qua ảnh nguồn, hình học lòng mạch và video mô phỏng của ca coarctation <strong>0225_H_AO_COA</strong>. Mỗi bước dùng đúng asset trong thư mục bạn cung cấp.</p><div className="hero-tags"><span>MR SOURCE</span><span>P001 SURFACE</span><span>CFD VIDEO</span></div></div><div className="hero-index"><span>CASE STUDY</span><strong>0225</strong><small>VMR · AORTA / COA</small></div></section>
 
       <nav className="flow-nav" aria-label="Các bước của flow">{stages.map((item, index) => { const Icon = item.icon; return <button type="button" key={item.number} className={`flow-step ${stage === index ? 'active' : ''} ${stage > index ? 'passed' : ''}`} aria-current={stage === index ? 'step' : undefined} onClick={() => setStage(index)}><span className="step-number">{stage > index ? <Check size={16}/> : item.number}</span><span className="step-copy"><small>{item.label}</small><strong>{item.short}</strong></span><Icon className="step-icon" size={19}/>{index < stages.length - 1 && <ArrowRight className="step-chevron" size={17}/>}</button> })}</nav>
 
       <section className={`workstation${stage === 2 ? ' cfd' : ''}`} aria-label={stages[stage].label}>
-        <div className="visual-column"><div className="visual-head"><div><span className="visual-live"/> <strong>{stages[stage].label}</strong><span className="visual-sep">/</span><span>VMR 0225_H_AO_COA</span></div><span className="visual-stage">{stages[stage].number} / 03</span></div><div className={`visual-body visual-body-${stage + 1}`}>{stage === 0 && <MRViewer/>}{stage === 1 && <SurfaceViewer active/>}{stage === 2 && <SimulationVideo active/>}</div></div>
+        <div className="visual-column"><div className="visual-head"><div><span className="visual-live"/> <strong>{stages[stage].label}</strong><span className="visual-sep">/</span><span>VMR 0225_H_AO_COA</span></div><span className="visual-stage">{stages[stage].number} / 03</span></div><div className={`visual-body visual-body-${stage + 1}`}>{stage === 0 && <MRViewer/>}{stage === 1 && <Suspense fallback={<div className="visual-loading">Đang tải trình xem 3D…</div>}><SurfaceViewer active/></Suspense>}{stage === 2 && <Suspense fallback={<div className="visual-loading">Đang tải video CFD…</div>}><SimulationVideo active/></Suspense>}</div></div>
         <aside className="stage-notes"><div className="stage-notes-main"><StageNotes stage={stage}/></div><div className="stage-actions"><span>{stage === 0 ? 'Ảnh nguồn' : stage === 1 ? 'Hình học nguồn' : 'Mô phỏng đã kết xuất'}</span><div><button className="secondary-button" type="button" disabled={stage === 0} onClick={() => setStage(value => value - 1)}><ArrowLeft size={16}/> Trước</button><button className="primary-button" type="button" onClick={() => setStage(value => value === 2 ? 0 : value + 1)}>{stage === 2 ? <><RotateCcw size={15}/> Xem lại flow</> : <>Bước tiếp <ArrowRight size={16}/></>}</button></div></div></aside>
       </section>
 
