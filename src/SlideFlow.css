@@ -153,6 +153,8 @@
   color: #fff;
   text-decoration: underline;
 }
+.slide-flow__hero-actions a.slide-flow__lab-cta{padding:0 12px;border:1px solid #9ad8d68a;border-radius:5px;background:#6cbcb328;color:#e7f8f4}
+.slide-flow__hero-actions a.slide-flow__lab-cta:hover{background:#6cbcb34a;text-decoration:none}
 
 .slide-flow__hero-case {
   display: flex;

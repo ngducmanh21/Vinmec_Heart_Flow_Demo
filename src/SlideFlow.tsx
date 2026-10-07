@@ -22,6 +22,7 @@ import {
   Workflow,
 } from 'lucide-react'
 import MRViewer from './MRViewer'
+import SlideLab from './SlideLab'
 import './SlideFlow.css'
 
 const SurfaceViewer = lazy(() => import('./SurfaceViewer'))
@@ -136,7 +137,7 @@ const roadmap = [
   {
     label: 'Kế tiếp',
     title: 'Đo và so sánh',
-    copy: 'Kiểm chứng sinh lý và so sánh hình học ảo cần phép đo độc lập cùng một endpoint được định nghĩa.',
+    copy: 'Kiểm chứng sinh lý cần ghép đầu ra mô hình với phép đo catheter theo cùng một endpoint; so sánh hình học ảo cần các lần chạy thay thế.',
     icon: Ruler,
     tone: 'next',
   },
@@ -203,12 +204,12 @@ function IntakeStage() {
       <aside className="slide-flow__side-panel">
         <div className="slide-flow__panel-kicker"><Stethoscope size={14} /> ĐẦU VÀO LÂM SÀNG</div>
         <h3>Bắt đầu từ điều ảnh có thể cho biết</h3>
-        <p className="slide-flow__panel-lead">Deck đặt rà soát giải phẫu và thông số đo ở đầu flow. Ca này có volume MR, nhưng folder chưa có số đo lâm sàng độc lập về áp lực hoặc lưu lượng.</p>
+        <p className="slide-flow__panel-lead">Deck đặt rà soát giải phẫu và thông số đo ở đầu flow. Báo cáo ca có huyết áp catheter tóm tắt tại AAo và DAo; chưa có waveform thô hoặc phép ghép những số đo này với video CFD đã lưu.</p>
 
         <div className="slide-flow__input-list">
           <div><span>Phương thức chụp</span><strong>MR · volume VTI</strong><EvidenceTag /></div>
           <div><span>Kích thước nguồn</span><strong>300 × 240 × 280 voxel</strong><EvidenceTag /></div>
-          <div><span>Thông số đo lâm sàng độc lập</span><strong className="is-missing">Chưa cung cấp</strong><EvidenceTag tone="planned">Cần trước khi kiểm chứng</EvidenceTag></div>
+          <div><span>Huyết áp catheter trung bình</span><strong>AAo 88 · DAo 81 mmHg</strong><EvidenceTag>Báo cáo ca</EvidenceTag></div>
           <div><span>Căn chỉnh MR với bề mặt</span><strong className="is-missing">Chưa kiểm chứng</strong><EvidenceTag tone="planned">Ranh giới còn mở</EvidenceTag></div>
         </div>
 
@@ -324,22 +325,22 @@ function CheckStage() {
       <div className="slide-flow__check-hero">
         <span className="slide-flow__eyebrow"><ClipboardCheck size={13} /> BƯỚC KIỂM CHỨNG</span>
         <h3>Dự đoán gần với phép đo đến mức nào?</h3>
-        <p>Deck đặt phép đo độc lập sau các phương án mô hình. Với showcase này, trạng thái chính xác là “đang lên kế hoạch”: folder chưa có endpoint độc lập.</p>
-        <div className="slide-flow__status-line"><span className="slide-flow__status-dot" /> Ca được cung cấp chưa có bộ dữ liệu kiểm chứng</div>
+        <p>Báo cáo ca có huyết áp catheter tóm tắt: AAo mean 88 mmHg và DAo mean 81 mmHg. Lượt chạy CFD đang phát chưa có đầu ra tương ứng để đối chiếu cùng điều kiện, nên việc kiểm chứng video vẫn đang lên kế hoạch.</p>
+        <div className="slide-flow__status-line"><span className="slide-flow__status-dot" /> Chưa có cặp kết quả mô phỏng và phép đo phù hợp để kiểm chứng video</div>
       </div>
 
       <div className="slide-flow__check-grid">
         <div className="slide-flow__check-card">
           <span className="slide-flow__check-number">01</span>
-          <h4>Dữ liệu kiểm tra độc lập</h4>
-          <p>Cần một phép đo mà solver không dùng để tạo mô hình.</p>
-          <EvidenceTag tone="planned">Cần bổ sung</EvidenceTag>
+          <h4>Số đo lâm sàng trong báo cáo</h4>
+          <p>Huyết áp catheter AAo/DAo trung bình 88/81 mmHg; chưa có waveform catheter thô.</p>
+          <EvidenceTag>Báo cáo ca</EvidenceTag>
         </div>
         <div className="slide-flow__check-card">
           <span className="slide-flow__check-number">02</span>
           <h4>Endpoint được định nghĩa</h4>
-          <p>Thống nhất đại lượng áp lực, vận tốc hoặc lưu lượng từng nhánh sẽ được đối chiếu.</p>
-          <EvidenceTag tone="planned">Chưa định nghĩa</EvidenceTag>
+          <p>Cần xác định dự đoán áp lực tương ứng, điều kiện dòng chảy và cách ghép với số đo.</p>
+          <EvidenceTag tone="planned">Chưa ghép CFD</EvidenceTag>
         </div>
         <div className="slide-flow__check-card">
           <span className="slide-flow__check-number">03</span>
@@ -403,6 +404,7 @@ export default function SlideFlow() {
           <p>Dùng asset của ca để đi qua một flow lấy cảm hứng tương tác từ HeartFlow: rà soát ảnh, xem mô hình, đặt câu hỏi về phương án thay thế và xác định phép đo cần có để kiểm tra.</p>
           <div className="slide-flow__hero-actions">
             <button type="button" onClick={() => selectStep(0)}>Mở flow của ca <ArrowRight size={15} /></button>
+            <a className="slide-flow__lab-cta" href="#slide-lab">Xem mô phỏng slide 43–48 <ArrowRight size={15} /></a>
             <a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">Trang tham khảo tương tác: HeartFlow FFRCT <ExternalLink size={13} /></a>
           </div>
         </div>
@@ -435,11 +437,13 @@ export default function SlideFlow() {
         <div className="slide-flow__workspace-footer"><span>{activeStep === 0 ? 'Rà soát nguồn' : activeStep === 1 ? 'Bằng chứng mô hình' : activeStep === 2 ? 'Bối cảnh nghiên cứu' : 'Kế hoạch kiểm chứng'}</span><div><button type="button" className="slide-flow__secondary-button" onClick={() => moveStep(-1)} disabled={activeStep === 0}><ArrowLeft size={14} /> Trước</button><button type="button" className="slide-flow__primary-button" onClick={() => moveStep(1)} disabled={activeStep === steps.length - 1}>{activeStep === steps.length - 1 ? 'Kết thúc flow' : 'Bước tiếp'} <ArrowRight size={14} /></button></div></div>
       </section>
 
+      <SlideLab />
+
       <Roadmap />
 
       <section className="slide-flow__sources" aria-label="Provenance and scope">
         <div><span className="slide-flow__eyebrow"><ShieldCheck size={13} /> NGUỒN VÀ PHẠM VI</span><h2>Mỗi lớp dữ liệu có một ranh giới bằng chứng riêng</h2></div>
-        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP tham khảo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Bối cảnh deck</strong> Trình tự flow và hướng nghiên cứu đến từ <em>Slides.pdf</em>, slide 43–58, do người dùng cung cấp.</p><p><strong>Kiểm chứng</strong> Showcase chỉ ra phép kiểm tra cần có. Các ví dụ nghiên cứu không trở thành tuyên bố theo bệnh nhân.</p></div>
+        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Bối cảnh deck</strong> Trình tự flow và hướng nghiên cứu đến từ <em>Slides.pdf</em>, slide 43–58, do người dùng cung cấp.</p><p><strong>Kiểm chứng</strong> Showcase chỉ ra phép đối chiếu còn thiếu. Các ví dụ nghiên cứu không trở thành tuyên bố theo bệnh nhân.</p></div>
       </section>
     </div>
   )

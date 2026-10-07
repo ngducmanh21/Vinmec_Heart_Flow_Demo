@@ -1,0 +1,595 @@
+.aneurysm-demo {
+  --aneurysm-ink: #183d4e;
+  --aneurysm-deep: #0a2533;
+  --aneurysm-panel: #fff;
+  --aneurysm-border: #d7e5e7;
+  --aneurysm-teal: #3aa8aa;
+  --aneurysm-mint: #a9e9d1;
+  --aneurysm-amber: #e8c274;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 24px 28px 28px;
+  color: var(--aneurysm-ink);
+}
+
+.aneurysm-demo button,
+.aneurysm-demo a,
+.aneurysm-demo input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aneurysm-demo button:focus-visible,
+.aneurysm-demo a:focus-visible,
+.aneurysm-demo input:focus-visible {
+  outline: 3px solid #70c9c2;
+  outline-offset: 3px;
+}
+
+.aneurysm-demo__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 25px 29px 23px;
+  border: 1px solid #185061;
+  border-radius: 11px 11px 0 0;
+  background:
+    radial-gradient(circle at 76% 0%, #236573 0, #123d4b 36%, transparent 64%),
+    linear-gradient(119deg, #092534 0%, #0c3040 56%, #123f4e 100%);
+  color: #fff;
+}
+
+.aneurysm-demo__eyebrow,
+.aneurysm-demo__control-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #79c7c2;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.45px;
+  line-height: 1.2;
+}
+
+.aneurysm-demo__eyebrow > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #73d3c5;
+  box-shadow: 0 0 0 4px #73d3c51f;
+}
+
+.aneurysm-demo__header h2 {
+  margin: 12px 0 8px;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
+  letter-spacing: -1.05px;
+  line-height: 1.12;
+}
+
+.aneurysm-demo__header p {
+  max-width: 700px;
+  margin: 0;
+  color: #b9d0d5;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.aneurysm-demo__source-chip {
+  flex: none;
+  margin-top: 3px;
+  padding: 8px 10px;
+  border: 1px solid #8bd1d044;
+  border-radius: 4px;
+  background: #80cfc514;
+  color: #aee2e0;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.aneurysm-demo__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 13px;
+  align-items: stretch;
+  margin-top: 13px;
+}
+
+.aneurysm-demo__visual-card,
+.aneurysm-demo__controls {
+  min-width: 0;
+  border: 1px solid var(--aneurysm-border);
+  border-radius: 9px;
+  background: var(--aneurysm-panel);
+  box-shadow: 0 5px 20px #1537450b;
+}
+
+.aneurysm-demo__visual-card {
+  overflow: hidden;
+}
+
+.aneurysm-demo__visual-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 16px;
+  border-bottom: 1px solid #244a58;
+  background: #0d2c3a;
+  color: #91b6bd;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .85px;
+  text-transform: uppercase;
+}
+
+.aneurysm-demo__visual-head > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.aneurysm-demo__live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64cec1;
+  box-shadow: 0 0 0 3px #64cec124;
+}
+
+.aneurysm-demo__canvas-wrap {
+  padding: 13px;
+  background: #0b2432;
+}
+
+.aneurysm-demo__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #1d4a58;
+  border-radius: 5px;
+}
+
+.aneurysm-demo__streamline {
+  stroke-dasharray: .045 .07;
+  animation: aneurysm-flow-line 4.8s linear infinite;
+}
+
+.aneurysm-demo__recirc-line {
+  animation: aneurysm-recirc-line 5.7s linear infinite;
+  transform-origin: center;
+}
+
+.aneurysm-demo__particle {
+  fill: #f1c56b;
+  filter: drop-shadow(0 0 6px #eec57399);
+}
+
+.aneurysm-demo__canvas.is-paused .aneurysm-demo__streamline,
+.aneurysm-demo__canvas.is-paused .aneurysm-demo__recirc-line {
+  animation-play-state: paused;
+}
+
+.aneurysm-demo__label text,
+.aneurysm-demo__axis-label {
+  fill: #b4d8d3;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 1.1px;
+}
+
+.aneurysm-demo__label path {
+  fill: none;
+  stroke: #82c9c1;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.aneurysm-demo__label--recirc text {
+  fill: #e8c274;
+}
+
+.aneurysm-demo__label--recirc path {
+  stroke: #e8c274;
+}
+
+.aneurysm-demo__axis-label {
+  fill: #759da4;
+  font-size: 10px;
+  letter-spacing: .7px;
+  text-anchor: middle;
+}
+
+.aneurysm-demo__legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  min-height: 43px;
+  padding: 0 16px;
+  border-top: 1px solid #dfe9ea;
+  color: #77919a;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.aneurysm-demo__legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aneurysm-demo__legend-line {
+  width: 23px;
+  height: 3px;
+  border-radius: 99px;
+}
+
+.aneurysm-demo__legend-line--flow {
+  background: linear-gradient(90deg, #63c8bd, #f1c56b);
+}
+
+.aneurysm-demo__legend-line--recirc {
+  height: 2px;
+  border: 1px dashed #5ba69e;
+  background: transparent;
+}
+
+.aneurysm-demo__legend-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #45aaa4;
+  border-radius: 50%;
+  background: #0f3443;
+}
+
+.aneurysm-demo__controls {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 19px 18px;
+}
+
+.aneurysm-demo__control-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.aneurysm-demo__control-kicker {
+  color: #3c9d9e;
+  font-size: 8px;
+  letter-spacing: 1.25px;
+}
+
+.aneurysm-demo__control-heading h3 {
+  margin: 9px 0 0;
+  color: #1b4858;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 19px;
+  letter-spacing: -.5px;
+  line-height: 1.2;
+}
+
+.aneurysm-demo__icon-button {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  flex: none;
+  border: 1px solid #d6e4e6;
+  border-radius: 5px;
+  background: #f7fbfb;
+  color: #5c8a92;
+}
+
+.aneurysm-demo__icon-button:hover {
+  border-color: #9bcbcd;
+  background: #eef8f8;
+}
+
+.aneurysm-demo__control-copy {
+  margin: 11px 0 17px;
+  color: #758e98;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.aneurysm-demo__preset-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.aneurysm-demo__preset-row button {
+  min-height: 36px;
+  border: 1px solid #d6e4e6;
+  border-radius: 5px;
+  background: #fff;
+  color: #67848d;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aneurysm-demo__preset-row button:hover {
+  border-color: #9bcacc;
+  background: #f5fbfa;
+}
+
+.aneurysm-demo__preset-row button.is-selected {
+  border-color: #42a8a5;
+  background: #eaf8f5;
+  color: #227d84;
+  box-shadow: inset 0 0 0 1px #b3ded4;
+}
+
+.aneurysm-demo__range-wrap {
+  margin-top: 20px;
+}
+
+.aneurysm-demo__range-label,
+.aneurysm-demo__range-scale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.aneurysm-demo__range-label {
+  color: #6c8890;
+  font-size: 10px;
+}
+
+.aneurysm-demo__range-label strong {
+  color: #2b8087;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.aneurysm-demo__range-wrap input {
+  width: 100%;
+  margin: 12px 0 6px;
+  accent-color: #328f95;
+  cursor: pointer;
+}
+
+.aneurysm-demo__range-scale {
+  color: #9aadb2;
+  font-size: 8px;
+}
+
+.aneurysm-demo__play-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-top: 20px;
+  border: 1px solid #228799;
+  border-radius: 5px;
+  background: #22899a;
+  color: #fff;
+  box-shadow: 0 2px 0 #176678;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.aneurysm-demo__play-button:hover {
+  background: #16788a;
+}
+
+.aneurysm-demo__play-button:disabled {
+  cursor: not-allowed;
+  opacity: .72;
+}
+
+.aneurysm-demo__read-card {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 13px 0;
+  border-top: 1px solid #e5edef;
+  border-bottom: 1px solid #e5edef;
+}
+
+.aneurysm-demo__read-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.aneurysm-demo__read-icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.aneurysm-demo__read-icon--flow {
+  background: #e8f6f2;
+  color: #2b9994;
+}
+
+.aneurysm-demo__read-icon--recirc {
+  background: #fff5e4;
+  color: #bd8d43;
+}
+
+.aneurysm-demo__read-row strong {
+  display: block;
+  color: #3e6975;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.aneurysm-demo__read-row p {
+  margin: 3px 0 0;
+  color: #8a9fa5;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.aneurysm-demo__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 10px 11px;
+  border-left: 3px solid #d7a95e;
+  background: #fff9ed;
+  color: #7c6e55;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.aneurysm-demo__notice svg {
+  flex: none;
+  margin-top: 1px;
+  color: #c9953e;
+}
+
+.aneurysm-demo__notice p {
+  margin: 0;
+}
+
+.aneurysm-demo__notice strong {
+  color: #8f692e;
+  font-weight: 850;
+}
+
+.aneurysm-demo__source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 17px;
+  color: #1d8293;
+  font-size: 9px;
+  font-weight: 850;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.aneurysm-demo__source-link:hover {
+  text-decoration: underline;
+}
+
+.aneurysm-demo__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 2px 0;
+  color: #91a6ad;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+@keyframes aneurysm-flow-line {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes aneurysm-recirc-line {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -32; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aneurysm-demo__streamline,
+  .aneurysm-demo__recirc-line {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .aneurysm-demo__layout {
+    grid-template-columns: minmax(0, 1fr) 285px;
+  }
+
+  .aneurysm-demo__controls {
+    padding: 18px 16px;
+  }
+}
+
+@media (max-width: 850px) {
+  .aneurysm-demo {
+    padding: 20px;
+  }
+
+  .aneurysm-demo__header {
+    padding: 23px 24px;
+  }
+
+  .aneurysm-demo__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .aneurysm-demo__controls {
+    min-height: 0;
+  }
+
+  .aneurysm-demo__source-link {
+    margin-top: 17px;
+  }
+}
+
+@media (max-width: 620px) {
+  .aneurysm-demo {
+    padding: 13px;
+  }
+
+  .aneurysm-demo__header {
+    display: block;
+    padding: 20px 18px;
+  }
+
+  .aneurysm-demo__header h2 {
+    font-size: 24px;
+  }
+
+  .aneurysm-demo__header p {
+    font-size: 10px;
+  }
+
+  .aneurysm-demo__source-chip {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 7px;
+  }
+
+  .aneurysm-demo__visual-head {
+    min-height: 41px;
+    padding: 0 10px;
+    font-size: 7px;
+  }
+
+  .aneurysm-demo__canvas-wrap {
+    padding: 7px;
+  }
+
+  .aneurysm-demo__legend {
+    gap: 8px;
+    padding: 0 10px;
+    font-size: 8px;
+  }
+
+  .aneurysm-demo__controls {
+    padding: 17px 15px;
+  }
+
+  .aneurysm-demo__footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+}
