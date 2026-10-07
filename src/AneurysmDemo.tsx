@@ -30,7 +30,7 @@ function clamp(value: number, min: number, max: number) {
 function buildGeometry(bulge: number): AneurysmGeometry {
   const ratio = clamp((bulge - 35) / 65, 0, 1)
   // The pouch grows off the upper wall while the lower wall stays continuous,
-  // which keeps the sketch closer to the side aneurysm shown on slide 48.
+  // which keeps the sketch closer to a side aneurysm geometry.
   const top = 188 - ratio * 90
   const mainTop = 214
   const mainBottom = 306
@@ -122,7 +122,7 @@ export default function AneurysmDemo() {
     <section className="aneurysm-demo" aria-labelledby={`${rangeId}-title`}>
       <header className="aneurysm-demo__header">
         <div>
-          <span className="aneurysm-demo__eyebrow"><span aria-hidden="true" /> SLIDE 48 · ANEURYSM FLOW</span>
+          <span className="aneurysm-demo__eyebrow"><span aria-hidden="true" /> ANEURYSM FLOW · DÒNG HỒI LƯU</span>
           <h2 id={`${rangeId}-title`}>Dòng hồi lưu trong túi phình</h2>
           <p>Khảo sát định tính cách hình dạng túi làm đổi vùng dòng chảy cục bộ. Kéo thanh điều khiển để xem túi hẹp và túi rộng.</p>
         </div>
@@ -290,7 +290,7 @@ export default function AneurysmDemo() {
             <div className="aneurysm-demo__read-row"><span className="aneurysm-demo__read-icon aneurysm-demo__read-icon--recirc" aria-hidden="true">↻</span><div><strong>Vùng hồi lưu</strong><p>Nét đứt và mũi tên vòng biểu thị vùng dòng quay lại.</p></div></div>
           </div>
 
-          <div className="aneurysm-demo__notice"><Info size={15} /><p><strong>Minh họa dòng hồi lưu; không dự đoán vỡ và không phải ca 0225.</strong> Đây là mô phỏng giáo dục lấy cảm hứng từ slide 48, không phải CFD bệnh nhân.</p></div>
+          <div className="aneurysm-demo__notice"><Info size={15} /><p><strong>Minh họa dòng hồi lưu; không dự đoán vỡ và không phải ca 0225.</strong> Đây là mô phỏng giáo dục định tính, không phải CFD bệnh nhân.</p></div>
           <a className="aneurysm-demo__source-link" href="https://doi.org/10.1371/journal.pone.0132494" target="_blank" rel="noreferrer">
             Đọc nguồn Jing et al. (PLOS ONE, 2015) <ExternalLink size={13} />
           </a>

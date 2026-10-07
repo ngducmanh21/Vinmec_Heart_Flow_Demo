@@ -41,7 +41,7 @@ export type ImageStackStage = 'stack' | 'segmentation' | 'model'
 export type ImageStackSource = 'mr-0225' | 'ct-p3'
 
 export type ImageStackDemoProps = {
-  /** Open the demo at a particular slide-inspired stage. */
+  /** Open the demo at a particular workflow stage. */
   initialStage?: ImageStackStage
   /** Render the real P001 surface when the model stage is selected. */
   showSurface?: boolean
@@ -64,9 +64,9 @@ const STAGES: Array<{
   title: string
   short: string
 }> = [
-  { id: 'stack', number: '43', label: 'INPUT VOLUME', title: 'Xếp chồng các lát ảnh', short: 'm × n pixels · k layers' },
-  { id: 'segmentation', number: '44', label: 'SEGMENTATION', title: 'Tách cấu trúc cần dựng', short: 'CT contour / MR còn thiếu' },
-  { id: 'model', number: '44→3D', label: 'MODEL BUILD', title: 'Dựng model để kiểm tra', short: 'P007 / P001 · xoay để xem' },
+  { id: 'stack', number: '01', label: 'INPUT VOLUME', title: 'Xếp chồng các lát ảnh', short: 'm × n pixels · k layers' },
+  { id: 'segmentation', number: '02', label: 'SEGMENTATION', title: 'Tách cấu trúc cần dựng', short: 'CT contour / MR còn thiếu' },
+  { id: 'model', number: '03', label: 'MODEL BUILD', title: 'Dựng model để kiểm tra', short: 'P007 / P001 · xoay để xem' },
 ]
 
 function imagePath(file: string) {
@@ -85,7 +85,7 @@ function stageIndex(stage: ImageStackStage) {
 
 function StageRail({ stage, onChange }: { stage: ImageStackStage; onChange: (stage: ImageStackStage) => void }) {
   return (
-    <nav className="image-stack-demo__rail" aria-label="Các bước mô phỏng từ slide 43 đến 44">
+    <nav className="image-stack-demo__rail" aria-label="Các bước mô phỏng từ volume đến model">
       {STAGES.map((item, index) => {
         const active = item.id === stage
         const passed = stageIndex(stage) > index
@@ -261,7 +261,7 @@ function StageIntro({ stage }: { stage: ImageStackStage }) {
   const item = STAGES.find(value => value.id === stage) ?? STAGES[0]
   return (
     <div className="image-stack-demo__stage-heading">
-      <div><span className="image-stack-demo__eyebrow"><Sparkles size={13} /> SLIDES {item.number}</span><h2>{item.title}</h2></div>
+      <div><span className="image-stack-demo__eyebrow"><Sparkles size={13} /> BƯỚC {item.number}</span><h2>{item.title}</h2></div>
       <p>{stage === 'stack' && 'Một volume gồm nhiều ảnh 2D. Kéo qua các lát để thấy ý tưởng “k layers stack on top of each other”.'}{stage === 'segmentation' && 'Contour được đặt lên lát ảnh để minh họa bước tách cấu trúc trước khi dựng model. Nhánh CT dùng contour đã có trong repo; nhánh MR chỉ là workflow concept.'}{stage === 'model' && 'Từ contour đã xác thực có thể dựng surface CAD/3D để kiểm tra hình học. Chọn nguồn ở dưới để xem đúng case và đúng asset.'}</p>
     </div>
   )
@@ -311,7 +311,7 @@ export default function ImageStackDemo({ initialStage = 'stack', showSurface = t
   return (
     <section className={rootClass} aria-label="Mô phỏng image stack đến model">
       <header className="image-stack-demo__hero">
-        <div><span className="image-stack-demo__hero-kicker"><CircleDot size={12} /> DIGITAL TWIN · SLIDES 43–44</span><h1>Từ volume ảnh đến model 3D</h1><p>Flow tương tác lấy đúng ý tưởng trong deck: nhiều lát ảnh → contour / mask → model. Chọn bộ evidence để xem CT P-3/0227 đã có contour và mesh, hoặc MR 0225 hiện chỉ có ảnh nguồn và surface P001 riêng biệt.</p></div>
+        <div><span className="image-stack-demo__hero-kicker"><CircleDot size={12} /> DIGITAL TWIN · IMAGE TO MODEL</span><h1>Từ volume ảnh đến model 3D</h1><p>Flow tương tác đi từ nhiều lát ảnh → contour / mask → model. Chọn bộ evidence để xem CT P-3/0227 đã có contour và mesh, hoặc MR 0225 hiện chỉ có ảnh nguồn và surface P001 riêng biệt.</p></div>
         <div className="image-stack-demo__hero-case"><small>ACTIVE SOURCE</small><strong>{isCt ? 'P-3' : '0225'}</strong><span>{isCt ? '0227_H_AO_COA' : 'H_AO_COA'}</span><i><ScanLine size={14} /> {isCt ? 'CT + MASK' : 'MR SOURCE'}</i></div>
       </header>
 
@@ -322,7 +322,7 @@ export default function ImageStackDemo({ initialStage = 'stack', showSurface = t
       </div>
 
       <StageRail stage={stage} onChange={setStage} />
-      <div className={`image-stack-demo__disclosure${isCt ? ' is-ct' : ''}`}><AlertTriangle size={14} /><span>{isCt ? 'CT P-3/0227 là một ca khác với MR 0225. Contours và P007 mesh trong nhánh này được dùng cùng bộ P-3 để minh họa đúng CT → mask → 3D.' : 'Slides 43–44 dùng CT như ví dụ tổng quát; MR 0225 trong folder có 16 lát nguồn nhưng chưa có segmentation hoặc registration MR–P001 đã kiểm chứng.'}</span></div>
+      <div className={`image-stack-demo__disclosure${isCt ? ' is-ct' : ''}`}><AlertTriangle size={14} /><span>{isCt ? 'CT P-3/0227 là một ca khác với MR 0225. Contours và P007 mesh trong nhánh này được dùng cùng bộ P-3 để minh họa đúng CT → mask → 3D.' : 'Nhánh CT là ví dụ tổng quát; MR 0225 trong folder có 16 lát nguồn nhưng chưa có segmentation hoặc registration MR–P001 đã kiểm chứng.'}</span></div>
 
       <div className="image-stack-demo__workbench">
         <div className="image-stack-demo__main-panel">
@@ -335,20 +335,20 @@ export default function ImageStackDemo({ initialStage = 'stack', showSurface = t
         <aside className="image-stack-demo__side-panel">
           <div className="image-stack-demo__side-kicker"><Workflow size={14} /> WORKFLOW EVIDENCE</div>
           <h3>{stage === 'stack' ? '1. Một volume, nhiều lát' : stage === 'segmentation' ? '2. Tách vùng cần dựng' : '3. Kiểm tra model 3D'}</h3>
-          <p>{stage === 'stack' ? (isCt ? 'Duyệt 9 lát CT P-3/0227 có cùng bộ contours và P007 mesh. Đây là bộ asset phù hợp với minh họa CT tổng quát trong slide 43.' : 'Kéo slider hoặc bấm Tự chạy để duyệt 16 lát MR 0225 đã xuất từ VTI. Các thẻ phía sau làm rõ ý tưởng về chiều sâu của volume.') : stage === 'segmentation' ? (isCt ? 'Lớp contour overlay là asset của CT P-3/0227 và có thể được đối chiếu với P007 mesh. Không gán kết quả này cho MR 0225.' : 'MR 0225 chưa có algorithm segmentation hoặc nhãn ground truth trong folder, nên giao diện chỉ trình bày bước cần làm.') : (isCt ? 'P007 là model dựng từ bộ CT contours P-3/0227; kéo để xoay và dùng slice plane để đối chiếu.' : 'Surface P001 có thể xoay, zoom và ghim điểm. Nó là bằng chứng hình học riêng của MR 0225, không được gán là overlay của lát MR.')}</p>
+          <p>{stage === 'stack' ? (isCt ? 'Duyệt 9 lát CT P-3/0227 có cùng bộ contours và P007 mesh. Đây là bộ asset phù hợp với workflow CT tổng quát.' : 'Kéo slider hoặc bấm Tự chạy để duyệt 16 lát MR 0225 đã xuất từ VTI. Các thẻ phía sau làm rõ ý tưởng về chiều sâu của volume.') : stage === 'segmentation' ? (isCt ? 'Lớp contour overlay là asset của CT P-3/0227 và có thể được đối chiếu với P007 mesh. Không gán kết quả này cho MR 0225.' : 'MR 0225 chưa có algorithm segmentation hoặc nhãn ground truth trong folder, nên giao diện chỉ trình bày bước cần làm.') : (isCt ? 'P007 là model dựng từ bộ CT contours P-3/0227; kéo để xoay và dùng slice plane để đối chiếu.' : 'Surface P001 có thể xoay, zoom và ghim điểm. Nó là bằng chứng hình học riêng của MR 0225, không được gán là overlay của lát MR.')}</p>
           <div className="image-stack-demo__side-list">
             <div><span><Layers3 size={13} /> SOURCE</span><strong>{isCt ? (stage === 'model' ? 'P007 · CT-derived mesh' : 'CT · 9 exported slices') : (stage === 'model' ? 'P001 · supplied surface' : 'MR · 16 exported slices')}</strong><small>{isCt ? `0227_H_AO_COA · slice ${680 + ctSlice * 10}` : stage === 'model' ? '25,108 vertices · 50,212 triangles' : (current ? `active slice ${current.index} · z ${sliceZ(current)}` : 'loading')}</small></div>
             <div><span><CircleDot size={13} /> STATUS</span><strong className={isCt || stage === 'stack' || stage === 'model' ? 'is-source' : 'is-concept'}>{isCt ? 'Verified P-3 assets' : stage === 'stack' || stage === 'model' ? 'Asset trong folder' : 'Conceptual UI'}</strong><small>{isCt ? 'CT contour ↔ P007 checked in repo' : stage === 'stack' ? 'pixel-accurate source preview' : stage === 'model' ? 'viewer uses supplied surface.bin' : 'requires segmentation pipeline'}</small></div>
           </div>
           <div className={`image-stack-demo__notice${isCt || stage === 'stack' || stage === 'model' ? ' image-stack-demo__notice--teal' : ' image-stack-demo__notice--amber'}`}>
             {isCt || stage === 'stack' || stage === 'model' ? <Check size={15} /> : <AlertTriangle size={15} />}
-            <span>{isCt ? 'Đây là case CT P-3/0227. Không trộn label hoặc kết quả sang MR 0225.' : stage === 'stack' ? 'Ảnh hiển thị là MR nguồn; slide 43 dùng CT như mô tả khái quát.' : stage === 'model' ? 'Surface viewer được tải khi mở stage này để giữ initial bundle nhẹ.' : 'Không gọi đây là segmentation hoặc registration đã kiểm chứng.'}</span>
+            <span>{isCt ? 'Đây là case CT P-3/0227. Không trộn label hoặc kết quả sang MR 0225.' : stage === 'stack' ? 'Ảnh hiển thị là MR nguồn; nhánh CT là mô tả khái quát.' : stage === 'model' ? 'Surface viewer được tải khi mở stage này để giữ initial bundle nhẹ.' : 'Không gọi đây là segmentation hoặc registration đã kiểm chứng.'}</span>
           </div>
           <button type="button" className="image-stack-demo__reset" onClick={() => { setStage('stack'); setSelected(4); setCtSlice(4); setPlaying(false); setModelResetKey(value => value + 1) }}><RotateCcw size={14} /> Đặt lại mô phỏng</button>
         </aside>
       </div>
 
-      <footer className="image-stack-demo__footer"><span><Boxes size={13} /> Conceptual reconstruction of slides 43–44</span><span>CT P-3/0227 and MR 0225 remain separate evidence sets.</span></footer>
+      <footer className="image-stack-demo__footer"><span><Boxes size={13} /> Conceptual image-to-model workflow</span><span>CT P-3/0227 and MR 0225 remain separate evidence sets.</span></footer>
     </section>
   )
 }

@@ -121,7 +121,7 @@ export default function StenosisDemo() {
     <section className="stenosis-demo" aria-labelledby="stenosis-demo-title">
       <header className="stenosis-demo__hero">
         <div>
-          <div className="stenosis-demo__eyebrow"><span /><Activity size={13} /> SLIDE 47 · HẸP MẠCH VÀNH</div>
+          <div className="stenosis-demo__eyebrow"><span /><Activity size={13} /> HẸP MẠCH VÀNH · MÔ HÌNH DÒNG CHẢY</div>
           <h2 id="stenosis-demo-title">Một đoạn hẹp làm thay đổi dòng chảy ra sao?</h2>
           <p>Điều chỉnh mức hẹp để xem mô hình định tính mô tả dòng chảy và áp lực tương đối trước và sau đoạn hẹp.</p>
         </div>
@@ -173,7 +173,7 @@ export default function StenosisDemo() {
         </aside>
       </div>
 
-      <footer className="stenosis-demo__footer"><AlertTriangle size={14} /><span>Đây là mô phỏng giáo dục dựa trên ý tưởng trong slide 47. Không dùng để chẩn đoán, phân tầng nguy cơ hoặc quyết định điều trị.</span></footer>
+      <footer className="stenosis-demo__footer"><AlertTriangle size={14} /><span>Đây là mô phỏng giáo dục về dòng chảy qua đoạn hẹp. Không dùng để chẩn đoán, phân tầng nguy cơ hoặc quyết định điều trị.</span></footer>
     </section>
   )
 }

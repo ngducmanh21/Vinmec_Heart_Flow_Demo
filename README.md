@@ -1,23 +1,23 @@
 # CardioFlow Lab — từ ảnh lâm sàng đến mô hình dòng chảy
 
-Website dùng trình tự bốn bước từ `Slides.pdf` (slide 55), với kiểu tương tác lấy cảm hứng từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/). Giao diện và nội dung được viết mới; hình và thương hiệu HeartFlow không được sao chép. Hai khu showcase van tự dựng và “Tính năng tương tác” trước đó đã được gỡ.
+Website dùng trình tự nghiên cứu bốn bước từ tài liệu `Slides.pdf`, với kiểu tương tác lấy cảm hứng từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/). Giao diện và nội dung được viết mới; hình và thương hiệu HeartFlow không được sao chép. Hai khu showcase van tự dựng và “Tính năng tương tác” trước đó đã được gỡ.
 
 1. **Ảnh lâm sàng và thông số đo:** duyệt 16 lát trích từ `0225_H_AO_COA.vti`. [Báo cáo ca](public/vmr-0225/0225_H_AO_COA.pdf) xác nhận phương thức ảnh là **MR**, không phải CT, và ghi huyết áp catheter trung bình AAo 88 / DAo 81 mmHg. Folder chưa có waveform catheter thô hoặc phép ghép số đo này với video CFD.
 2. **Mô hình dòng chảy theo ca:** xoay bề mặt PolyData `P001.vtp`, ghim tối đa ba tọa độ hình học, và phát `coa_step0_to31600_pressure_0_6mmHg.mp4` với metadata của 80 frame. Video trái là áp lực bề mặt với thang màu cố định 0–6 mmHg; bên phải là đường dòng vận tốc tức thời với thang màu theo từng frame. Thời gian vật lý là 0–3,95 s, phát chậm thành 16 s. STEP được tải riêng như CAD solid xấp xỉ, không phải mesh CFD.
-3. **Phương án do bác sĩ định nghĩa:** các ca hẹp mạch vành, phình mạch, stent, bypass, van và thiết bị trong slide 47–53 được tóm tắt như ví dụ nghiên cứu đã công bố hoặc hướng tương lai. Chúng không phải các lần chạy thay thế của ca 0225.
+3. **Phương án do bác sĩ định nghĩa:** các ca hẹp mạch vành, phình mạch, stent, bypass, van và thiết bị được tóm tắt như ví dụ nghiên cứu đã công bố hoặc hướng tương lai. Chúng không phải các lần chạy thay thế của ca 0225.
 4. **Đối chiếu với phép đo độc lập:** trình bày số đo catheter đã có và cặp đầu ra mô hình còn cần để đối chiếu cùng điều kiện. Video CFD hiện tại chưa được kiểm chứng lâm sàng cho ca này.
 
-## Slide Lab 43–48
+## Khu mô phỏng tương tác
 
-Khu tương tác riêng trong website đi qua đúng thứ tự câu hỏi ở slide 43–48:
+Khu tương tác riêng đi từ ảnh nguồn đến mô hình và các câu hỏi dòng chảy:
 
-- **43–44:** bộ CT P-3/0227 có 9 lát, contour và P007 cùng ca; có thể duyệt CT, bật contour và xoay model 3D. `npm run verify:geometry` kiểm tra vị trí contour với mesh. Tab MR 0225 là ca **khác**, không phủ P001 lên MR khi chưa kiểm chứng registration.
-- **45:** phát lại video CFD và metadata thật của ca MR 0225 để minh họa cách đọc áp lực/đường dòng. Hình trong slide 45 không được nhận là cùng lượt chạy hoặc cùng thang màu.
-- **46:** bản đồ các câu hỏi ứng dụng; can thiệp và van/thiết bị được ghi là hướng phát triển.
-- **47:** mô hình hẹp mạch bằng SVG tương tác, tham khảo [Gosling et al. (2019)](https://doi.org/10.1016/j.jcmg.2018.01.019). Phần trăm hiển thị là thang đồ họa quy ước, không giải CFD hay tính FFR.
-- **48:** mô hình túi phình và vùng hồi lưu định tính, tham khảo [Jing et al. (2015)](https://doi.org/10.1371/journal.pone.0132494). Không có dữ liệu phình mạch bệnh nhân và không dự đoán nguy cơ vỡ.
+- **Ảnh đến mô hình:** bộ CT P-3/0227 có 9 lát, contour và P007 cùng ca; có thể duyệt CT, bật contour và xoay model 3D. `npm run verify:geometry` kiểm tra vị trí contour với mesh. Tab MR 0225 là ca **khác**, không phủ P001 lên MR khi chưa kiểm chứng registration.
+- **Áp lực và vận tốc:** phát lại video CFD và metadata thật của ca MR 0225. Dùng thang màu và thời gian thuộc chính video này.
+- **Câu hỏi ứng dụng:** can thiệp và van/thiết bị được ghi là hướng phát triển.
+- **Hẹp mạch:** mô hình SVG tương tác, tham khảo [Gosling et al. (2019)](https://doi.org/10.1016/j.jcmg.2018.01.019). Phần trăm hiển thị là thang đồ họa quy ước, không giải CFD hay tính FFR.
+- **Phình mạch:** mô hình túi phình và vùng hồi lưu định tính, tham khảo [Jing et al. (2015)](https://doi.org/10.1371/journal.pone.0132494). Không có dữ liệu phình mạch bệnh nhân và không dự đoán nguy cơ vỡ.
 
-Ảnh MR và bề mặt P001 thuộc cùng ca nhưng demo **không xác nhận căn chỉnh không gian giữa hai file**, nên không phủ mask lên ảnh. Pin trên P001 chỉ trả tọa độ của mô hình đã chuẩn hóa, không trả áp lực hay FFRCT tại điểm. Đường dòng trong video không phải các hạt máu được theo dõi. Kết quả CFD là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý, không phải đánh giá lâm sàng hay khuyến nghị điều trị. Slide 56 phân biệt **Now / Next / Future**; asset ca 0225 hiện chứng minh được áp lực và vận tốc, chưa có bảng branch-flow riêng.
+Ảnh MR và bề mặt P001 thuộc cùng ca nhưng demo **không xác nhận căn chỉnh không gian giữa hai file**, nên không phủ mask lên ảnh. Pin trên P001 chỉ trả tọa độ của mô hình đã chuẩn hóa, không trả áp lực hay FFRCT tại điểm. Đường dòng trong video không phải các hạt máu được theo dõi. Kết quả CFD là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý, không phải đánh giá lâm sàng hay khuyến nghị điều trị. Asset ca 0225 hiện chứng minh được áp lực và vận tốc, chưa có bảng branch-flow riêng.
 
 ## Chạy cục bộ
 

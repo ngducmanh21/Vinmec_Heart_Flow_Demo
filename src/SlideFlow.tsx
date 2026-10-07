@@ -80,7 +80,7 @@ const researchExamples = [
     title: 'Hẹp mạch vành',
     question: 'Bao nhiêu áp lực đến được phía hạ lưu?',
     detail: 'Một tỷ số áp lực như FFR có thể đặt câu hỏi về dòng chảy mạch vành khi tăng tưới máu.',
-    source: 'Gosling et al. (2019) · deck slide 47',
+    source: 'Gosling et al. (2019)',
     sourceLinks: [{ label: 'DOI', href: 'https://doi.org/10.1016/j.jcmg.2018.01.019' }],
     status: 'Ví dụ nghiên cứu đã công bố',
     icon: Activity,
@@ -88,8 +88,8 @@ const researchExamples = [
   {
     title: 'Dòng chảy trong phình mạch',
     question: 'Dòng chảy hồi lưu xuất hiện ở đâu?',
-    detail: 'Thay đổi hình dạng có thể làm đổi mô thức dòng chảy cục bộ. Deck gọi đây là phân tích thăm dò.',
-    source: 'Jing et al., PLOS ONE (2015) · deck slide 48',
+    detail: 'Thay đổi hình dạng có thể làm đổi mô thức dòng chảy cục bộ. Đây là phân tích thăm dò, không dự đoán nguy cơ vỡ.',
+    source: 'Jing et al., PLOS ONE (2015)',
     sourceLinks: [{ label: 'DOI', href: 'https://doi.org/10.1371/journal.pone.0132494' }],
     status: 'Ví dụ phân tích thăm dò',
     icon: Layers3,
@@ -98,7 +98,7 @@ const researchExamples = [
     title: 'So sánh phương án can thiệp',
     question: 'Các kế hoạch khác nhau có làm đổi kết quả mô hình?',
     detail: 'Các phương án ban đầu, đặt stent gần, xa và kết hợp minh họa câu hỏi thay đổi điều trị trong điều kiện mô phỏng.',
-    source: 'Gosling et al. (2019) · deck slide 49',
+    source: 'Gosling et al. (2019)',
     sourceLinks: [{ label: 'DOI', href: 'https://doi.org/10.1016/j.jcmg.2018.01.019' }],
     status: 'Ví dụ so sánh đã công bố',
     icon: GitBranch,
@@ -107,7 +107,7 @@ const researchExamples = [
     title: 'Cầu nối mạch vành',
     question: 'Động mạch tự nhiên và cầu nối chia dòng thế nào?',
     detail: 'Các thang màu riêng cho trạng thái nghỉ và tăng tưới máu hỗ trợ so sánh dòng chảy, không kết luận độ thông cầu nối.',
-    source: 'Wu et al., PLOS ONE (2023) · deck slide 50',
+    source: 'Wu et al., PLOS ONE (2023)',
     sourceLinks: [{ label: 'DOI', href: 'https://doi.org/10.1371/journal.pone.0281423' }],
     status: 'Ví dụ so sánh đã công bố',
     icon: BarChart3,
@@ -115,8 +115,8 @@ const researchExamples = [
   {
     title: 'Van và thiết bị tiếp xúc máu',
     question: 'Giá đỡ hoặc thiết bị làm đổi dòng cục bộ ra sao?',
-    detail: 'Van chuyển động, thiết bị quay và kiểm chứng trên bench được deck trình bày như các hướng mở rộng.',
-    source: 'Kamensky et al. (2018) and Ponnaluri et al. (2023) · slides 51–53',
+    detail: 'Van chuyển động, thiết bị quay và kiểm chứng trên bench là những hướng cần phát triển và kiểm chứng riêng.',
+    source: 'Kamensky et al. (2018) · Ponnaluri et al. (2023)',
     sourceLinks: [
       { label: 'Kamensky DOI', href: 'https://doi.org/10.1016/j.cma.2017.11.007' },
       { label: 'Ponnaluri DOI', href: 'https://doi.org/10.1007/s10439-022-03105-w' },
@@ -130,7 +130,7 @@ const roadmap = [
   {
     label: 'Hiện tại',
     title: 'Prototype nghiên cứu',
-    copy: 'Deck liệt kê dòng đập mạch với thành cố định, áp lực, vận tốc và lưu lượng từng nhánh. Asset ca 0225 hiện chỉ có áp lực và vận tốc.',
+    copy: 'Video ca 0225 hiện cho xem áp lực và vận tốc trong mô hình thành cố định. Lưu lượng từng nhánh cần asset riêng.',
     icon: Activity,
     tone: 'current',
   },
@@ -204,7 +204,7 @@ function IntakeStage() {
       <aside className="slide-flow__side-panel">
         <div className="slide-flow__panel-kicker"><Stethoscope size={14} /> ĐẦU VÀO LÂM SÀNG</div>
         <h3>Bắt đầu từ điều ảnh có thể cho biết</h3>
-        <p className="slide-flow__panel-lead">Deck đặt rà soát giải phẫu và thông số đo ở đầu flow. Báo cáo ca có huyết áp catheter tóm tắt tại AAo và DAo; chưa có waveform thô hoặc phép ghép những số đo này với video CFD đã lưu.</p>
+        <p className="slide-flow__panel-lead">Quy trình bắt đầu từ ảnh nguồn và thông số đo. Báo cáo ca có huyết áp catheter tóm tắt tại AAo và DAo; chưa có waveform thô hoặc phép ghép những số đo này với video CFD đã lưu.</p>
 
         <div className="slide-flow__input-list">
           <div><span>Phương thức chụp</span><strong>MR · volume VTI</strong><EvidenceTag /></div>
@@ -279,13 +279,13 @@ function AlternativesStage({ selectedResearch, onSelectResearch }: { selectedRes
         <div>
           <span className="slide-flow__eyebrow"><GitBranch size={13} /> CÂU HỎI MÔ HÌNH</span>
           <h3>Phương án điều trị cần một câu hỏi rõ ràng</h3>
-          <p>Deck dùng các ví dụ hẹp mạch vành, phình mạch, cầu nối, van và thiết bị để minh họa nơi mô hình dòng chảy có thể so sánh lựa chọn. Đây là hướng nghiên cứu có nguồn, chưa phải output của ca 0225.</p>
+          <p>Các nghiên cứu về hẹp mạch vành, phình mạch, cầu nối, van và thiết bị cho thấy những câu hỏi mô hình dòng chảy có thể hỗ trợ. Chúng chưa phải output của ca 0225.</p>
         </div>
         <EvidenceTag tone="future">Ví dụ đã công bố + hướng tương lai</EvidenceTag>
       </div>
 
       <div className="slide-flow__research-layout">
-        <div className="slide-flow__research-list" role="list" aria-label="Các ví dụ nghiên cứu từ slide deck">
+        <div className="slide-flow__research-list" role="list" aria-label="Các ví dụ nghiên cứu đã công bố">
           {researchExamples.map((example, index) => {
             const Icon = example.icon
             const active = index === selectedResearch
@@ -302,7 +302,7 @@ function AlternativesStage({ selectedResearch, onSelectResearch }: { selectedRes
         <article className="slide-flow__research-detail">
           <div className="slide-flow__detail-heading">
             <span className="slide-flow__detail-icon"><SelectedIcon size={18} /></span>
-            <div><span>VÍ DỤ TRONG DECK</span><h4>{selected.title}</h4></div>
+            <div><span>VÍ DỤ NGHIÊN CỨU</span><h4>{selected.title}</h4></div>
             <EvidenceTag tone={selected.status === 'Hướng mở rộng tương lai' ? 'future' : 'source'}>{selected.status}</EvidenceTag>
           </div>
           <p className="slide-flow__research-question">{selected.question}</p>
@@ -345,14 +345,14 @@ function CheckStage() {
         <div className="slide-flow__check-card">
           <span className="slide-flow__check-number">03</span>
           <h4>Pilot khả thi</h4>
-          <p>Deck đề xuất một đầu mối lâm sàng, 3–5 ca hồi cứu và một endpoint độc lập.</p>
-          <EvidenceTag tone="future">Hướng ở slide 58</EvidenceTag>
+        <p>Một pilot có thể bắt đầu với một đầu mối lâm sàng, 3–5 ca hồi cứu và một endpoint độc lập.</p>
+        <EvidenceTag tone="future">Hướng triển khai</EvidenceTag>
         </div>
       </div>
 
       <div className="slide-flow__check-footnote">
         <ShieldCheck size={16} />
-        <p><strong>Ranh giới bằng chứng:</strong> deck dẫn một ví dụ kiểm chứng FFR mạch vành đã công bố, đồng thời nêu solver này chưa được kiểm chứng lâm sàng. Ví dụ đó không kiểm chứng lượt chạy ca 0225.</p>
+        <p><strong>Ranh giới bằng chứng:</strong> ví dụ kiểm chứng FFR mạch vành đã công bố không kiểm chứng lượt chạy ca 0225. Mô hình này vẫn cần đánh giá lâm sàng riêng.</p>
       </div>
     </div>
   )
@@ -363,7 +363,7 @@ function Roadmap() {
     <section className="slide-flow__roadmap" aria-labelledby="slide-flow-roadmap-title">
       <div className="slide-flow__section-heading">
         <div><span className="slide-flow__eyebrow"><BarChart3 size={13} /> TRẠNG THÁI PHÁT TRIỂN</span><h2 id="slide-flow-roadmap-title">Ranh giới rõ giữa prototype và câu hỏi kế tiếp</h2></div>
-        <p>Diễn giải từ deck được cung cấp, slide 56</p>
+        <p>Lộ trình phát triển và kiểm chứng mô hình</p>
       </div>
       <div className="slide-flow__roadmap-grid">
         {roadmap.map(item => {
@@ -404,7 +404,7 @@ export default function SlideFlow() {
           <p>Dùng asset của ca để đi qua một flow lấy cảm hứng tương tác từ HeartFlow: rà soát ảnh, xem mô hình, đặt câu hỏi về phương án thay thế và xác định phép đo cần có để kiểm tra.</p>
           <div className="slide-flow__hero-actions">
             <button type="button" onClick={() => selectStep(0)}>Mở flow của ca <ArrowRight size={15} /></button>
-            <a className="slide-flow__lab-cta" href="#slide-lab">Xem mô phỏng slide 43–48 <ArrowRight size={15} /></a>
+            <a className="slide-flow__lab-cta" href="#slide-lab">Khám phá mô phỏng <ArrowRight size={15} /></a>
             <a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">Trang tham khảo tương tác: HeartFlow FFRCT <ExternalLink size={13} /></a>
           </div>
         </div>
@@ -413,7 +413,7 @@ export default function SlideFlow() {
           <strong>0225</strong>
           <small>MR · ĐỘNG MẠCH CHỦ / COA</small>
           <div className="slide-flow__hero-divider" />
-          <p>Deck nguồn<br /><b>Slides.pdf</b><br />flow: slide 55 · roadmap: slide 56</p>
+          <p>Bằng chứng ca<br /><b>MR · P001 · CFD</b><br />prototype nghiên cứu</p>
         </div>
       </section>
 
@@ -443,7 +443,7 @@ export default function SlideFlow() {
 
       <section className="slide-flow__sources" aria-label="Provenance and scope">
         <div><span className="slide-flow__eyebrow"><ShieldCheck size={13} /> NGUỒN VÀ PHẠM VI</span><h2>Mỗi lớp dữ liệu có một ranh giới bằng chứng riêng</h2></div>
-        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Bối cảnh deck</strong> Trình tự flow và hướng nghiên cứu đến từ <em>Slides.pdf</em>, slide 43–58, do người dùng cung cấp.</p><p><strong>Kiểm chứng</strong> Showcase chỉ ra phép đối chiếu còn thiếu. Các ví dụ nghiên cứu không trở thành tuyên bố theo bệnh nhân.</p></div>
+        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Nghiên cứu tham khảo</strong> Các hướng ứng dụng có liên kết đến bài báo gốc trong từng ví dụ; hình minh họa tương tác được dựng mới.</p><p><strong>Kiểm chứng</strong> Showcase chỉ ra phép đối chiếu còn thiếu. Các ví dụ nghiên cứu không trở thành tuyên bố theo bệnh nhân.</p></div>
       </section>
     </div>
   )

@@ -8,17 +8,51 @@ const StenosisDemo = lazy(() => import('./StenosisDemo'))
 const AneurysmDemo = lazy(() => import('./AneurysmDemo'))
 
 const modules = [
-  { key: 'image', number: '43–44', label: 'Ảnh → mô hình', status: 'CT P-3 · ca riêng', icon: ScanLine },
-  { key: 'fields', number: '45', label: 'Áp lực & vận tốc', status: 'Video ca 0225', icon: Activity },
-  { key: 'questions', number: '46', label: 'Câu hỏi dòng chảy', status: 'Bản đồ ứng dụng', icon: CircleHelp },
-  { key: 'stenosis', number: '47', label: 'Hẹp mạch', status: 'Minh họa', icon: Layers3 },
-  { key: 'aneurysm', number: '48', label: 'Phình mạch', status: 'Minh họa', icon: Waves },
+  { key: 'image', label: 'Ảnh → mô hình', status: 'CT P-3 · ca riêng', icon: ScanLine },
+  { key: 'fields', label: 'Áp lực & vận tốc', status: 'Video ca 0225', icon: Activity },
+  { key: 'questions', label: 'Câu hỏi dòng chảy', status: 'Bản đồ ứng dụng', icon: CircleHelp },
+  { key: 'stenosis', label: 'Hẹp mạch', status: 'Minh họa', icon: Layers3 },
+  { key: 'aneurysm', label: 'Phình mạch', status: 'Minh họa', icon: Waves },
 ] as const
 
 type ModuleKey = typeof modules[number]['key']
 
 function Questions({ onChoose }: { onChoose: (key: ModuleKey) => void }) {
-  return <div className="slide-lab__questions"><div className="slide-lab__questions-head"><span>SLIDE 46 · BẢN ĐỒ CÂU HỎI</span><h3>Mô hình dòng chảy sẽ giúp hỏi điều gì?</h3><p>Slide 46 giới thiệu các hướng ứng dụng. Hai hướng đầu có bản tương tác minh họa ở đây; so sánh điều trị và van/thiết bị vẫn là hướng phát triển, không phải kết quả ca 0225.</p></div><div className="slide-lab__questions-grid"><button type="button" onClick={() => onChoose('stenosis')}><Layers3 size={22}/><strong>Hẹp động mạch</strong><span>Điều gì xảy ra với dòng chảy và áp lực sau chỗ hẹp?</span><small>Xem minh họa slide 47 <ArrowRight size={13}/></small></button><button type="button" onClick={() => onChoose('aneurysm')}><Waves size={22}/><strong>Phình mạch</strong><span>Hình dạng túi phình thay đổi vùng hồi lưu như thế nào?</span><small>Xem minh họa slide 48 <ArrowRight size={13}/></small></button><div className="is-future"><FlaskConical size={22}/><strong>So sánh phương án</strong><span>Cần mô hình và lần chạy thay thế cho cùng một ca.</span><small>HƯỚNG KẾ TIẾP · SLIDE 49</small></div><div className="is-future"><Activity size={22}/><strong>Van & thiết bị</strong><span>Cần hình học chuyển động và kiểm chứng riêng.</span><small>HƯỚNG TƯƠNG LAI · SLIDE 51–53</small></div></div></div>
+  return (
+    <div className="slide-lab__questions">
+      <div className="slide-lab__questions-head">
+        <span>BẢN ĐỒ ỨNG DỤNG</span>
+        <h3>Mô hình dòng chảy sẽ giúp hỏi điều gì?</h3>
+        <p>Khám phá hai câu hỏi bằng mô phỏng tương tác. So sánh điều trị và van/thiết bị vẫn là hướng phát triển, không phải kết quả của ca 0225.</p>
+      </div>
+      <div className="slide-lab__questions-grid">
+        <button type="button" onClick={() => onChoose('stenosis')}>
+          <Layers3 size={22} />
+          <strong>Hẹp động mạch</strong>
+          <span>Điều gì xảy ra với dòng chảy và áp lực sau chỗ hẹp?</span>
+          <small>Xem minh họa <ArrowRight size={13} /></small>
+        </button>
+        <button type="button" onClick={() => onChoose('aneurysm')}>
+          <Waves size={22} />
+          <strong>Phình mạch</strong>
+          <span>Hình dạng túi phình thay đổi vùng hồi lưu như thế nào?</span>
+          <small>Xem minh họa <ArrowRight size={13} /></small>
+        </button>
+        <div className="is-future">
+          <FlaskConical size={22} />
+          <strong>So sánh phương án</strong>
+          <span>Cần mô hình và lần chạy thay thế cho cùng một ca.</span>
+          <small>HƯỚNG KẾ TIẾP</small>
+        </div>
+        <div className="is-future">
+          <Activity size={22} />
+          <strong>Van & thiết bị</strong>
+          <span>Cần hình học chuyển động và kiểm chứng riêng.</span>
+          <small>HƯỚNG TƯƠNG LAI</small>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function SlideLab() {
@@ -26,13 +60,60 @@ export default function SlideLab() {
   const index = modules.findIndex(item => item.key === active)
   const current = modules[index]
 
-  function move(delta: number) { setActive(modules[Math.min(modules.length - 1, Math.max(0, index + delta))].key) }
+  function move(delta: number) {
+    setActive(modules[Math.min(modules.length - 1, Math.max(0, index + delta))].key)
+  }
 
-  return <section className="slide-lab" id="slide-lab" aria-labelledby="slide-lab-title"><div className="slide-lab__heading"><div><span className="slide-lab__eyebrow"><i/> TƯƠNG TÁC THEO SLIDE 43–48</span><h2 id="slide-lab-title">Từ lát ảnh đến câu hỏi dòng chảy</h2><p>Duyệt bộ CT P‑3 và video CFD ca MR 0225 như <strong>hai ca riêng</strong>, rồi thử hai mô hình minh họa để hiểu ý tưởng trong deck. Các panel minh họa không tính FFR, không dự đoán vỡ phình mạch và không dùng dữ liệu bệnh nhân 0225.</p></div><div className="slide-lab__count"><strong>43—48</strong><span>6 SLIDE · 5 GÓC XEM</span></div></div>
-    <nav className="slide-lab__nav" aria-label="Chọn mô phỏng theo slide">{modules.map(item => { const Icon=item.icon; return <button type="button" key={item.key} className={active === item.key ? 'is-active' : ''} aria-current={active === item.key ? 'step' : undefined} onClick={() => setActive(item.key)}><span className="slide-lab__nav-number">{item.number}</span><Icon size={17}/><span><strong>{item.label}</strong><small>{item.status}</small></span></button> })}</nav>
-    <div className="slide-lab__workspace"><div className="slide-lab__workspace-head"><div><span>SLIDE {current.number} · {current.status.toUpperCase()}</span><h3>{current.label}</h3></div><div><button type="button" aria-label="Mục trước" disabled={index===0} onClick={() => move(-1)}><ArrowLeft size={16}/></button><span>{index+1} / {modules.length}</span><button type="button" aria-label="Mục tiếp" disabled={index===modules.length-1} onClick={() => move(1)}><ArrowRight size={16}/></button></div></div>
-      <div className="slide-lab__content">{active === 'image' && <Suspense fallback={<div className="slide-lab__loading">Đang tải ảnh và hình học…</div>}><ImageStackDemo/></Suspense>}{active === 'fields' && <div className="slide-lab__fields"><div className="slide-lab__notice"><Activity size={17}/><p>Slide 45 minh họa cách đọc áp lực bề mặt và đường dòng. Panel dưới dùng <strong>video thật của ca 0225</strong> được cung cấp riêng; đây không phải cùng kết quả hay thang màu của hình trong slide 45.</p></div><Suspense fallback={<div className="slide-lab__loading">Đang tải video CFD…</div>}><SimulationVideo active title="Áp lực bề mặt và đường dòng · ca 0225"/></Suspense></div>}{active === 'questions' && <Questions onChoose={setActive}/>}{active === 'stenosis' && <Suspense fallback={<div className="slide-lab__loading">Đang tải minh họa hẹp mạch…</div>}><StenosisDemo/></Suspense>}{active === 'aneurysm' && <Suspense fallback={<div className="slide-lab__loading">Đang tải minh họa phình mạch…</div>}><AneurysmDemo/></Suspense>}</div>
-      <div className="slide-lab__footer"><span>{active === 'image' ? 'CT P-3 · CA RIÊNG' : active === 'fields' ? 'VIDEO CA 0225' : active === 'questions' ? 'BẢN ĐỒ ỨNG DỤNG' : 'MINH HỌA ĐỊNH TÍNH'}</span><div><button type="button" disabled={index===0} onClick={() => move(-1)}><ArrowLeft size={14}/> Trước</button><button type="button" disabled={index===modules.length-1} onClick={() => move(1)}>Tiếp <ArrowRight size={14}/></button></div></div></div>
-    <p className="slide-lab__source">Nguồn nội dung: <strong>Slides.pdf, slide 43–48</strong>. Các hình nghiên cứu trong deck được thay bằng đồ họa code mới; xem bài báo gốc qua liên kết trong từng minh họa. <a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">HeartFlow là tham khảo kiểu tương tác <ExternalLink size={12}/></a>.</p>
-  </section>
+  return (
+    <section className="slide-lab" id="slide-lab" aria-labelledby="slide-lab-title">
+      <div className="slide-lab__heading">
+        <div>
+          <span className="slide-lab__eyebrow"><i /> KHÁM PHÁ MÔ HÌNH</span>
+          <h2 id="slide-lab-title">Từ lát ảnh đến câu hỏi dòng chảy</h2>
+          <p>Duyệt bộ CT P-3 và video CFD ca MR 0225 như <strong>hai ca riêng</strong>, rồi thử mô hình hẹp mạch và phình mạch để hiểu các câu hỏi dòng chảy. Hai mô hình minh họa không tính FFR, không dự đoán vỡ phình mạch và không dùng dữ liệu bệnh nhân 0225.</p>
+        </div>
+      </div>
+
+      <nav className="slide-lab__nav" aria-label="Chọn góc xem mô phỏng">
+        {modules.map(item => {
+          const Icon = item.icon
+          return (
+            <button type="button" key={item.key} className={active === item.key ? 'is-active' : ''} aria-current={active === item.key ? 'step' : undefined} onClick={() => setActive(item.key)}>
+              <Icon size={17} />
+              <span><strong>{item.label}</strong><small>{item.status}</small></span>
+            </button>
+          )
+        })}
+      </nav>
+
+      <div className="slide-lab__workspace">
+        <div className="slide-lab__workspace-head">
+          <div><span>{current.status.toUpperCase()}</span><h3>{current.label}</h3></div>
+          <div>
+            <button type="button" aria-label="Mục trước" disabled={index === 0} onClick={() => move(-1)}><ArrowLeft size={16} /></button>
+            <span>{index + 1} / {modules.length}</span>
+            <button type="button" aria-label="Mục tiếp" disabled={index === modules.length - 1} onClick={() => move(1)}><ArrowRight size={16} /></button>
+          </div>
+        </div>
+        <div className="slide-lab__content">
+          {active === 'image' && <Suspense fallback={<div className="slide-lab__loading">Đang tải ảnh và hình học…</div>}><ImageStackDemo /></Suspense>}
+          {active === 'fields' && <div className="slide-lab__fields">
+            <div className="slide-lab__notice"><Activity size={17} /><p>Panel dưới phát <strong>video CFD đã lưu của ca 0225</strong>: áp lực bề mặt ở trái và đường dòng vận tốc ở phải. Thang màu và thông số theo metadata của video này.</p></div>
+            <Suspense fallback={<div className="slide-lab__loading">Đang tải video CFD…</div>}><SimulationVideo active title="Áp lực bề mặt và đường dòng · ca 0225" /></Suspense>
+          </div>}
+          {active === 'questions' && <Questions onChoose={setActive} />}
+          {active === 'stenosis' && <Suspense fallback={<div className="slide-lab__loading">Đang tải minh họa hẹp mạch…</div>}><StenosisDemo /></Suspense>}
+          {active === 'aneurysm' && <Suspense fallback={<div className="slide-lab__loading">Đang tải minh họa phình mạch…</div>}><AneurysmDemo /></Suspense>}
+        </div>
+        <div className="slide-lab__footer">
+          <span>{active === 'image' ? 'CT P-3 · CA RIÊNG' : active === 'fields' ? 'VIDEO CA 0225' : active === 'questions' ? 'BẢN ĐỒ ỨNG DỤNG' : 'MINH HỌA ĐỊNH TÍNH'}</span>
+          <div>
+            <button type="button" disabled={index === 0} onClick={() => move(-1)}><ArrowLeft size={14} /> Trước</button>
+            <button type="button" disabled={index === modules.length - 1} onClick={() => move(1)}>Tiếp <ArrowRight size={14} /></button>
+          </div>
+        </div>
+      </div>
+      <p className="slide-lab__source">Nguồn dữ liệu được ghi trong từng góc xem; các hình minh họa được dựng mới. <a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">HeartFlow là tham khảo kiểu tương tác <ExternalLink size={12} /></a>.</p>
+    </section>
+  )
 }
