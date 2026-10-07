@@ -1,0 +1,176 @@
+.coronary-roadmap {
+  --roadmap-ink: #153b4d;
+  --roadmap-deep: #082532;
+  --roadmap-teal: #69d0c8;
+  --roadmap-border: #d6e5e7;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 30px 28px 42px;
+  color: var(--roadmap-ink);
+}
+
+.coronary-roadmap button,
+.coronary-roadmap a {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.coronary-roadmap button:focus-visible,
+.coronary-roadmap [role='button']:focus-visible {
+  outline: 3px solid #68c9c2;
+  outline-offset: 3px;
+}
+
+.coronary-roadmap__hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 218px;
+  overflow: hidden;
+  padding: 33px 39px;
+  border: 1px solid #175264;
+  border-radius: 13px;
+  background: radial-gradient(circle at 78% 16%, #2a7079 0, #123e4d 31%, transparent 58%), linear-gradient(126deg, #092532 0%, #0a2c3a 55%, #113e4c 100%);
+  color: #fff;
+  box-shadow: 0 15px 33px #153b4917;
+}
+
+.coronary-roadmap__hero::before,
+.coronary-roadmap__hero::after {
+  position: absolute;
+  right: -150px;
+  bottom: -300px;
+  width: 580px;
+  height: 580px;
+  border: 1px solid #7bd1ca30;
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.coronary-roadmap__hero::after { right: -25px; bottom: -195px; width: 370px; height: 370px; border-color: #7bd1ca37; }
+.coronary-roadmap__hero > div:first-child { position: relative; z-index: 1; max-width: 760px; }
+.coronary-roadmap__eyebrow { display: flex; align-items: center; gap: 7px; color: #82d1cb; font-size: 9px; font-weight: 850; letter-spacing: 1.45px; line-height: 1.25; }
+.coronary-roadmap__eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: #6bd8cb; box-shadow: 0 0 0 4px #6bd8cb20; }
+.coronary-roadmap__hero h2 { max-width: 700px; margin: 14px 0 9px; color: #f6ffff; font-family: Manrope, Arial, sans-serif; font-size: clamp(27px, 3.15vw, 42px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.08; }
+.coronary-roadmap__hero p { max-width: 645px; margin: 0; color: #b9d1d6; font-size: 12px; line-height: 1.7; }
+.coronary-roadmap__hero-mark { position: relative; z-index: 1; display: flex; flex: 0 0 125px; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; border-left: 1px solid #88c4c53d; color: #79d1ca; }
+.coronary-roadmap__hero-mark span { color: #c5e9e4; font-size: 9px; font-weight: 850; letter-spacing: 2.5px; line-height: 1.7; text-align: center; }
+.coronary-roadmap__notice { display: flex; align-items: flex-start; gap: 8px; margin: 12px 2px 0; color: #6c8992; font-size: 9px; line-height: 1.55; }
+.coronary-roadmap__notice svg { flex: none; margin-top: 1px; color: #4d9ca3; }
+.coronary-roadmap__notice strong { color: #4d737d; }
+.coronary-roadmap__workspace { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 15px; align-items: stretch; margin-top: 18px; }
+.coronary-roadmap__visual-card, .coronary-roadmap__controls { overflow: hidden; border: 1px solid var(--roadmap-border); border-radius: 9px; background: #fff; box-shadow: 0 5px 19px #1537450b; }
+.coronary-roadmap__card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 50px; padding: 0 17px; border-bottom: 1px solid #dfeaec; color: #355d69; font-size: 9px; letter-spacing: .75px; }
+.coronary-roadmap__card-head > span { display: flex; align-items: center; gap: 7px; }
+.coronary-roadmap__card-head small { color: #9caeb3; font-size: 8px; font-weight: 600; letter-spacing: 0; }
+.coronary-roadmap__live-dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: #5bb8a8; box-shadow: 0 0 0 3px #5bb8a821; }
+.coronary-roadmap__canvas { padding: 13px; background: #102b37; }
+.coronary-roadmap__diagram { display: block; width: 100%; height: auto; overflow: visible; }
+.coronary-roadmap__grid line { stroke: #6db8be12; stroke-width: 1; stroke-dasharray: 2 7; }
+.coronary-roadmap__heart path { fill: none; stroke: #68b6ba12; stroke-width: 1.3; }
+.coronary-roadmap__artery-shadow { stroke: #0a1823; stroke-width: 17; opacity: .9; }
+.coronary-roadmap__artery { stroke: url(#missing); stroke: #58b4b6; stroke-width: 8; opacity: .94; filter: drop-shadow(0 0 5px #62d1c440); }
+.coronary-roadmap__arteries path:nth-child(odd) { stroke-width: 11; opacity: .7; }
+.coronary-roadmap__flow-lines path { stroke: #c6eedc; stroke-width: 1.8; stroke-dasharray: 1 11; stroke-linecap: round; opacity: .8; }
+.coronary-roadmap__origin circle:first-child { fill: #1d5662; stroke: #8de2d1; stroke-width: 1.5; }
+.coronary-roadmap__origin circle:nth-child(2) { fill: #c4f4dd; }
+.coronary-roadmap__origin text, .coronary-roadmap__branch-labels text { fill: #75aeb4; font-size: 8px; font-weight: 850; letter-spacing: 1px; }
+.coronary-roadmap__branch-labels text { fill: #a3d2cc; font-size: 10px; }
+.coronary-roadmap__marker { cursor: pointer; outline: none; }
+.coronary-roadmap__marker-halo { fill: #f2ad6520; stroke: #f0b16b80; stroke-width: 1; opacity: .6; transition: r .2s ease, opacity .2s ease; }
+.coronary-roadmap__marker-ring { fill: #133c47; stroke: #f0b36f; stroke-width: 1.6; transition: r .2s ease, stroke-width .2s ease; }
+.coronary-roadmap__marker-core { fill: #ffd08a; }
+.coronary-roadmap__marker-leader { stroke: #deab72; stroke-width: 1; stroke-dasharray: 2 3; opacity: .65; }
+.coronary-roadmap__marker-label { fill: #ffdb9c; font-size: 9px; font-weight: 850; letter-spacing: .7px; }
+.coronary-roadmap__marker:not(.is-selected) { opacity: .78; }
+.coronary-roadmap__marker:hover, .coronary-roadmap__marker.is-selected { opacity: 1; }
+.coronary-roadmap__marker.is-selected .coronary-roadmap__marker-halo { opacity: 1; }
+.coronary-roadmap__marker.is-selected .coronary-roadmap__marker-ring { stroke-width: 2.4; }
+.coronary-roadmap__legend { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; padding: 10px 15px; background: #0d2733; color: #7da5ab; font-size: 8px; }
+.coronary-roadmap__legend span { display: inline-flex; align-items: center; gap: 6px; }
+.coronary-roadmap__legend i { display: block; width: 17px; height: 3px; border-radius: 5px; background: #58b4b6; }
+.coronary-roadmap__legend i.is-lesion { width: 8px; height: 8px; border: 1px solid #f0b16b; border-radius: 50%; background: #ffd08a; }
+.coronary-roadmap__legend i.is-flow { height: 1px; background: #c6eedc; border-top: 1px dashed #c6eedc; }
+.coronary-roadmap__controls { padding: 20px 18px; }
+.coronary-roadmap__panel-kicker { display: flex; align-items: center; gap: 7px; color: #39959b; font-size: 8px; font-weight: 850; letter-spacing: 1.2px; }
+.coronary-roadmap__selected-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; }
+.coronary-roadmap__selected-heading > div { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.coronary-roadmap__selected-heading h3 { margin: 0; color: #245163; font-family: Manrope, Arial, sans-serif; font-size: 18px; letter-spacing: -.4px; }
+.coronary-roadmap__selected-dot { width: 10px; height: 10px; flex: none; border-radius: 50%; box-shadow: 0 0 0 4px #f1a9661b; }
+.coronary-roadmap__selected-dot.is-alert { background: #dc835f; }
+.coronary-roadmap__selected-dot.is-watch { background: #e8b167; }
+.coronary-roadmap__selected-dot.is-calm { background: #6abeb2; }
+.coronary-roadmap__severity-badge { min-width: 52px; padding: 6px 7px; border-radius: 4px; text-align: center; font-size: 11px; font-weight: 850; }
+.coronary-roadmap__severity-badge.is-alert { background: #fbe9e3; color: #b96c55; }
+.coronary-roadmap__severity-badge.is-watch { background: #fff3df; color: #ad7d38; }
+.coronary-roadmap__severity-badge.is-calm { background: #e5f5f1; color: #368d82; }
+.coronary-roadmap__selected-location { margin: 5px 0 17px 18px; color: #8aa1a8; font-size: 10px; }
+.coronary-roadmap__metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 0; border-top: 1px solid #e4edef; border-bottom: 1px solid #e4edef; }
+.coronary-roadmap__metric-grid div { padding-right: 8px; border-right: 1px solid #edf2f3; }
+.coronary-roadmap__metric-grid div:last-child { padding-left: 8px; border: 0; }
+.coronary-roadmap__metric-grid span, .coronary-roadmap__metric-grid small { display: block; color: #92a8ae; font-size: 8px; line-height: 1.4; }
+.coronary-roadmap__metric-grid strong { display: block; margin: 3px 0; color: #315969; font-size: 16px; font-weight: 850; }
+.coronary-roadmap__meter { padding: 15px 0 13px; }
+.coronary-roadmap__meter > div { display: flex; justify-content: space-between; gap: 9px; color: #79939b; font-size: 9px; }
+.coronary-roadmap__meter strong { color: #3c6875; }
+.coronary-roadmap__meter-track { display: block; height: 7px; margin-top: 7px; overflow: hidden; border-radius: 8px; background: #e7eff0; }
+.coronary-roadmap__meter-track i { display: block; height: 100%; border-radius: inherit; }
+.coronary-roadmap__meter-track i.is-alert { background: linear-gradient(90deg, #f4c27d, #d9785d); }
+.coronary-roadmap__meter-track i.is-watch { background: linear-gradient(90deg, #a3d9c8, #e8b167); }
+.coronary-roadmap__meter-track i.is-calm { background: #61b8ae; }
+.coronary-roadmap__list-heading { display: flex; justify-content: space-between; gap: 10px; margin-top: 5px; color: #62818a; font-size: 8px; font-weight: 850; letter-spacing: 1px; }
+.coronary-roadmap__list-heading small { color: #a3b3b6; font-size: 8px; font-weight: 600; letter-spacing: 0; }
+.coronary-roadmap__lesion-list { display: flex; flex-direction: column; gap: 6px; margin-top: 9px; }
+.coronary-roadmap__lesion-row { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 49px; padding: 7px 8px; border: 1px solid #e2ebed; border-radius: 6px; background: #fbfdfd; color: inherit; text-align: left; transition: border-color .15s ease, background .15s ease, transform .15s ease; }
+.coronary-roadmap__lesion-row:hover { border-color: #a4d1ce; background: #f1faf8; transform: translateX(1px); }
+.coronary-roadmap__lesion-row.is-selected { border-color: #8bcac6; background: #edf8f6; box-shadow: 0 2px 8px #358f8f12; }
+.coronary-roadmap__lesion-index { display: grid; width: 25px; height: 25px; flex: none; place-items: center; border-radius: 50%; font-size: 9px; font-weight: 850; }
+.coronary-roadmap__lesion-index.is-alert { background: #fbe9e3; color: #b96c55; }
+.coronary-roadmap__lesion-index.is-watch { background: #fff3df; color: #ad7d38; }
+.coronary-roadmap__lesion-index.is-calm { background: #e5f5f1; color: #368d82; }
+.coronary-roadmap__lesion-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
+.coronary-roadmap__lesion-copy strong { color: #3c6470; font-size: 10px; }
+.coronary-roadmap__lesion-copy small { overflow: hidden; color: #99adb1; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.coronary-roadmap__lesion-value { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.coronary-roadmap__lesion-value strong { color: #3d6b76; font-size: 11px; }
+.coronary-roadmap__lesion-value small { color: #a1b1b5; font-size: 8px; }
+.coronary-roadmap__callout { display: flex; gap: 8px; margin-top: 13px; padding: 10px; border-left: 3px solid #78bfb8; background: #eff8f6; color: #59818a; font-size: 9px; line-height: 1.5; }
+.coronary-roadmap__callout svg { flex: none; margin-top: 1px; color: #4aa093; }
+.coronary-roadmap__callout strong { color: #377a78; }
+.coronary-roadmap__callout p { margin: 3px 0 0; }
+.coronary-roadmap__footer { display: flex; align-items: center; gap: 8px; margin-top: 15px; color: #98acb1; font-size: 9px; line-height: 1.5; }
+.coronary-roadmap__footer svg { flex: none; color: #b68158; }
+
+@media (max-width: 1080px) {
+  .coronary-roadmap__workspace { grid-template-columns: minmax(0, 1fr) 295px; }
+}
+
+@media (max-width: 850px) {
+  .coronary-roadmap { padding: 24px 20px 35px; }
+  .coronary-roadmap__workspace { grid-template-columns: 1fr; }
+  .coronary-roadmap__controls { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
+  .coronary-roadmap__panel-kicker, .coronary-roadmap__selected-heading, .coronary-roadmap__selected-location, .coronary-roadmap__metric-grid, .coronary-roadmap__meter, .coronary-roadmap__list-heading, .coronary-roadmap__lesion-list, .coronary-roadmap__callout { grid-column: 1 / -1; }
+  .coronary-roadmap__metric-grid { grid-template-columns: 1fr 1fr; }
+  .coronary-roadmap__lesion-list { display: grid; grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 620px) {
+  .coronary-roadmap { padding: 18px 13px 29px; }
+  .coronary-roadmap__hero { min-height: 0; padding: 23px 20px; }
+  .coronary-roadmap__hero h2 { font-size: 25px; letter-spacing: -.8px; }
+  .coronary-roadmap__hero p { font-size: 11px; }
+  .coronary-roadmap__hero-mark { display: none; }
+  .coronary-roadmap__notice { font-size: 8px; }
+  .coronary-roadmap__card-head { min-height: 44px; padding: 0 11px; font-size: 8px; }
+  .coronary-roadmap__card-head small { font-size: 7px; }
+  .coronary-roadmap__canvas { padding: 7px; }
+  .coronary-roadmap__legend { gap: 8px 12px; padding: 8px 10px; font-size: 7px; }
+  .coronary-roadmap__controls { display: block; padding: 17px 14px; }
+  .coronary-roadmap__selected-heading h3 { font-size: 16px; }
+  .coronary-roadmap__lesion-list { display: flex; }
+  .coronary-roadmap__lesion-row { min-height: 46px; }
+  .coronary-roadmap__footer { align-items: flex-start; font-size: 8px; }
+}

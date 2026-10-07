@@ -1,0 +1,178 @@
+.coronary-report {
+  --cr-ink: #173e4e;
+  --cr-deep: #072632;
+  --cr-teal: #3aa2a5;
+  --cr-muted: #78939c;
+  --cr-line: #d8e6e8;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 32px 28px 46px;
+  color: var(--cr-ink);
+}
+
+.coronary-report button,.coronary-report a { font: inherit; -webkit-tap-highlight-color: transparent; }
+.coronary-report button:focus-visible,.coronary-report a:focus-visible { outline: 3px solid #61bdb8; outline-offset: 3px; }
+
+.coronary-report__hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 208px;
+  overflow: hidden;
+  padding: 31px 37px;
+  border: 1px solid #1f5361;
+  border-radius: 13px;
+  background: radial-gradient(circle at 76% 10%, #2e7076 0, #123e4b 35%, #082a38 100%);
+  color: #fff;
+  box-shadow: 0 14px 34px #16445218;
+}
+
+.coronary-report__hero::before,
+.coronary-report__hero::after { position: absolute; right: -120px; bottom: -340px; width: 650px; height: 650px; border: 1px solid #82d4d033; border-radius: 50%; content: ''; pointer-events: none; }
+.coronary-report__hero::after { right: 35px; bottom: -247px; width: 420px; height: 420px; border-color: #82d4d043; }
+.coronary-report__hero-copy { position: relative; z-index: 1; max-width: 760px; }
+.coronary-report__eyebrow { display: flex; align-items: center; gap: 8px; color: #8cd5d0; font-size: 9px; font-weight: 850; letter-spacing: 1.45px; }
+.coronary-report__eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: #69d4c3; box-shadow: 0 0 0 4px #69d4c326; }
+.coronary-report__hero h2 { margin: 15px 0 8px; color: #f3ffff; font-family: Manrope, Arial, sans-serif; font-size: clamp(27px, 3.2vw, 42px); font-weight: 800; letter-spacing: -1.45px; line-height: 1.1; }
+.coronary-report__hero p { max-width: 680px; margin: 0; color: #bdd5d9; font-size: 12px; line-height: 1.7; }
+.coronary-report__hero-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+.coronary-report__hero-tags span { padding: 6px 8px; border: 1px solid #8bd2d14a; border-radius: 4px; background: #8bd2d113; color: #b5e5e2; font-size: 8px; font-weight: 850; letter-spacing: 1px; }
+.coronary-report__hero-status { position: relative; z-index: 1; display: flex; min-width: 175px; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 125px; padding-left: 26px; border-left: 1px solid #8bc4c43d; text-align: center; }
+.coronary-report__status-icon { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #87d2cb56; border-radius: 50%; background: #8bd2d117; color: #9ce0d8; }
+.coronary-report__hero-status strong { color: #d3efec; font-size: 10px; font-weight: 800; }
+.coronary-report__hero-status > span { color: #86c7c6; font-size: 8px; font-weight: 850; letter-spacing: 1.25px; }
+
+.coronary-report__caveat { display: flex; align-items: flex-start; gap: 9px; margin: 13px 2px 0; padding: 11px 13px; border: 1px solid #e6d8b7; border-radius: 7px; background: #fffaf0; color: #8b7450; font-size: 10px; line-height: 1.55; }
+.coronary-report__caveat svg { flex: none; margin-top: 1px; color: #bc924d; }
+.coronary-report__caveat p { margin: 0; }
+.coronary-report__caveat strong { color: #73592d; }
+
+.coronary-report__workflow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 19px 0; }
+.coronary-report__workflow-step { position: relative; display: flex; min-height: 73px; align-items: center; gap: 10px; padding: 11px 15px; border: 1px solid var(--cr-line); border-radius: 8px; background: #fff; color: #69838c; text-align: left; box-shadow: 0 2px 8px #193e4a06; cursor: pointer; }
+.coronary-report__workflow-step:hover { border-color: #a7cdd2; background: #fafdfe; }
+.coronary-report__workflow-step.is-active { border-color: #51aaad; background: linear-gradient(110deg, #e9f7f5, #fff); box-shadow: 0 3px 16px #2c85871b; }
+.coronary-report__workflow-number { display: grid; width: 32px; height: 32px; flex: none; place-items: center; border: 1px solid #d7e4e6; border-radius: 50%; background: #f5f9f9; color: #7d9aa1; font-size: 10px; font-weight: 850; }
+.coronary-report__workflow-step.is-active .coronary-report__workflow-number { border-color: #28969e; background: #238c99; color: #fff; }
+.coronary-report__workflow-step.is-complete .coronary-report__workflow-number { border-color: #b8ded8; background: #e5f5f1; color: #378f80; }
+.coronary-report__workflow-copy { min-width: 0; }
+.coronary-report__workflow-copy strong { display: block; color: #385e6a; font-family: Manrope, Arial, sans-serif; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.coronary-report__workflow-step.is-active .coronary-report__workflow-copy strong { color: #1c7783; }
+.coronary-report__workflow-copy small { display: block; margin-top: 3px; color: #91a7ad; font-size: 8px; }
+.coronary-report__workflow-icon { margin-left: auto; flex: none; color: #9ab1b6; }
+.coronary-report__workflow-step.is-active .coronary-report__workflow-icon { color: #359298; }
+.coronary-report__workflow-arrow { position: absolute; z-index: 2; top: 50%; right: -14px; padding: 2px; border-radius: 50%; background: #eef3f4; color: #9cb6bb; transform: translateY(-50%); }
+
+.coronary-report__summary-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 15px; }
+.coronary-report__summary-card, .coronary-report__selected-card, .coronary-report__register-card, .coronary-report__report-card { overflow: hidden; border: 1px solid var(--cr-line); border-radius: 9px; background: #fff; box-shadow: 0 5px 20px #1537450b; }
+.coronary-report__summary-card, .coronary-report__selected-card { padding: 18px 19px; }
+.coronary-report__card-heading, .coronary-report__section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.coronary-report__card-heading > div, .coronary-report__section-heading > div { display: flex; min-width: 0; align-items: center; gap: 10px; }
+.coronary-report__heading-icon { display: grid; width: 31px; height: 31px; flex: none; place-items: center; border-radius: 7px; background: #e3f3f1; color: #348d8c; }
+.coronary-report__heading-icon.is-purple { background: #f0eafb; color: #8b68ae; }
+.coronary-report__heading-icon.is-orange { background: #fff0df; color: #b8783d; }
+.coronary-report__heading-icon.is-green { background: #e5f3ea; color: #458f68; }
+.coronary-report__card-heading small, .coronary-report__section-heading small, .coronary-report__report-card-top small { display: block; color: #9aaeb3; font-size: 8px; font-weight: 850; letter-spacing: 1.05px; }
+.coronary-report__card-heading strong, .coronary-report__section-heading strong, .coronary-report__report-card-top strong { display: block; margin-top: 3px; color: #315967; font-family: Manrope, Arial, sans-serif; font-size: 13px; font-weight: 800; }
+.coronary-report__status-pill, .coronary-report__selected-label, .coronary-report__section-meta, .coronary-report__report-state { flex: none; color: #5d9691; font-size: 8px; font-weight: 850; letter-spacing: .95px; }
+.coronary-report__status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 7px; border: 1px solid #cce5df; border-radius: 4px; background: #f2fbf8; }
+.coronary-report__status-pill i, .coronary-report__lesion-id i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #54b2a0; box-shadow: 0 0 0 3px #54b2a01e; }
+.coronary-report__summary-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 19px; padding: 13px 0; border-top: 1px solid #e7eff0; border-bottom: 1px solid #e7eff0; }
+.coronary-report__summary-stats span, .coronary-report__summary-stats small { display: block; color: #91a7ad; font-size: 8px; }
+.coronary-report__summary-stats strong { display: block; margin: 5px 0 2px; color: #315f6e; font-size: 14px; font-weight: 850; }
+.coronary-report__summary-stats small { font-size: 8px; }
+.coronary-report__input-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 13px; color: #6e8b94; font-size: 9px; line-height: 1.5; }
+.coronary-report__input-note svg { flex: none; color: #4a9d9a; }
+.coronary-report__input-note strong { color: #397c83; }
+.coronary-report__selected-card { background: linear-gradient(140deg, #fff 0, #f6fbfa 100%); }
+.coronary-report__selected-label { color: #925e9c; }
+.coronary-report__selected-location { margin: 15px 0 13px; color: #6f8b94; font-size: 10px; }
+.coronary-report__selected-location strong { color: #315c69; font-size: 12px; }
+.coronary-report__ratio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+.coronary-report__ratio-heading { display: flex; justify-content: space-between; gap: 5px; color: #8ca3a9; font-size: 8px; }
+.coronary-report__ratio-heading strong { color: #3d6973; font-size: 9px; }
+.coronary-report__ratio-track { height: 5px; overflow: hidden; margin-top: 6px; border-radius: 9px; background: #e7eff0; }
+.coronary-report__ratio-track span { display: block; height: 100%; border-radius: inherit; }
+.coronary-report__ratio-track .is-teal { background: #52b7ac; }
+.coronary-report__ratio-track .is-violet { background: #997fc4; }
+.coronary-report__ratio-track .is-gold { background: #d0a65d; }
+.coronary-report__selected-foot { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 17px; color: #879fa6; font-size: 9px; }
+.coronary-report__selected-foot strong { color: #486f79; }
+
+.coronary-report__main-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 15px; margin-top: 15px; }
+.coronary-report__register-card { padding: 19px; }
+.coronary-report__section-lead { margin: 11px 0 15px 41px; color: #829ba3; font-size: 10px; line-height: 1.55; }
+.coronary-report__section-meta { color: #9aaeb3; }
+.coronary-report__lesion-list { display: grid; gap: 7px; }
+.coronary-report__lesion-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) 95px 105px 18px; align-items: center; gap: 13px; width: 100%; min-height: 65px; padding: 9px 12px; border: 1px solid #e2ecee; border-radius: 7px; background: #fbfdfd; color: #6f8b94; text-align: left; cursor: pointer; transition: border-color .18s, background .18s, transform .18s; }
+.coronary-report__lesion-row:hover { border-color: #b3d7d6; background: #f5fbfa; transform: translateY(-1px); }
+.coronary-report__lesion-row.is-selected { border-color: #86c9c4; background: #eff9f6; box-shadow: inset 3px 0 #45a99e; }
+.coronary-report__lesion-id { display: inline-flex; align-items: center; gap: 7px; color: #518181; font-size: 10px; font-weight: 850; letter-spacing: .7px; }
+.coronary-report__lesion-row > span:not(.coronary-report__lesion-id) { min-width: 0; }
+.coronary-report__lesion-row span strong { display: block; color: #3c6875; font-size: 10px; font-weight: 850; }
+.coronary-report__lesion-row span small { display: block; margin-top: 3px; overflow: hidden; color: #93a8ae; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.coronary-report__lesion-severity strong { color: #9a668e !important; font-size: 13px !important; }
+.coronary-report__lesion-plaque strong { color: #4d7b78 !important; }
+.coronary-report__lesion-arrow { color: #9ab5b8; }
+.coronary-report__review-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 13px; padding: 10px 11px; border-radius: 6px; background: #f5f9f9; color: #78949b; font-size: 9px; line-height: 1.5; }
+.coronary-report__review-note svg { flex: none; color: #51a59d; }
+.coronary-report__review-note strong { color: #47777b; }
+
+.coronary-report__report-card { padding: 19px; background: #102f3c; color: #d7edeb; }
+.coronary-report__report-card-top { display: flex; align-items: center; gap: 10px; }
+.coronary-report__report-card-top > div { min-width: 0; }
+.coronary-report__report-card-top small { color: #80b7bc; }
+.coronary-report__report-card-top strong { color: #e1f4f0; }
+.coronary-report__report-card-top .coronary-report__report-state { margin-left: auto; padding: 5px 7px; border: 1px solid #6cc1b35c; border-radius: 4px; color: #91d9ce; }
+.coronary-report__report-card > p { margin: 17px 0 14px; color: #abc9ce; font-size: 10px; line-height: 1.6; }
+.coronary-report__report-preview { display: grid; gap: 8px; padding: 12px; border: 1px solid #6fbbc327; border-radius: 7px; background: #0b2935; }
+.coronary-report__report-preview div { display: flex; justify-content: space-between; gap: 12px; }
+.coronary-report__report-preview span { color: #79aab1; font-size: 8px; }
+.coronary-report__report-preview strong { max-width: 180px; overflow: hidden; color: #d3ece9; font-size: 8px; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.coronary-report__download { display: flex; width: 100%; min-height: 39px; align-items: center; justify-content: center; gap: 7px; margin-top: 14px; border: 1px solid #6ccbc0; border-radius: 5px; background: #55b4ae; color: #082c39; font-size: 10px; font-weight: 850; text-decoration:none; cursor: pointer; box-shadow: 0 2px 0 #287e80; }
+.coronary-report__download:hover { background: #6bc8c0; }
+.coronary-report__text-preview{margin-top:13px;border:1px solid #375767;border-radius:5px;background:#092c3a;color:#bfdbdc}.coronary-report__text-preview summary{padding:10px 12px;cursor:pointer;font-size:9px;font-weight:800}.coronary-report__text-preview summary:focus-visible{outline:3px solid #61bdb8;outline-offset:2px}.coronary-report__text-preview pre{overflow:auto;max-height:230px;margin:0;padding:12px;border-top:1px solid #375767;color:#cbe3e3;font:10px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.coronary-report__report-foot { display: flex; align-items: flex-start; gap: 6px; margin-top: 13px; color: #8fb9bd; font-size: 8px; line-height: 1.45; }
+.coronary-report__report-foot svg { flex: none; margin-top: 1px; color: #73c8b6; }
+.coronary-report__footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 20px 1px 0; color: #91a8ae; font-size: 9px; }
+.coronary-report__footer span { display: inline-flex; align-items: center; gap: 6px; }
+.coronary-report__footer svg { color: #4b9f96; }
+
+@media (max-width: 980px) {
+  .coronary-report__summary-grid, .coronary-report__main-grid { grid-template-columns: 1fr; }
+  .coronary-report__report-card { min-height: 0; }
+}
+
+@media (max-width: 760px) {
+  .coronary-report { padding: 22px 20px 36px; }
+  .coronary-report__hero { align-items: flex-start; padding: 25px; }
+  .coronary-report__hero-status { display: none; }
+  .coronary-report__workflow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .coronary-report__workflow-arrow { display: none; }
+  .coronary-report__lesion-row { grid-template-columns: 43px minmax(0, 1fr) 74px 18px; gap: 8px; }
+  .coronary-report__lesion-plaque { display: none; }
+}
+
+@media (max-width: 520px) {
+  .coronary-report { padding: 16px 13px 28px; }
+  .coronary-report__hero { min-height: 0; padding: 22px 19px; }
+  .coronary-report__hero h2 { font-size: 25px; letter-spacing: -.8px; }
+  .coronary-report__hero p { font-size: 11px; }
+  .coronary-report__caveat { font-size: 9px; }
+  .coronary-report__workflow { gap: 6px; margin: 12px 0; }
+  .coronary-report__workflow-step { min-height: 61px; gap: 7px; padding: 8px; }
+  .coronary-report__workflow-number { width: 26px; height: 26px; font-size: 8px; }
+  .coronary-report__workflow-copy strong { font-size: 9px; white-space: normal; }
+  .coronary-report__workflow-copy small { font-size: 7px; }
+  .coronary-report__workflow-icon { display: none; }
+  .coronary-report__summary-card, .coronary-report__selected-card, .coronary-report__register-card, .coronary-report__report-card { padding: 15px; }
+  .coronary-report__summary-stats { gap: 6px; }
+  .coronary-report__summary-stats strong { font-size: 12px; }
+  .coronary-report__summary-stats small { font-size: 7px; }
+  .coronary-report__ratio-grid { gap: 8px; }
+  .coronary-report__section-lead { margin-left: 0; }
+  .coronary-report__lesion-row { min-height: 60px; padding: 8px; }
+  .coronary-report__lesion-row span small { font-size: 7px; }
+  .coronary-report__footer { align-items: flex-start; flex-direction: column; gap: 7px; }
+}

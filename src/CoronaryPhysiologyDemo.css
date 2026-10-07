@@ -1,0 +1,713 @@
+.coronary-physiology-demo {
+  --coronary-ink: #173d4f;
+  --coronary-deep: #071d2a;
+  --coronary-teal: #6ad1c6;
+  --coronary-muted: #78929a;
+  --coronary-line: #d7e5e7;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 28px 28px 39px;
+  color: var(--coronary-ink);
+}
+
+.coronary-physiology-demo button,
+.coronary-physiology-demo a {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.coronary-physiology-demo button:focus-visible,
+.coronary-physiology-demo a:focus-visible {
+  outline: 3px solid #64beb9;
+  outline-offset: 3px;
+}
+
+.coronary-physiology-demo__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 176px;
+  padding: 30px 34px;
+  overflow: hidden;
+  border: 1px solid #185365;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 76% 12%, #2e7980 0, #144451 26%, transparent 61%),
+    linear-gradient(120deg, #092532 0%, #0a2c3b 58%, #113d4b 100%);
+  color: #fff;
+  box-shadow: 0 13px 32px #163d4b14;
+}
+
+.coronary-physiology-demo__header > div:first-child {
+  max-width: 830px;
+}
+
+.coronary-physiology-demo__eyebrow,
+.coronary-physiology-demo__section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #83d2cc;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.35px;
+  line-height: 1.3;
+}
+
+.coronary-physiology-demo__eyebrow > span,
+.coronary-physiology-demo__visual-head i {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: #6bd6c8;
+  box-shadow: 0 0 0 4px #6bd6c820;
+}
+
+.coronary-physiology-demo__header h2 {
+  margin: 12px 0 8px;
+  color: #f3ffff;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: clamp(25px, 3.1vw, 39px);
+  font-weight: 800;
+  letter-spacing: -1.35px;
+  line-height: 1.09;
+}
+
+.coronary-physiology-demo__header p {
+  max-width: 720px;
+  margin: 0;
+  color: #bbd4d8;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.coronary-physiology-demo__badge {
+  display: flex;
+  flex: 0 0 153px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 105px;
+  border-left: 1px solid #8bc4c53b;
+  color: #aee7df;
+}
+
+.coronary-physiology-demo__badge strong {
+  color: #dcf5ed;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 20px;
+  letter-spacing: .65px;
+}
+
+.coronary-physiology-demo__badge span {
+  padding: 6px 9px;
+  border: 1px solid #79d5cd65;
+  border-radius: 4px;
+  background: #68cfc715;
+  color: #9ee0d6;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.15px;
+}
+
+.coronary-physiology-demo__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 2px 0;
+  color: #6a8791;
+  font-size: 9.5px;
+  line-height: 1.55;
+}
+
+.coronary-physiology-demo__notice svg {
+  flex: none;
+  margin-top: 1px;
+  color: #4c9da0;
+}
+
+.coronary-physiology-demo__notice p {
+  margin: 0;
+}
+
+.coronary-physiology-demo__notice strong {
+  color: #3a6a75;
+}
+
+.coronary-physiology-demo__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 333px;
+  gap: 15px;
+  align-items: stretch;
+  margin-top: 18px;
+}
+
+.coronary-physiology-demo__visual-card,
+.coronary-physiology-demo__side {
+  overflow: hidden;
+  border: 1px solid var(--coronary-line);
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 6px 20px #1537450b;
+}
+
+.coronary-physiology-demo__visual-card {
+  min-width: 0;
+}
+
+.coronary-physiology-demo__visual-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 50px;
+  padding: 0 17px;
+  border-bottom: 1px solid #e0ebed;
+  color: #6e8b94;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .65px;
+}
+
+.coronary-physiology-demo__visual-head > span {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__visual-head > span:last-child {
+  color: #91a9af;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.coronary-physiology-demo__visual-head > span:last-child svg {
+  color: #49a6a6;
+}
+
+.coronary-physiology-demo__canvas-wrap {
+  position: relative;
+  height: 510px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 48% 50%, #123c4c 0, #0b2d3b 38%, transparent 75%),
+    #071d2a;
+}
+
+.coronary-physiology-demo__canvas-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.coronary-physiology-demo__canvas-wrap::before,
+.coronary-physiology-demo__canvas-wrap::after {
+  position: absolute;
+  left: 50%;
+  width: 72%;
+  height: 1px;
+  transform: translateX(-50%);
+  background: #73c3c126;
+  content: '';
+  pointer-events: none;
+}
+
+.coronary-physiology-demo__canvas-wrap::before {
+  top: 28%;
+}
+
+.coronary-physiology-demo__canvas-wrap::after {
+  bottom: 24%;
+}
+
+.coronary-physiology-demo__canvas-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid #73b7bc34;
+  border-radius: 4px;
+  background: #061b28bb;
+  color: #8bb9bd;
+  font-size: 8px;
+  pointer-events: none;
+}
+
+.coronary-physiology-demo__canvas-hint svg {
+  color: #6bd2c7;
+}
+
+.coronary-physiology-demo__legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 13px 17px;
+  border-top: 1px solid #1a4452;
+  background: #092532;
+  color: #8fb1b5;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.coronary-physiology-demo__legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coronary-physiology-demo__legend-title {
+  color: #67c7c0;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+.coronary-physiology-demo__legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #ffffff0b;
+}
+
+.coronary-physiology-demo__side {
+  display: flex;
+  flex-direction: column;
+}
+
+.coronary-physiology-demo__side-section {
+  padding: 17px 17px 16px;
+  border-bottom: 1px solid #e4edef;
+}
+
+.coronary-physiology-demo__side-section:last-child {
+  border-bottom: 0;
+}
+
+.coronary-physiology-demo__section-kicker {
+  color: #45969b;
+  font-size: 8px;
+  letter-spacing: 1.15px;
+}
+
+.coronary-physiology-demo__selected-card {
+  background: linear-gradient(140deg, #f8fcfc, #edf7f6);
+}
+
+.coronary-physiology-demo__selected-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 13px;
+}
+
+.coronary-physiology-demo__selected-title > div {
+  min-width: 0;
+}
+
+.coronary-physiology-demo__selected-title span {
+  display: block;
+  color: #24878e;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .7px;
+}
+
+.coronary-physiology-demo__selected-title strong {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #315867;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__selected-title > b {
+  padding: 6px 7px;
+  border-radius: 4px;
+  background: #edc17525;
+  color: #c87b4e;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__ratio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.coronary-physiology-demo__ratio-grid > div,
+.coronary-physiology-demo__detail-grid > div {
+  padding: 10px 9px;
+  border: 1px solid #d9e8e8;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.coronary-physiology-demo__ratio-grid span,
+.coronary-physiology-demo__detail-grid span {
+  display: block;
+  color: #8ba4a9;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: .6px;
+}
+
+.coronary-physiology-demo__ratio-grid strong {
+  display: block;
+  margin-top: 4px;
+  color: #3b7780;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 19px;
+  letter-spacing: -.5px;
+}
+
+.coronary-physiology-demo__ratio-grid small,
+.coronary-physiology-demo__detail-grid small {
+  display: block;
+  margin-top: 2px;
+  color: #99adb1;
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.coronary-physiology-demo__microcopy {
+  margin: 10px 0 0;
+  color: #7b959c;
+  font-size: 8.5px;
+  line-height: 1.45;
+}
+
+.coronary-physiology-demo__lesion-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.coronary-physiology-demo__lesion-list button {
+  display: grid;
+  grid-template-columns: 27px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 9px 8px;
+  border: 1px solid #e0eaec;
+  border-radius: 5px;
+  background: #fff;
+  color: #3c6672;
+  text-align: left;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+
+.coronary-physiology-demo__lesion-list button:hover {
+  border-color: #a7d3d1;
+  background: #f4fbfa;
+  transform: translateY(-1px);
+}
+
+.coronary-physiology-demo__lesion-list button.is-selected {
+  border-color: #70bdb9;
+  background: #edf8f6;
+  box-shadow: inset 3px 0 #47a4a2;
+}
+
+.coronary-physiology-demo__rank {
+  color: #9bb0b5;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .7px;
+}
+
+.coronary-physiology-demo__lesion-copy {
+  display: block;
+  min-width: 0;
+}
+
+.coronary-physiology-demo__lesion-copy strong,
+.coronary-physiology-demo__lesion-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__lesion-copy strong {
+  color: #3b6874;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.coronary-physiology-demo__lesion-copy small {
+  margin-top: 3px;
+  color: #93a8ad;
+  font-size: 8px;
+}
+
+.coronary-physiology-demo__lesion-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coronary-physiology-demo__lesion-value b {
+  color: #ca8056;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__lesion-value i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.coronary-physiology-demo__detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.coronary-physiology-demo__detail-grid strong {
+  display: block;
+  margin-top: 4px;
+  color: #3d6f78;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.coronary-physiology-demo__plan-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  background: #fbfcfc;
+}
+
+.coronary-physiology-demo__plan-card > div {
+  min-width: 0;
+}
+
+.coronary-physiology-demo__plan-card span,
+.coronary-physiology-demo__plan-card strong,
+.coronary-physiology-demo__plan-card small {
+  display: block;
+}
+
+.coronary-physiology-demo__plan-card span {
+  color: #90a7ac;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: .7px;
+}
+
+.coronary-physiology-demo__plan-card strong {
+  margin-top: 5px;
+  color: #3d6e78;
+  font-size: 10px;
+}
+
+.coronary-physiology-demo__plan-card small {
+  margin-top: 3px;
+  overflow: hidden;
+  color: #96a9ae;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__plan-card button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #bcd8d7;
+  border-radius: 4px;
+  background: #fff;
+  color: #438a8c;
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.coronary-physiology-demo__plan-card button:hover {
+  border-color: #75b8b4;
+  background: #eff9f7;
+}
+
+.coronary-physiology-demo__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px 1px 0;
+  color: #91a7ad;
+  font-size: 8px;
+}
+
+.coronary-physiology-demo__footer > span {
+  font-weight: 850;
+  letter-spacing: .7px;
+}
+
+.coronary-physiology-demo__footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #348b92;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.coronary-physiology-demo__footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1080px) {
+  .coronary-physiology-demo__workspace {
+    grid-template-columns: minmax(0, 1fr) 305px;
+  }
+
+  .coronary-physiology-demo__canvas-wrap {
+    height: 480px;
+  }
+}
+
+@media (max-width: 870px) {
+  .coronary-physiology-demo__header {
+    padding: 26px;
+  }
+
+  .coronary-physiology-demo__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .coronary-physiology-demo__side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .coronary-physiology-demo__selected-card {
+    grid-row: span 2;
+  }
+
+  .coronary-physiology-demo__detail-grid {
+    grid-column: 2;
+  }
+
+  .coronary-physiology-demo__plan-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .coronary-physiology-demo {
+    padding: 18px 13px 28px;
+  }
+
+  .coronary-physiology-demo__header {
+    display: block;
+    min-height: 0;
+    padding: 22px 20px;
+  }
+
+  .coronary-physiology-demo__header h2 {
+    font-size: 24px;
+    letter-spacing: -.7px;
+  }
+
+  .coronary-physiology-demo__header p {
+    font-size: 11px;
+  }
+
+  .coronary-physiology-demo__badge {
+    display: inline-flex;
+    flex-direction: row;
+    min-height: 0;
+    margin-top: 17px;
+    padding-top: 13px;
+    border-top: 1px solid #8bc4c53b;
+    border-left: 0;
+  }
+
+  .coronary-physiology-demo__badge strong {
+    font-size: 16px;
+  }
+
+  .coronary-physiology-demo__workspace {
+    margin-top: 14px;
+  }
+
+  .coronary-physiology-demo__visual-head {
+    min-height: 46px;
+    padding: 0 11px;
+    font-size: 8px;
+  }
+
+  .coronary-physiology-demo__visual-head > span:last-child {
+    display: none;
+  }
+
+  .coronary-physiology-demo__canvas-wrap {
+    height: min(111vw, 420px);
+  }
+
+  .coronary-physiology-demo__canvas-hint {
+    right: 8px;
+    bottom: 8px;
+    font-size: 7px;
+  }
+
+  .coronary-physiology-demo__legend {
+    gap: 8px 12px;
+    padding: 11px;
+    font-size: 7px;
+  }
+
+  .coronary-physiology-demo__side {
+    display: block;
+  }
+
+  .coronary-physiology-demo__side-section {
+    padding: 15px 13px;
+  }
+
+  .coronary-physiology-demo__selected-card {
+    grid-row: auto;
+  }
+
+  .coronary-physiology-demo__detail-grid,
+  .coronary-physiology-demo__plan-card {
+    grid-column: auto;
+  }
+
+  .coronary-physiology-demo__footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coronary-physiology-demo__lesion-list button {
+    transition: none;
+  }
+}

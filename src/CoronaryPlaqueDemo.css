@@ -1,0 +1,115 @@
+.coronary-plaque {
+  --plaque-ink: #153b4d;
+  --plaque-border: #d6e5e7;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 30px 28px 42px;
+  color: var(--plaque-ink);
+}
+
+.coronary-plaque button,
+.coronary-plaque a { font: inherit; -webkit-tap-highlight-color: transparent; }
+.coronary-plaque button:focus-visible { outline: 3px solid #68c9c2; outline-offset: 3px; }
+.coronary-plaque__hero { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 218px; overflow: hidden; padding: 33px 39px; border: 1px solid #175264; border-radius: 13px; background: radial-gradient(circle at 78% 16%, #3d6d80 0, #173e52 34%, transparent 58%), linear-gradient(126deg, #092532 0%, #0a2c3a 55%, #163a51 100%); color: #fff; box-shadow: 0 15px 33px #153b4917; }
+.coronary-plaque__hero::before, .coronary-plaque__hero::after { position: absolute; right: -150px; bottom: -300px; width: 580px; height: 580px; border: 1px solid #7bd1ca30; border-radius: 50%; content: ''; pointer-events: none; }
+.coronary-plaque__hero::after { right: -25px; bottom: -195px; width: 370px; height: 370px; border-color: #9da8d637; }
+.coronary-plaque__hero > div:first-child { position: relative; z-index: 1; max-width: 760px; }
+.coronary-plaque__eyebrow { display: flex; align-items: center; gap: 7px; color: #a4cbd8; font-size: 9px; font-weight: 850; letter-spacing: 1.45px; line-height: 1.25; }
+.coronary-plaque__eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: #a18ac5; box-shadow: 0 0 0 4px #a18ac520; }
+.coronary-plaque__hero h2 { max-width: 700px; margin: 14px 0 9px; color: #f6ffff; font-family: Manrope, Arial, sans-serif; font-size: clamp(27px, 3.15vw, 42px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.08; }
+.coronary-plaque__hero p { max-width: 645px; margin: 0; color: #c0d4dd; font-size: 12px; line-height: 1.7; }
+.coronary-plaque__hero-mark { position: relative; z-index: 1; display: flex; flex: 0 0 125px; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 128px; border-left: 1px solid #9ebad03d; color: #c2b2e2; }
+.coronary-plaque__hero-mark span { color: #d9d7ec; font-size: 9px; font-weight: 850; letter-spacing: 2.5px; line-height: 1.7; text-align: center; }
+.coronary-plaque__notice { display: flex; align-items: flex-start; gap: 8px; margin: 12px 2px 0; color: #6c8992; font-size: 9px; line-height: 1.55; }
+.coronary-plaque__notice svg { flex: none; margin-top: 1px; color: #4d9ca3; }
+.coronary-plaque__notice strong { color: #4d737d; }
+.coronary-plaque__selector { display: flex; gap: 7px; margin-top: 15px; }
+.coronary-plaque__selector button { display: flex; align-items: center; gap: 7px; min-height: 36px; padding: 0 12px; border: 1px solid #d6e5e7; border-radius: 5px; background: #fff; color: #728e97; cursor: pointer; font-size: 9px; }
+.coronary-plaque__selector button:hover { border-color: #9acbc7; background: #f2faf8; }
+.coronary-plaque__selector button.is-selected { border-color: #80bdbb; background: #eaf7f4; color: #287d7d; box-shadow: 0 3px 10px #368f8f13; }
+.coronary-plaque__selector button span { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: #e9f0f1; color: #64838d; font-size: 8px; font-weight: 850; }
+.coronary-plaque__selector button.is-selected span { background: #318f90; color: #fff; }
+.coronary-plaque__selector button strong { font-size: 10px; }
+.coronary-plaque__selector button small { color: #b18d61; font-size: 9px; font-weight: 800; }
+.coronary-plaque__workspace { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 15px; align-items: start; margin-top: 12px; }
+.coronary-plaque__visual-column { display: flex; min-width: 0; flex-direction: column; gap: 15px; }
+.coronary-plaque__visual-card, .coronary-plaque__section-card, .coronary-plaque__controls { overflow: hidden; border: 1px solid var(--plaque-border); border-radius: 9px; background: #fff; box-shadow: 0 5px 19px #1537450b; }
+.coronary-plaque__card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 50px; padding: 0 17px; border-bottom: 1px solid #dfeaec; color: #355d69; font-size: 9px; letter-spacing: .75px; }
+.coronary-plaque__card-head > span { display: flex; align-items: center; gap: 7px; }
+.coronary-plaque__card-head small { color: #9caeb3; font-size: 8px; letter-spacing: 0; }
+.coronary-plaque__live-dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: #a18ac5; box-shadow: 0 0 0 3px #a18ac525; }
+.coronary-plaque__longitudinal-wrap { padding: 13px; background: #102b37; }
+.coronary-plaque__longitudinal { display: block; width: 100%; height: auto; }
+.coronary-plaque__vessel-grid line { stroke: #6db8be12; stroke-width: 1; stroke-dasharray: 2 7; }
+.coronary-plaque__vessel-kicker { fill: #76aab0; font-size: 8px; font-weight: 850; letter-spacing: 1.1px; }
+.coronary-plaque__vessel-label { fill: #ffdb9c; font-size: 9px; font-weight: 850; letter-spacing: .5px; }
+.coronary-plaque__vessel-end-label { fill: #73a3ab; font-size: 8px; font-weight: 800; letter-spacing: 1px; }
+.coronary-plaque__longitudinal-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; padding: 10px 15px; background: #0d2733; color: #7da5ab; font-size: 8px; }
+.coronary-plaque__longitudinal-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.coronary-plaque__longitudinal-legend i { display: block; width: 18px; height: 4px; border-radius: 5px; }
+.coronary-plaque__longitudinal-legend i.is-wall { background: #5fb7b4; }
+.coronary-plaque__longitudinal-legend i.is-noncalcified { background: #72c8bd; }
+.coronary-plaque__longitudinal-legend i.is-calcified { background: #e6b36f; }
+.coronary-plaque__longitudinal-legend i.is-low { background: #c696bd; }
+.coronary-plaque__section-card { padding-bottom: 11px; }
+.coronary-plaque__section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 17px 17px 6px; }
+.coronary-plaque__section-kicker { display: flex; align-items: center; gap: 6px; color: #3e9698; font-size: 8px; font-weight: 850; letter-spacing: 1.1px; }
+.coronary-plaque__section-head h3 { margin: 7px 0 0; color: #315a67; font-family: Manrope, Arial, sans-serif; font-size: 16px; letter-spacing: -.4px; }
+.coronary-plaque__linked-label { display: inline-flex; align-items: center; gap: 5px; margin-top: 2px; color: #9b82b7; font-size: 8px; font-weight: 800; letter-spacing: .7px; }
+.coronary-plaque__cross-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; padding: 6px 12px 0; }
+.coronary-plaque__cross-card { overflow: hidden; border: 1px solid #e2ebed; border-radius: 7px; background: #f9fbfb; }
+.coronary-plaque__cross-card.is-selected { border-color: #d4a274; background: #fffaf3; box-shadow: 0 3px 12px #bf8a4218; }
+.coronary-plaque__cross-head { display: flex; align-items: center; justify-content: space-between; gap: 5px; padding: 8px 9px; border-bottom: 1px solid #e6edef; color: #52727c; font-size: 9px; font-weight: 800; }
+.coronary-plaque__cross-card.is-selected .coronary-plaque__cross-head { color: #9b6d42; }
+.coronary-plaque__cross-head small { color: #a3b3b6; font-size: 7px; font-weight: 600; }
+.coronary-plaque__cross-svg { display: block; width: 100%; height: auto; padding: 5px; background: #0e2d3a; }
+.coronary-plaque__cross-axis { fill: #83aab0; font-size: 7px; font-weight: 800; letter-spacing: .7px; }
+.coronary-plaque__cross-foot { display: flex; align-items: center; justify-content: space-between; gap: 5px; padding: 8px 9px; color: #829ca3; font-size: 7px; }
+.coronary-plaque__cross-foot span { display: inline-flex; align-items: center; gap: 5px; }
+.coronary-plaque__cross-foot i { width: 6px; height: 6px; border-radius: 50%; background: #8eafb5; }
+.coronary-plaque__cross-foot i.is-lesion { background: #e2a66c; box-shadow: 0 0 0 3px #e2a66c20; }
+.coronary-plaque__cross-foot strong { color: #668690; font-weight: 800; }
+.coronary-plaque__controls { padding: 20px 18px; }
+.coronary-plaque__panel-kicker { display: flex; align-items: center; gap: 7px; color: #3e9698; font-size: 8px; font-weight: 850; letter-spacing: 1.2px; }
+.coronary-plaque__selected-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-top: 15px; }
+.coronary-plaque__selected-heading > div { display: flex; align-items: center; gap: 8px; }
+.coronary-plaque__selected-heading h3 { margin: 0; color: #245163; font-family: Manrope, Arial, sans-serif; font-size: 18px; letter-spacing: -.4px; }
+.coronary-plaque__selected-heading small { max-width: 100px; color: #95a9ae; font-size: 8px; line-height: 1.35; text-align: right; }
+.coronary-plaque__selected-dot { width: 10px; height: 10px; flex: none; border-radius: 50%; background: #9d84ba; box-shadow: 0 0 0 4px #9d84ba1e; }
+.coronary-plaque__total-card { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 13px; padding: 10px 9px 10px 12px; border: 1px solid #e4e7ed; border-radius: 7px; background: linear-gradient(120deg, #fafbfd, #f5f1f9); }
+.coronary-plaque__total-card > div { display: flex; flex-direction: column; gap: 3px; }
+.coronary-plaque__total-card span { color: #7e7791; font-size: 7px; font-weight: 850; letter-spacing: .8px; }
+.coronary-plaque__total-card strong { color: #4b536f; font-size: 21px; font-weight: 850; letter-spacing: -.5px; }
+.coronary-plaque__total-card small { color: #9ea6ae; font-size: 7px; }
+.coronary-plaque__ring { width: 105px; height: 105px; flex: none; }
+.coronary-plaque__ring-overline { fill: #a2aab2; font-size: 7px; font-weight: 850; letter-spacing: 1px; }
+.coronary-plaque__ring-value { fill: #4b536f; font-size: 22px; font-weight: 850; }
+.coronary-plaque__ring-unit { fill: #a2aab2; font-size: 7px; font-weight: 800; letter-spacing: .4px; }
+.coronary-plaque__composition-list { margin-top: 15px; padding: 12px 0; border-top: 1px solid #e5edef; border-bottom: 1px solid #e5edef; }
+.coronary-plaque__composition-row + .coronary-plaque__composition-row { margin-top: 10px; }
+.coronary-plaque__composition-row > div { display: flex; align-items: center; justify-content: space-between; gap: 7px; color: #6d8991; font-size: 9px; }
+.coronary-plaque__composition-row > div span { display: inline-flex; align-items: center; gap: 6px; }
+.coronary-plaque__composition-row > div i { width: 7px; height: 7px; border-radius: 2px; }
+.coronary-plaque__composition-row strong { color: #506f79; font-size: 9px; }
+.coronary-plaque__composition-track { display: block; height: 5px; margin-top: 5px; overflow: hidden; border-radius: 5px; background: #edf2f3; }
+.coronary-plaque__composition-track i { display: block; height: 100%; border-radius: inherit; }
+.coronary-plaque__composition-row small { display: block; margin-top: 3px; color: #a0afb3; font-size: 7px; }
+.coronary-plaque__stage-card { margin-top: 13px; padding: 11px 12px; border: 1px solid #d8e8e8; border-radius: 7px; }
+.coronary-plaque__stage-card.is-teal { border-color: #b8deda; background: #f0f9f7; }
+.coronary-plaque__stage-card.is-amber { border-color: #ecd8b8; background: #fff8eb; }
+.coronary-plaque__stage-card.is-violet { border-color: #ded2e6; background: #f9f4fb; }
+.coronary-plaque__stage-heading { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; color: #679096; font-size: 8px; font-weight: 850; letter-spacing: .9px; }
+.is-amber .coronary-plaque__stage-heading { color: #ad8246; }
+.is-violet .coronary-plaque__stage-heading { color: #8e6ca4; }
+.coronary-plaque__stage-card > strong { display: block; color: #41777a; font-size: 10px; line-height: 1.4; }
+.is-amber > strong { color: #946d39; }
+.is-violet > strong { color: #77538e; }
+.coronary-plaque__stage-card > small { display: block; margin-top: 4px; color: #91a7a9; font-size: 7px; }
+.coronary-plaque__case-total { display: flex; justify-content: space-between; gap: 8px; margin-top: 13px; padding-top: 12px; border-top: 1px solid #e7eef0; color: #91a6ad; font-size: 8px; }
+.coronary-plaque__case-total strong { color: #587580; font-size: 10px; }
+.coronary-plaque__footer { display: flex; align-items: flex-start; gap: 8px; margin-top: 15px; color: #98acb1; font-size: 9px; line-height: 1.5; }
+.coronary-plaque__footer svg { flex: none; margin-top: 1px; color: #7394a0; }
+
+@media (max-width: 1120px) { .coronary-plaque__workspace { grid-template-columns: minmax(0, 1fr) 300px; } .coronary-plaque__cross-head { display: block; } .coronary-plaque__cross-head small { display: block; margin-top: 2px; } }
+@media (max-width: 900px) { .coronary-plaque { padding: 24px 20px 35px; } .coronary-plaque__workspace { grid-template-columns: 1fr; } .coronary-plaque__controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0 17px; } .coronary-plaque__panel-kicker, .coronary-plaque__selected-heading, .coronary-plaque__total-card, .coronary-plaque__composition-list, .coronary-plaque__stage-card, .coronary-plaque__case-total { grid-column: 1 / -1; } .coronary-plaque__total-card { align-items: center; } }
+@media (max-width: 620px) { .coronary-plaque { padding: 18px 13px 29px; } .coronary-plaque__hero { min-height: 0; padding: 23px 20px; } .coronary-plaque__hero h2 { font-size: 25px; letter-spacing: -.8px; } .coronary-plaque__hero p { font-size: 11px; } .coronary-plaque__hero-mark { display: none; } .coronary-plaque__notice { font-size: 8px; } .coronary-plaque__selector { overflow-x: auto; padding-bottom: 3px; } .coronary-plaque__selector button { flex: 0 0 auto; } .coronary-plaque__card-head { min-height: 44px; padding: 0 11px; font-size: 8px; } .coronary-plaque__card-head small { font-size: 7px; } .coronary-plaque__longitudinal-wrap { padding: 7px; } .coronary-plaque__longitudinal-legend { gap: 8px 12px; padding: 8px 10px; font-size: 7px; } .coronary-plaque__section-head { padding: 15px 12px 5px; } .coronary-plaque__section-head h3 { font-size: 14px; } .coronary-plaque__linked-label { font-size: 7px; } .coronary-plaque__cross-grid { grid-template-columns: 1fr; gap: 7px; padding: 6px 8px 0; } .coronary-plaque__cross-card { display: grid; grid-template-columns: 100px 1fr; grid-template-rows: auto auto; } .coronary-plaque__cross-head { grid-column: 1 / -1; display: flex; } .coronary-plaque__cross-svg { width: 100px; grid-row: 2; } .coronary-plaque__cross-foot { grid-row: 2; align-self: center; flex-direction: column; align-items: flex-start; padding: 9px; } .coronary-plaque__controls { display: block; padding: 17px 14px; } .coronary-plaque__selected-heading h3 { font-size: 16px; } .coronary-plaque__total-card strong { font-size: 19px; } .coronary-plaque__footer { font-size: 8px; } }

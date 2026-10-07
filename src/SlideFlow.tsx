@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import MRViewer from './MRViewer'
 import SlideLab from './SlideLab'
+import CoronarySuite from './CoronarySuite'
 import './SlideFlow.css'
 
 const SurfaceViewer = lazy(() => import('./SurfaceViewer'))
@@ -401,15 +402,16 @@ export default function SlideFlow() {
         <div className="slide-flow__hero-copy">
           <div className="slide-flow__hero-kicker"><span /> FLOW NGHIÊN CỨU DÒNG CHẢY</div>
           <h1>Từ ảnh lâm sàng đến mô hình dòng chảy có thể kiểm tra</h1>
-          <p>Dùng asset của ca để đi qua một flow lấy cảm hứng tương tác từ HeartFlow: rà soát ảnh, xem mô hình, đặt câu hỏi về phương án thay thế và xác định phép đo cần có để kiểm tra.</p>
+          <p>Duyệt ảnh, mô hình và video của ca động mạch chủ 0225, rồi khám phá một ca mạch vành giả lập riêng để xem các kiểu tương tác trong hành trình phân tích.</p>
           <div className="slide-flow__hero-actions">
             <button type="button" onClick={() => selectStep(0)}>Mở flow của ca <ArrowRight size={15} /></button>
             <a className="slide-flow__lab-cta" href="#slide-lab">Khám phá mô phỏng <ArrowRight size={15} /></a>
+            <a className="slide-flow__lab-cta" href="#coronary-suite">Xem mạch vành giả lập <ArrowRight size={15} /></a>
             <a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">Trang tham khảo tương tác: HeartFlow FFRCT <ExternalLink size={13} /></a>
           </div>
         </div>
         <div className="slide-flow__hero-case">
-          <span>CA ĐANG CHỌN</span>
+          <span>CA NGUỒN</span>
           <strong>0225</strong>
           <small>MR · ĐỘNG MẠCH CHỦ / COA</small>
           <div className="slide-flow__hero-divider" />
@@ -417,7 +419,7 @@ export default function SlideFlow() {
         </div>
       </section>
 
-      <div className="slide-flow__disclosure"><Info size={14} /><span>Flow showcase nguyên bản. HeartFlow chỉ là trang tham khảo tương tác. Ca đang chọn là dữ liệu MR động mạch chủ, không có FFRCT mạch vành hoặc tuyên bố hiệu năng lâm sàng.</span></div>
+      <div className="slide-flow__disclosure"><Info size={14} /><span>Ca nguồn 0225 là MR động mạch chủ. Khu mạch vành phía dưới là ca giả lập độc lập để showcase giao diện; không có FFR₍CT₎ được tính cho bệnh nhân. HeartFlow chỉ là tham khảo kiểu tương tác.</span></div>
 
       <StepRail activeStep={activeStep} onSelect={selectStep} />
 
@@ -439,11 +441,13 @@ export default function SlideFlow() {
 
       <SlideLab />
 
+      <CoronarySuite />
+
       <Roadmap />
 
       <section className="slide-flow__sources" aria-label="Provenance and scope">
         <div><span className="slide-flow__eyebrow"><ShieldCheck size={13} /> NGUỒN VÀ PHẠM VI</span><h2>Mỗi lớp dữ liệu có một ranh giới bằng chứng riêng</h2></div>
-        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Nghiên cứu tham khảo</strong> Các hướng ứng dụng có liên kết đến bài báo gốc trong từng ví dụ; hình minh họa tương tác được dựng mới.</p><p><strong>Kiểm chứng</strong> Showcase chỉ ra phép đối chiếu còn thiếu. Các ví dụ nghiên cứu không trở thành tuyên bố theo bệnh nhân.</p></div>
+        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Ca SIM-COR-01</strong> Hình học và toàn bộ chỉ số mạch vành được tạo để minh họa tương tác; không xuất phát từ ảnh CCTA hoặc kết quả bệnh nhân.</p><p><strong>Kiểm chứng</strong> Video CFD ca 0225 chưa có phép đối chiếu tương ứng; khu mạch vành giả lập không đưa ra kết luận lâm sàng.</p></div>
       </section>
     </div>
   )

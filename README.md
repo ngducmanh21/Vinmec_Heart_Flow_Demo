@@ -20,6 +20,12 @@ Khu tương tác riêng đi từ ảnh nguồn đến mô hình và các câu h�
 
 Ảnh MR và bề mặt P001 thuộc cùng ca nhưng demo **không xác nhận căn chỉnh không gian giữa hai file**, nên không phủ mask lên ảnh. Pin trên P001 chỉ trả tọa độ của mô hình đã chuẩn hóa, không trả áp lực hay FFRCT tại điểm. Đường dòng trong video không phải các hạt máu được theo dõi. Kết quả CFD là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý, không phải đánh giá lâm sàng hay khuyến nghị điều trị. Asset ca 0225 hiện chứng minh được áp lực và vận tốc, chưa có bảng branch-flow riêng.
 
+## Ca mạch vành giả lập SIM-COR-01
+
+Khu `#coronary-suite` là một showcase **hoàn toàn giả lập** và tách khỏi ca 0225. Nó đi qua năm góc xem: cây mạch vành 3D với màu và pin minh họa sinh lý, bản đồ nhiều tổn thương, mảng bám và mặt cắt, lập kế hoạch PCI ảo, cùng báo cáo demo tải cục bộ. Các tổn thương và giá trị dùng chung từ `src/coronaryDemoData.ts`, để lựa chọn ở một góc xem được giữ khi chuyển sang góc khác.
+
+Không có ảnh CCTA, kết quả solver FFR_CT, phép đo mảng bám hay tích hợp PACS/EMR thật trong khu này. Các tỷ lệ, độ hẹp, thể tích và thông số kế hoạch đều được đặt sẵn để trình diễn giao diện, không dùng cho bệnh nhân, chẩn đoán hoặc quyết định điều trị. Tài liệu tham khảo về nhóm tính năng: [FFR_CT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/), [Roadmap](https://www.heartflow.com/heartflow-one/roadmap/), [Plaque Analysis](https://www.heartflow.com/heartflow-one/plaque/), [Plaque Staging](https://www.heartflow.com/heartflow-one/plaque-staging/) và [PCI Navigator](https://www.heartflow.com/heartflow-one/pci-navigator/).
+
 ## Chạy cục bộ
 
 ```bash

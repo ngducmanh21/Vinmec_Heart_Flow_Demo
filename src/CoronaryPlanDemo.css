@@ -1,0 +1,716 @@
+.coronary-plan {
+  --cp-ink: #173e4e;
+  --cp-deep: #082631;
+  --cp-panel: #0c2d3b;
+  --cp-teal: #63c9c1;
+  --cp-cyan: #78d3d6;
+  --cp-gold: #e9b66c;
+  --cp-muted: #78939b;
+  --cp-line: #d7e6e8;
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  padding: 30px 28px 40px;
+  color: var(--cp-ink);
+}
+
+.coronary-plan button,
+.coronary-plan input {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.coronary-plan button:focus-visible,
+.coronary-plan input:focus-visible {
+  outline: 3px solid #55b9bb;
+  outline-offset: 3px;
+}
+
+.coronary-plan__hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 205px;
+  overflow: hidden;
+  padding: 30px 38px;
+  border: 1px solid #185464;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 79% 18%, #2f737a 0, #123e4c 31%, transparent 61%),
+    linear-gradient(125deg, #082530 0%, #0a2c3a 54%, #123f4d 100%);
+  color: #fff;
+  box-shadow: 0 15px 33px #153b4917;
+}
+
+.coronary-plan__hero::before,
+.coronary-plan__hero::after {
+  position: absolute;
+  right: -144px;
+  bottom: -320px;
+  width: 600px;
+  height: 600px;
+  border: 1px solid #7bd1ca32;
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.coronary-plan__hero::after {
+  right: 8px;
+  bottom: -205px;
+  width: 375px;
+  height: 375px;
+  border-color: #7bd1ca3a;
+}
+
+.coronary-plan__hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.coronary-plan__eyebrow,
+.coronary-plan__panel-label,
+.coronary-plan__rail-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #7ed0cb;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.45px;
+  line-height: 1.25;
+}
+
+.coronary-plan__eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6bd8cb;
+  box-shadow: 0 0 0 4px #6bd8cb20;
+}
+
+.coronary-plan__hero h2 {
+  max-width: 720px;
+  margin: 14px 0 9px;
+  color: #f6ffff;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 800;
+  letter-spacing: -1.55px;
+  line-height: 1.08;
+}
+
+.coronary-plan__hero p {
+  max-width: 650px;
+  margin: 0;
+  color: #b9d1d6;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.coronary-plan__synthetic-badge {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 155px;
+  align-items: center;
+  gap: 10px;
+  min-height: 65px;
+  padding: 11px 13px;
+  border: 1px solid #9bded24a;
+  border-radius: 8px;
+  background: #76c9c714;
+  color: #87ded0;
+}
+
+.coronary-plan__synthetic-badge span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coronary-plan__synthetic-badge b {
+  color: #ecfffa;
+  font-size: 11px;
+  letter-spacing: .8px;
+}
+
+.coronary-plan__synthetic-badge small {
+  color: #a6d6d4;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.coronary-plan__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 2px 0;
+  color: #68868e;
+  font-size: 9.5px;
+  line-height: 1.6;
+}
+
+.coronary-plan__notice svg {
+  flex: none;
+  margin-top: 1px;
+  color: #429aa2;
+}
+
+.coronary-plan__notice strong {
+  color: #3d6d77;
+  font-weight: 850;
+}
+
+.coronary-plan__lesion-rail {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px;
+  border: 1px solid var(--cp-line);
+  border-radius: 8px;
+  background: #f9fbfb;
+}
+
+.coronary-plan__rail-label {
+  flex: 0 0 auto;
+  padding: 0 10px 0 4px;
+  color: #6c8992;
+}
+
+.coronary-plan__lesion-tab {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 51px;
+  padding: 7px 10px;
+  border: 1px solid #dce8e9;
+  border-radius: 6px;
+  background: #fff;
+  color: #5c7b84;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.coronary-plan__lesion-tab:hover {
+  border-color: #9acbcd;
+  background: #f5fcfb;
+  transform: translateY(-1px);
+}
+
+.coronary-plan__lesion-tab.is-active {
+  border-color: #56b1ae;
+  background: #eaf8f5;
+  box-shadow: 0 3px 11px #287f7d12;
+}
+
+.coronary-plan__lesion-id {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  flex: none;
+  place-items: center;
+  border: 1px solid #d2e1e2;
+  border-radius: 50%;
+  color: #7f9aa0;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.is-active .coronary-plan__lesion-id {
+  border-color: #47a8a4;
+  background: #318f96;
+  color: #fff;
+}
+
+.coronary-plan__lesion-tab > span:nth-child(2) {
+  min-width: 0;
+}
+
+.coronary-plan__lesion-tab strong,
+.coronary-plan__lesion-tab small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coronary-plan__lesion-tab strong {
+  color: #315d69;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.coronary-plan__lesion-tab small {
+  margin-top: 3px;
+  color: #8da4a9;
+  font-size: 8px;
+}
+
+.coronary-plan__lesion-tab > b {
+  margin-left: auto;
+  color: #d28a4b;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.coronary-plan__reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  min-width: 82px;
+  border: 1px solid #d5e3e5;
+  border-radius: 6px;
+  background: #fff;
+  color: #729098;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.coronary-plan__reset:hover {
+  border-color: #9cc8c9;
+  background: #eff9f8;
+  color: #287f89;
+}
+
+.coronary-plan__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 15px;
+  align-items: start;
+  margin-top: 17px;
+}
+
+.coronary-plan__main-column {
+  display: grid;
+  min-width: 0;
+  gap: 15px;
+}
+
+.coronary-plan__graphic-card,
+.coronary-plan__ratio-card,
+.coronary-plan__controls {
+  overflow: hidden;
+  border: 1px solid var(--cp-line);
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 5px 19px #1537450b;
+}
+
+.coronary-plan__graphic-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 17px;
+  border-bottom: 1px solid #dfeaec;
+  color: #355d69;
+  font-size: 9px;
+  letter-spacing: .75px;
+}
+
+.coronary-plan__graphic-head > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 7px;
+}
+
+.coronary-plan__live-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: #5bb8a8;
+  box-shadow: 0 0 0 3px #5bb8a821;
+}
+
+.coronary-plan__muted {
+  overflow: hidden;
+  color: #9caeb3;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coronary-plan__graphic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #4d858d;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .65px;
+  white-space: nowrap;
+}
+
+.coronary-plan__graphic {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 13px;
+  background: #102b37;
+}
+
+.coronary-plan__svg-kicker,
+.coronary-plan__svg-focus,
+.coronary-plan__svg-note,
+.coronary-plan__svg-landing,
+.coronary-plan__svg-foot {
+  font-family: 'DM Sans', Arial, sans-serif;
+}
+
+.coronary-plan__svg-kicker {
+  fill: #81b6bd;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.3px;
+}
+
+.coronary-plan__svg-focus {
+  fill: #f0bd7f;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.25px;
+}
+
+.coronary-plan__svg-note {
+  fill: #83adb4;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .35px;
+}
+
+.coronary-plan__svg-landing {
+  fill: #f2ca83;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: .8px;
+}
+
+.coronary-plan__svg-foot {
+  fill: #648d96;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .7px;
+}
+
+.coronary-plan__ratio-card {
+  padding: 16px 18px 15px;
+}
+
+.coronary-plan__ratio-card .coronary-plan__panel-label,
+.coronary-plan__controls .coronary-plan__panel-label {
+  color: #3d999b;
+}
+
+.coronary-plan__ratio-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 11px;
+}
+
+.coronary-plan__ratio-title h3 {
+  margin: 0;
+  color: #2d5866;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: -.4px;
+}
+
+.coronary-plan__ratio-title p {
+  margin: 4px 0 0;
+  color: #8da4a9;
+  font-size: 9px;
+}
+
+.coronary-plan__ratio-title > span {
+  padding: 5px 7px;
+  border: 1px solid #eadbbb;
+  border-radius: 4px;
+  background: #fffaf0;
+  color: #a8814d;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.coronary-plan__ratio-bars {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 25px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-top: 17px;
+}
+
+.coronary-plan__ratio-item > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: #6f8b93;
+  font-size: 9px;
+}
+
+.coronary-plan__ratio-item strong {
+  color: #2d8c8b;
+  font-size: 17px;
+  letter-spacing: -.5px;
+}
+
+.coronary-plan__ratio-track {
+  height: 8px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #e7eff0;
+}
+
+.coronary-plan__ratio-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.coronary-plan__ratio-track .is-before { background: linear-gradient(90deg, #e7ad6a, #d68756); }
+.coronary-plan__ratio-track .is-after { background: linear-gradient(90deg, #55b8ac, #84d7c1); }
+.coronary-plan__ratio-arrow { color: #9cb7ba; }
+
+.coronary-plan__ratio-foot {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 14px 0 0;
+  color: #80989e;
+  font-size: 8.5px;
+  line-height: 1.55;
+}
+
+.coronary-plan__ratio-foot svg { flex: none; margin-top: 1px; color: #65a4a3; }
+
+.coronary-plan__controls {
+  padding: 19px 18px 17px;
+}
+
+.coronary-plan__selected-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 17px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #e4edef;
+}
+
+.coronary-plan__selected-heading > div > span {
+  color: #9aaeb3;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.1px;
+}
+
+.coronary-plan__selected-heading h3 {
+  margin: 5px 0 0;
+  color: #315c69;
+  font-family: Manrope, Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: -.3px;
+  line-height: 1.25;
+}
+
+.coronary-plan__severity-badge {
+  flex: none;
+  padding: 6px 7px;
+  border: 1px solid #efdcc1;
+  border-radius: 4px;
+  background: #fff9ef;
+  color: #bb7d47;
+  font-size: 8px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.coronary-plan__extent-fieldset {
+  margin: 15px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.coronary-plan__extent-fieldset legend {
+  margin-bottom: 8px;
+  color: #66848c;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .4px;
+}
+
+.coronary-plan__extent-grid { display: grid; gap: 6px; }
+
+.coronary-plan__extent-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+  padding: 7px 9px;
+  border: 1px solid #dce8e9;
+  border-radius: 5px;
+  background: #fff;
+  color: #617f87;
+  text-align: left;
+  cursor: pointer;
+}
+
+.coronary-plan__extent-button:hover { border-color: #a7cdd0; background: #f7fcfb; }
+.coronary-plan__extent-button.is-active { border-color: #62b8b4; background: #edf9f6; color: #287f84; }
+.coronary-plan__extent-button > span { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 850; }
+.coronary-plan__extent-button small { color: #91a6ab; font-size: 8px; text-align: right; }
+.coronary-plan__extent-button.is-active small { color: #6c9998; }
+.coronary-plan__empty-check { width: 13px; height: 13px; border: 1px solid #c6d9db; border-radius: 3px; }
+.coronary-plan__extent-button svg { color: #2c9c96; }
+
+.coronary-plan__slider-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 19px;
+  color: #65848c;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.coronary-plan__slider-heading output { color: #2e8e8c; font-size: 15px; }
+.coronary-plan__slider { width: 100%; margin: 9px 0 0; accent-color: #3da7a3; cursor: pointer; }
+.coronary-plan__slider-scale { display: flex; justify-content: space-between; gap: 8px; color: #9aafb4; font-size: 8px; }
+.coronary-plan__control-hint { margin: 8px 0 0; color: #91a6ab; font-size: 8.5px; line-height: 1.5; }
+
+.coronary-plan__planning-card {
+  margin-top: 17px;
+  padding: 13px 12px 11px;
+  border: 1px solid #dbe9e8;
+  border-radius: 6px;
+  background: #f8fbfa;
+}
+
+.coronary-plan__planning-card .coronary-plan__panel-label { margin-bottom: 12px; color: #4d9796; font-size: 8px; }
+.coronary-plan__planning-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #e5efee; color: #68868b; font-size: 9px; line-height: 1.4; }
+.coronary-plan__planning-row span { display: inline-flex; align-items: center; gap: 6px; }
+.coronary-plan__planning-row strong { color: #3d7075; font-size: 9px; text-align: right; }
+.coronary-plan__planning-row i { width: 7px; height: 7px; flex: none; border-radius: 50%; }
+.coronary-plan__planning-row i.is-zone { background: #e5b66f; box-shadow: 0 0 0 3px #e5b66f24; }
+.coronary-plan__planning-row i.is-angle { background: #63bcb2; box-shadow: 0 0 0 3px #63bcb224; }
+.coronary-plan__planning-card p { margin: 9px 0 0; color: #91a5a8; font-size: 8px; line-height: 1.5; }
+
+.coronary-plan__compare-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 42px;
+  margin-top: 13px;
+  padding: 0 4px;
+  border: 0;
+  border-top: 1px solid #e4edef;
+  background: transparent;
+  color: #487883;
+  font-size: 9px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.coronary-plan__compare-toggle > span { display: inline-flex; align-items: center; gap: 7px; }
+.coronary-plan__compare-toggle > svg { transition: transform .18s ease; }
+.coronary-plan__compare-toggle.is-open > svg { transform: rotate(90deg); }
+.coronary-plan__compare-toggle:hover { color: #238b91; }
+
+.coronary-plan__compare-panel { padding: 0 2px 2px; }
+.coronary-plan__compare-panel > p { margin: 0 0 8px; color: #91a6ab; font-size: 8px; }
+.coronary-plan__compare-option { display: flex; align-items: center; gap: 7px; min-height: 36px; cursor: pointer; }
+.coronary-plan__compare-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.coronary-plan__fake-checkbox { display: grid; width: 16px; height: 16px; flex: none; place-items: center; border: 1px solid #c6dada; border-radius: 3px; background: #fff; color: #fff; }
+.coronary-plan__compare-option input:checked + .coronary-plan__fake-checkbox { border-color: #43a5a0; background: #43a5a0; }
+.coronary-plan__compare-option input:focus-visible + .coronary-plan__fake-checkbox { outline: 3px solid #55b9bb; outline-offset: 2px; }
+.coronary-plan__compare-option > span:last-child { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
+.coronary-plan__compare-option strong { color: #3c6d76; font-size: 9px; }
+.coronary-plan__compare-option small { color: #91a6ab; font-size: 8px; }
+
+.coronary-plan__compare-table { margin-top: 10px; border-top: 1px solid #deeaeb; }
+.coronary-plan__compare-table-head,
+.coronary-plan__compare-table-row { display: grid; grid-template-columns: 1fr .55fr .9fr; align-items: center; gap: 5px; min-height: 28px; border-bottom: 1px solid #eef3f3; font-size: 8px; }
+.coronary-plan__compare-table-head { color: #9bafb3; font-size: 7px; font-weight: 850; letter-spacing: .6px; }
+.coronary-plan__compare-table-row { color: #68868e; }
+.coronary-plan__compare-table-row strong { color: #3c7379; }
+.coronary-plan__compare-table-row b { color: #2d9592; font-size: 9px; }
+
+.coronary-plan__footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 1px 0; color: #91a7ad; font-size: 8.5px; }
+.coronary-plan__footer > span { display: inline-flex; align-items: center; gap: 5px; }
+.coronary-plan__footer svg { color: #54a29d; }
+
+@media (max-width: 1120px) {
+  .coronary-plan__workspace { grid-template-columns: minmax(0, 1fr) 300px; }
+  .coronary-plan__graphic-head { padding-inline: 13px; }
+  .coronary-plan__graphic-chip { font-size: 7px; }
+}
+
+@media (max-width: 900px) {
+  .coronary-plan__workspace { grid-template-columns: 1fr; }
+  .coronary-plan__controls { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
+  .coronary-plan__controls > .coronary-plan__panel-label,
+  .coronary-plan__controls > .coronary-plan__selected-heading,
+  .coronary-plan__controls > .coronary-plan__compare-toggle,
+  .coronary-plan__controls > .coronary-plan__compare-panel { grid-column: 1 / -1; }
+  .coronary-plan__controls > .coronary-plan__extent-fieldset { grid-column: 1; }
+  .coronary-plan__controls > .coronary-plan__slider-heading,
+  .coronary-plan__controls > .coronary-plan__slider,
+  .coronary-plan__controls > .coronary-plan__slider-scale,
+  .coronary-plan__controls > .coronary-plan__control-hint { grid-column: 2; }
+  .coronary-plan__controls > .coronary-plan__slider-heading { grid-row: 3; }
+  .coronary-plan__controls > .coronary-plan__slider { grid-row: 4; }
+  .coronary-plan__controls > .coronary-plan__slider-scale { grid-row: 5; }
+  .coronary-plan__controls > .coronary-plan__control-hint { grid-row: 6; }
+  .coronary-plan__controls > .coronary-plan__planning-card { grid-column: 1 / -1; }
+}
+
+@media (max-width: 680px) {
+  .coronary-plan { padding: 22px 13px 30px; }
+  .coronary-plan__hero { min-height: 0; padding: 23px 20px; }
+  .coronary-plan__hero h2 { font-size: 25px; letter-spacing: -.9px; }
+  .coronary-plan__hero p { font-size: 11px; }
+  .coronary-plan__synthetic-badge { display: none; }
+  .coronary-plan__lesion-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .coronary-plan__rail-label { grid-column: 1 / -1; min-height: 24px; padding: 0 3px; }
+  .coronary-plan__reset { min-height: 42px; }
+  .coronary-plan__lesion-tab { min-height: 50px; padding: 6px 7px; }
+  .coronary-plan__lesion-tab > b { font-size: 10px; }
+  .coronary-plan__graphic-head { min-height: 44px; padding: 0 10px; font-size: 8px; }
+  .coronary-plan__graphic-chip { display: none; }
+  .coronary-plan__graphic { padding: 7px; }
+  .coronary-plan__ratio-bars { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .coronary-plan__ratio-arrow { display: none; }
+  .coronary-plan__controls { display: block; padding: 16px 14px; }
+  .coronary-plan__selected-heading { margin-top: 14px; }
+  .coronary-plan__extent-fieldset { margin-top: 14px; }
+  .coronary-plan__footer { align-items: flex-start; flex-direction: column; gap: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coronary-plan__lesion-tab,
+  .coronary-plan__compare-toggle > svg { transition: none; }
+}
