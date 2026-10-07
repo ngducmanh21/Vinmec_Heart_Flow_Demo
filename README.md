@@ -1,21 +1,13 @@
-# CardioFlow Lab — Valve Closure & VMR 0225
+# CardioFlow Lab — từ ảnh lâm sàng đến mô hình dòng chảy
 
-Demo web cục bộ có hai tuyến nội dung độc lập:
+Website dùng trình tự bốn bước từ `Slides.pdf` (slide 55), với kiểu tương tác lấy cảm hứng từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/). Giao diện và nội dung được viết mới; hình và thương hiệu HeartFlow không được sao chép. Hai khu showcase van tự dựng và “Tính năng tương tác” trước đó đã được gỡ.
 
-- **Valve support & closure:** minh họa tương tác định tính về van ba lá, dây chằng nâng đỡ, mép lá khép kín và tình huống sa lá van khi mất nâng đỡ. Phần này dựa trên chủ đề nghiên cứu của [Kamensky và cộng sự (2018), Hình 15–16](https://yan.cee.illinois.edu/files/2021/08/1-s2.0-S0045782517307120-main.pdf), nhưng hình minh họa trên web do project tạo mới. Đây không phải mesh, trường biến dạng MIPE hay nghiệm fluid–structure interaction của bài báo.
-- **VMR 0225_H_AO_COA:** ca động mạch chủ có ảnh MR, bề mặt P001 và video CFD từ folder được cung cấp. Ca này không chứa dữ liệu van.
+1. **Ảnh lâm sàng và thông số đo:** duyệt 16 lát trích từ `0225_H_AO_COA.vti`. [Báo cáo ca](public/vmr-0225/0225_H_AO_COA.pdf) xác nhận phương thức ảnh là **MR**, không phải CT. Folder chưa có phép đo áp lực/lưu lượng lâm sàng độc lập để dùng làm endpoint.
+2. **Mô hình dòng chảy theo ca:** xoay bề mặt PolyData `P001.vtp`, ghim tối đa ba tọa độ hình học, và phát `coa_step0_to31600_pressure_0_6mmHg.mp4` với metadata của 80 frame. Video trái là áp lực bề mặt với thang màu cố định 0–6 mmHg; bên phải là đường dòng vận tốc tức thời với thang màu theo từng frame. Thời gian vật lý là 0–3,95 s, phát chậm thành 16 s. STEP được tải riêng như CAD solid xấp xỉ, không phải mesh CFD.
+3. **Phương án do bác sĩ định nghĩa:** các ca hẹp mạch vành, phình mạch, stent, bypass, van và thiết bị trong slide 47–53 được tóm tắt như ví dụ nghiên cứu đã công bố hoặc hướng tương lai. Chúng không phải các lần chạy thay thế của ca 0225.
+4. **Đối chiếu với phép đo độc lập:** trình bày dữ liệu và endpoint cần có để kiểm chứng. Folder chưa chứa bộ đo độc lập và solver chưa được xác thực lâm sàng cho ca này.
 
-Các kiểu tương tác trong showcase được tham khảo từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/): mô hình 3D, màu để đọc trường sinh lý, điểm thăm dò và so sánh các tình huống. Demo này không tính FFRCT, không có CCTA mạch vành và không sử dụng các tuyên bố hiệu quả lâm sàng của HeartFlow.
-
-Trên web, phần van có mô hình 3D procedural **kéo để xoay, cuộn để zoom**, chế độ **bình thường / sa lá van / so sánh** với góc nhìn đồng bộ, thanh pha đóng, phát chuyển động, lớp màu định tính và các điểm chú giải lá van, dây chằng, vòng van, vùng tiếp áp. Có thể chuyển về sơ đồ 2D. Phần ca 0225 cho phép ghim tối đa ba điểm trên P001 để so sánh tọa độ hình học; áp lực và vận tốc chỉ được đọc theo **toàn frame video**, không được gán cho điểm ghim.
-
-Flow dữ liệu ca `0225_H_AO_COA` dựa trên thư mục `cardiovascular_demo_2026-10-07/`:
-
-1. **Ảnh MR:** duyệt các lát trích từ volume `0225_H_AO_COA.vti`. [Báo cáo ca](public/vmr-0225/0225_H_AO_COA.pdf) xác nhận phương thức ảnh là **MR**, không phải CT.
-2. **Bề mặt mạch:** xoay mô hình PolyData `P001.vtp` cùng ca. Bề mặt này là đầu vào hình học được mô tả cho lưới CFD của video. File `0225_H_AO_COA_lumen_smooth.step` được cung cấp để tải về như một CAD solid xấp xỉ; STEP không được biểu diễn là mesh dùng trong video.
-3. **Video CFD:** phát `coa_step0_to31600_pressure_0_6mmHg.mp4` và đọc metadata của 80 frame. Video trái là áp lực bề mặt với thang màu cố định 0–6 mmHg; video phải là đường dòng vận tốc tức thời với thang màu theo từng frame. Thời gian vật lý là 0–3,95 s, phát chậm thành 16 s.
-
-Ảnh MR và bề mặt P001 thuộc cùng ca nhưng demo **không xác nhận căn chỉnh không gian giữa hai file**, nên không phủ mask lên ảnh. Bề mặt trong trình xem 3D chỉ được chuẩn hóa và xoay trục để dễ quan sát. Đường dòng trong video không phải các hạt máu được theo dõi. Kết quả CFD là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý, không phải đánh giá lâm sàng hay khuyến nghị điều trị.
+Ảnh MR và bề mặt P001 thuộc cùng ca nhưng demo **không xác nhận căn chỉnh không gian giữa hai file**, nên không phủ mask lên ảnh. Pin trên P001 chỉ trả tọa độ của mô hình đã chuẩn hóa, không trả áp lực hay FFRCT tại điểm. Đường dòng trong video không phải các hạt máu được theo dõi. Kết quả CFD là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý, không phải đánh giá lâm sàng hay khuyến nghị điều trị. Slide 56 phân biệt **Now / Next / Future**; asset ca 0225 hiện chứng minh được áp lực và vận tốc, chưa có bảng branch-flow riêng.
 
 ## Chạy cục bộ
 
