@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { ExternalLink, Info, Pause, Play, RotateCcw, Sparkles } from 'lucide-react'
+import { Suspense, lazy, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
+import { ExternalLink, Info, Move3D, Pause, Play, RotateCcw, Sparkles } from 'lucide-react'
 import './ValveShowcase.css'
+
+const Valve3DScene = lazy(() => import('./Valve3DScene'))
 
 type ValveMode = 'normal' | 'prolapse' | 'compare'
 type OverlayMode = 'none' | 'support' | 'deformation'
@@ -250,6 +252,7 @@ function ModeButton({ mode, current, children, onClick }: { mode: ValveMode; cur
 export default function ValveShowcase() {
   const [mode, setMode] = useState<ValveMode>('compare')
   const [phase, setPhase] = useState(100)
+  const [viewMode, setViewMode] = useState<'3d' | 'diagram'>('3d')
   const [overlay, setOverlay] = useState<OverlayMode>('support')
   const [activePin, setActivePin] = useState<PinName>('coaptation')
   const [playing, setPlaying] = useState(false)
@@ -319,15 +322,18 @@ export default function ValveShowcase() {
             <span className="valve-phase-badge">{phaseLabel(phase).toUpperCase()} · {phase}%</span>
           </div>
 
-          <div className={`valve-showcase__diagrams${mode === 'compare' ? ' is-compare' : ''}`}>
-            {mode === 'compare' ? (
+          <div className="valve-view-toolbar"><div><Move3D size={14}/><strong>GÓC NHÌN</strong><button type="button" className={viewMode === '3d' ? 'is-active' : ''} aria-pressed={viewMode === '3d'} onClick={() => setViewMode('3d')}>3D xoay được</button><button type="button" className={viewMode === 'diagram' ? 'is-active' : ''} aria-pressed={viewMode === 'diagram'} onClick={() => setViewMode('diagram')}>Sơ đồ 2D</button></div><span>{viewMode === '3d' ? 'Kéo mô hình để xoay · cuộn để zoom' : 'Chọn điểm trên sơ đồ để đọc chú giải'}</span></div>
+
+          <div className={`valve-showcase__diagrams${mode === 'compare' ? ' is-compare' : ''}${viewMode === '3d' ? ' is-3d' : ''}`}>
+            <div className="valve-3d-holder" style={{ display: viewMode === '3d' ? 'block' : 'none' }} aria-hidden={viewMode !== '3d'}><Suspense fallback={<div className="valve-3d-loading">Đang tải mô hình van 3D…</div>}><Valve3DScene mode={mode} phase={phase} overlay={overlay} activePin={activePin} onPin={setSelectedPin}/></Suspense></div>
+            {viewMode === 'diagram' && (mode === 'compare' ? (
               <div className="valve-compare-grid">
                 <div className="valve-compare-panel"><div className="valve-compare-label"><span className="valve-state-dot valve-state-dot--normal" /> Bình thường <small>coaptation</small></div><ValveDiagram mode="normal" phase={phase} overlay={overlay} activePin={activePin} onPin={setSelectedPin} idPrefix="valve-normal" /></div>
                 <div className="valve-compare-panel"><div className="valve-compare-label"><span className="valve-state-dot valve-state-dot--prolapse" /> Sa lá van <small>chordae removed</small></div><ValveDiagram mode="prolapse" phase={phase} overlay={overlay} activePin={activePin} onPin={setSelectedPin} idPrefix="valve-prolapse" /></div>
               </div>
             ) : (
               <ValveDiagram mode={mode} phase={phase} overlay={overlay} activePin={activePin} onPin={setSelectedPin} idPrefix={`valve-${mode}`} />
-            )}
+            ))}
           </div>
 
           <div className="valve-showcase__visual-foot">

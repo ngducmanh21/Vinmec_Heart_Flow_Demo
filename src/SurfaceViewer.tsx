@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
-import { RotateCcw } from 'lucide-react'
+import { Html, OrbitControls } from '@react-three/drei'
+import { RotateCcw, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
@@ -24,8 +24,11 @@ type Bounds = {
 }
 
 type SurfacePin = {
+  id: number
   point: THREE.Vector3
 }
+
+const MAX_SURFACE_PINS = 3
 
 function asNumber(value: unknown) {
   return typeof value === 'number' && Number.isFinite(value) ? value : null
@@ -167,11 +170,21 @@ function SurfaceMesh({ geometry, onPin }: { geometry: THREE.BufferGeometry; onPi
   </mesh>
 }
 
-function SurfacePinMarker({ point, radius }: { point: THREE.Vector3; radius: number }) {
-  return <mesh position={point} renderOrder={2}>
-    <sphereGeometry args={[radius, 16, 10]} />
-    <meshBasicMaterial color="#f7c76a" depthTest={false} depthWrite={false} toneMapped={false} />
-  </mesh>
+function SurfacePinMarker({ point, number, radius, selected, onSelect }: { point: THREE.Vector3; number: number; radius: number; selected: boolean; onSelect: () => void }) {
+  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+    event.stopPropagation()
+    onSelect()
+  }
+
+  return <group position={point} renderOrder={2}>
+    <mesh onClick={handleClick}>
+      <sphereGeometry args={[radius * (selected ? 1.3 : 1), 16, 10]} />
+      <meshBasicMaterial color={selected ? '#fff1b0' : '#f7c76a'} depthTest={false} depthWrite={false} toneMapped={false} />
+    </mesh>
+    <Html center position={[0, radius * 2.4, 0]} distanceFactor={8} style={{ pointerEvents: 'none' }}>
+      <span className={`surface-viewer__pin-badge${selected ? ' is-selected' : ''}`} aria-hidden="true">{number}</span>
+    </Html>
+  </group>
 }
 
 function formatCoordinate(value: number) {
@@ -179,12 +192,19 @@ function formatCoordinate(value: number) {
   return rounded.toFixed(3)
 }
 
+function pinCoordinates(pin: SurfacePin) {
+  return `x ${formatCoordinate(pin.point.x)} · y ${formatCoordinate(pin.point.y)} · z ${formatCoordinate(pin.point.z)}`
+}
+
 export default function SurfaceViewer({ active = true }: { active?: boolean }) {
   const [resource, setResource] = useState<SurfaceResource | null>(null)
   const [metadata, setMetadata] = useState<SurfaceMetadata | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [resetKey, setResetKey] = useState(0)
-  const [pin, setPin] = useState<SurfacePin | null>(null)
+  const [pins, setPins] = useState<SurfacePin[]>([])
+  const [selectedPinId, setSelectedPinId] = useState<number | null>(null)
+  const [pinNotice, setPinNotice] = useState<string | null>(null)
+  const nextPinId = useRef(1)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -233,7 +253,32 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
   const metadataBounds = useMemo(() => boundsFromMetadata(metadata), [metadata])
   const label = metadataLabel(metadata, resource)
   const pinRadius = Math.max(resource?.geometry.boundingSphere?.radius ?? .5, .001) * .018
-  const pinCoordinates = pin ? `x ${formatCoordinate(pin.point.x)} · y ${formatCoordinate(pin.point.y)} · z ${formatCoordinate(pin.point.z)}` : ''
+
+  function addPin(point: THREE.Vector3) {
+    if (pins.length >= MAX_SURFACE_PINS) {
+      setPinNotice('Đã đủ 3 điểm · xoá một điểm để ghim vị trí mới')
+      return
+    }
+
+    const id = nextPinId.current
+    nextPinId.current += 1
+    setPins(current => [...current, { id, point }])
+    setSelectedPinId(id)
+    setPinNotice(null)
+  }
+
+  function removePin(id: number) {
+    const remaining = pins.filter(pin => pin.id !== id)
+    setPins(remaining)
+    setSelectedPinId(current => current === id ? (remaining[0]?.id ?? null) : current)
+    setPinNotice(null)
+  }
+
+  function clearPins() {
+    setPins([])
+    setSelectedPinId(null)
+    setPinNotice(null)
+  }
 
   return <section className={`surface-viewer${active ? '' : ' surface-viewer--inactive'}`} aria-label="Bề mặt mạch nguồn P001.vtp">
     <div className="surface-viewer__canvas">
@@ -242,8 +287,8 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
         <ambientLight intensity={1.15} />
         <directionalLight position={[2.8, 3.5, 4]} intensity={2.4} color="#f5fdff" castShadow />
         <directionalLight position={[-3, -1, -2]} intensity={.9} color="#65b4c1" />
-        <SurfaceMesh geometry={resource.geometry} onPin={point => setPin({ point })} />
-        {pin && <SurfacePinMarker point={pin.point} radius={pinRadius} />}
+        <SurfaceMesh geometry={resource.geometry} onPin={addPin} />
+        {pins.map((pin, index) => <SurfacePinMarker key={pin.id} point={pin.point} number={index + 1} radius={pinRadius} selected={pin.id === selectedPinId} onSelect={() => setSelectedPinId(pin.id)} />)}
         <CameraRig geometry={resource.geometry} metadataBounds={metadataBounds} resetKey={resetKey} />
       </Canvas>}
       {!resource && !error && <div className="surface-viewer__message" role="status">Đang tải bề mặt P001.vtp…</div>}
@@ -258,18 +303,31 @@ export default function SurfaceViewer({ active = true }: { active?: boolean }) {
         <RotateCcw size={14} aria-hidden="true" />
         <span>Đặt lại góc nhìn</span>
       </button>
-      {pin && <aside className="surface-viewer__pin-panel" aria-label="Điểm ghim hình học" aria-live="polite">
+      <aside className="surface-viewer__pin-panel" aria-label="Điểm ghim hình học" aria-live="polite">
         <div className="surface-viewer__pin-heading">
           <span className="surface-viewer__pin-marker" aria-hidden="true" />
           <span>ĐIỂM GHIM HÌNH HỌC</span>
+          <strong>{pins.length}/{MAX_SURFACE_PINS}</strong>
         </div>
         <span className="surface-viewer__pin-space">VIEWER-SPACE · NORMALIZED</span>
-        <output className="surface-viewer__pin-coordinates" aria-label={`Tọa độ viewer-space: ${pinCoordinates}`}>
-          {pinCoordinates}
-        </output>
-        <p>điểm xem hình học; không có FFRCT/áp lực tại điểm</p>
-        <button type="button" className="surface-viewer__pin-clear" onClick={() => setPin(null)}>Xoá điểm ghim</button>
-      </aside>}
+        {pins.length ? <ol className="surface-viewer__pin-list">
+          {pins.map((pin, index) => <li key={pin.id} className={`surface-viewer__pin-row${pin.id === selectedPinId ? ' is-selected' : ''}`}>
+            <button type="button" className="surface-viewer__pin-select" onClick={() => setSelectedPinId(pin.id)} aria-pressed={pin.id === selectedPinId}>
+              <span className="surface-viewer__pin-number" aria-hidden="true">{index + 1}</span>
+              <span className="surface-viewer__pin-row-content">
+                <strong>Điểm {index + 1}</strong>
+                <code>{pinCoordinates(pin)}</code>
+              </span>
+            </button>
+            <button type="button" className="surface-viewer__pin-remove" onClick={() => removePin(pin.id)} aria-label={`Xoá điểm ghim ${index + 1}`} title="Xoá điểm này">
+              <X size={12} aria-hidden="true" />
+            </button>
+          </li>)}
+        </ol> : <p className="surface-viewer__pin-empty">Nhấp lên bề mặt để ghim tối đa 3 điểm. Kéo để xoay, cuộn để zoom.</p>}
+        {pinNotice && <p className="surface-viewer__pin-notice" role="status">{pinNotice}</p>}
+        <p className="surface-viewer__pin-disclaimer">Tọa độ chỉ mô tả hình học đã chuẩn hóa; không có FFRCT, áp lực hoặc xếp hạng tổn thương tại điểm.</p>
+        {pins.length > 0 && <button type="button" className="surface-viewer__pin-clear" onClick={clearPins}>Xoá tất cả điểm</button>}
+      </aside>
     </div>
   </section>
 }

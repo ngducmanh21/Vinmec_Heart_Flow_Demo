@@ -7,7 +7,7 @@ Demo web cục bộ có hai tuyến nội dung độc lập:
 
 Các kiểu tương tác trong showcase được tham khảo từ [HeartFlow FFRCT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/): mô hình 3D, màu để đọc trường sinh lý, điểm thăm dò và so sánh các tình huống. Demo này không tính FFRCT, không có CCTA mạch vành và không sử dụng các tuyên bố hiệu quả lâm sàng của HeartFlow.
 
-Trên web, phần van có chế độ **bình thường / sa lá van / so sánh**, thanh pha đóng, phát chuyển động, lớp màu định tính và các điểm chú giải lá van, dây chằng, vòng van, vùng tiếp áp. Phần ca 0225 có thể ghim một điểm trên P001 để đọc tọa độ hình học; áp lực và vận tốc chỉ được đọc theo **toàn frame video**, không được gán cho điểm ghim.
+Trên web, phần van có mô hình 3D procedural **kéo để xoay, cuộn để zoom**, chế độ **bình thường / sa lá van / so sánh** với góc nhìn đồng bộ, thanh pha đóng, phát chuyển động, lớp màu định tính và các điểm chú giải lá van, dây chằng, vòng van, vùng tiếp áp. Có thể chuyển về sơ đồ 2D. Phần ca 0225 cho phép ghim tối đa ba điểm trên P001 để so sánh tọa độ hình học; áp lực và vận tốc chỉ được đọc theo **toàn frame video**, không được gán cho điểm ghim.
 
 Flow dữ liệu ca `0225_H_AO_COA` dựa trên thư mục `cardiovascular_demo_2026-10-07/`:
 
