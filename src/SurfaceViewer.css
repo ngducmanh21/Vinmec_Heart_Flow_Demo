@@ -1,0 +1,130 @@
+.surface-viewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+  background: #0c1821;
+}
+
+.surface-viewer__canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  background: radial-gradient(circle at 50% 45%, #21343e 0%, #12222c 57%, #0c1821 100%);
+}
+
+.surface-viewer__canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.surface-viewer__hud {
+  position: absolute;
+  top: 12px;
+  left: 13px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: calc(100% - 26px);
+  padding: 6px 8px;
+  border: 1px solid #a7d1d159;
+  border-radius: 3px;
+  background: #0d2631d9;
+  color: #d8ecef;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .65px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.surface-viewer__hud > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #acd2d6;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.surface-viewer__hud i {
+  height: 11px;
+  border-left: 1px solid #a9cdd277;
+}
+
+.surface-viewer__live-dot {
+  display: inline-block;
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6ac1c2;
+  box-shadow: 0 0 0 3px #6ac1c225;
+}
+
+.surface-viewer__reset {
+  position: absolute;
+  right: 13px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 9px;
+  border: 1px solid #a7d1d159;
+  border-radius: 4px;
+  background: #0d2631d9;
+  color: #d8ecef;
+  font-size: 9px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.surface-viewer__reset:hover {
+  border-color: #86c5cf;
+  background: #163944e8;
+}
+
+.surface-viewer__message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #c5e1e5;
+  font-size: 11px;
+}
+
+.surface-viewer__message--error {
+  background: #0b1821dd;
+  color: #f2c7b8;
+}
+
+@media (max-width: 600px) {
+  .surface-viewer__hud {
+    right: 12px;
+    width: max-content;
+  }
+
+  .surface-viewer__hud > span:last-child {
+    max-width: min(48vw, 180px);
+  }
+
+  .surface-viewer__reset span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .surface-viewer__reset {
+    width: 30px;
+    justify-content: center;
+    padding: 0;
+  }
+}

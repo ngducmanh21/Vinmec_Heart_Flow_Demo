@@ -1,0 +1,1456 @@
+{
+  "node_count": 986268,
+  "tetrahedron_count": 5753273,
+  "dt_s": 0.000125,
+  "fps": 5,
+  "width": 1800,
+  "height": 900,
+  "frame_local_colour_scales": false,
+  "pressure_scale_mode": "fixed",
+  "speed_scale_mode": "frame-local",
+  "scaling_method": "pressure fixed 0-6 mmHg, out-of-range colours saturated; speed 0/frame max",
+  "constant_field_note": "Constant fields padded only to make a valid colour range",
+  "render_window": "vtkXOpenGLRenderWindow",
+  "frames": [
+    {
+      "step": 0,
+      "physical_time_s": 0,
+      "pressure_surface_min_max_mmHg": [
+        0,
+        0
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 0,
+      "speed_colour_range_cm_s": [
+        0,
+        0.000001
+      ],
+      "streamline_count": 0
+    },
+    {
+      "step": 400,
+      "physical_time_s": 0.05,
+      "pressure_surface_min_max_mmHg": [
+        0.003733039099719193,
+        0.03514567174729157
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 0.0664567625303033,
+      "speed_colour_range_cm_s": [
+        0,
+        0.0664567625303033
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 800,
+      "physical_time_s": 0.1,
+      "pressure_surface_min_max_mmHg": [
+        0.046439706060065464,
+        0.19252597038504768
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 0.7407306042026267,
+      "speed_colour_range_cm_s": [
+        0,
+        0.7407306042026267
+      ],
+      "streamline_count": 235
+    },
+    {
+      "step": 1200,
+      "physical_time_s": 0.15,
+      "pressure_surface_min_max_mmHg": [
+        0.16726544334789825,
+        0.4356578759457748
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 2.3002811682126025,
+      "speed_colour_range_cm_s": [
+        0,
+        2.3002811682126025
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 1600,
+      "physical_time_s": 0.2,
+      "pressure_surface_min_max_mmHg": [
+        0.3826402663090115,
+        0.7762448491863551
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 4.541476507060219,
+      "speed_colour_range_cm_s": [
+        0,
+        4.541476507060219
+      ],
+      "streamline_count": 233
+    },
+    {
+      "step": 2000,
+      "physical_time_s": 0.25,
+      "pressure_surface_min_max_mmHg": [
+        0.6739310715046749,
+        0.9043577746977843
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 6.719439787408996,
+      "speed_colour_range_cm_s": [
+        0,
+        6.719439787408996
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 2400,
+      "physical_time_s": 0.3,
+      "pressure_surface_min_max_mmHg": [
+        0.8065389306629067,
+        0.8701050614744158
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 6.097076008037605,
+      "speed_colour_range_cm_s": [
+        0,
+        6.097076008037605
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 2800,
+      "physical_time_s": 0.35000000000000003,
+      "pressure_surface_min_max_mmHg": [
+        1.0182499116889066,
+        1.091527531251284
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 6.2924323418295,
+      "speed_colour_range_cm_s": [
+        0,
+        6.2924323418295
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 3200,
+      "physical_time_s": 0.4,
+      "pressure_surface_min_max_mmHg": [
+        0.709571547296973,
+        1.063634899739846
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 4.766286530800579,
+      "speed_colour_range_cm_s": [
+        0,
+        4.766286530800579
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 3600,
+      "physical_time_s": 0.45,
+      "pressure_surface_min_max_mmHg": [
+        0.9708396450244438,
+        1.032942151673544
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 3.464976383024534,
+      "speed_colour_range_cm_s": [
+        0,
+        3.464976383024534
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 4000,
+      "physical_time_s": 0.5,
+      "pressure_surface_min_max_mmHg": [
+        0.8086045816782425,
+        0.99608686847142
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 2.642610766082959,
+      "speed_colour_range_cm_s": [
+        0,
+        2.642610766082959
+      ],
+      "streamline_count": 236
+    },
+    {
+      "step": 4400,
+      "physical_time_s": 0.55,
+      "pressure_surface_min_max_mmHg": [
+        0.8765708159073823,
+        0.911601009858894
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 2.0449376201219502,
+      "speed_colour_range_cm_s": [
+        0,
+        2.0449376201219502
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 4800,
+      "physical_time_s": 0.6,
+      "pressure_surface_min_max_mmHg": [
+        1.042691835824287,
+        1.6277030183200412
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 3.688859435409125,
+      "speed_colour_range_cm_s": [
+        0,
+        3.688859435409125
+      ],
+      "streamline_count": 234
+    },
+    {
+      "step": 5200,
+      "physical_time_s": 0.65,
+      "pressure_surface_min_max_mmHg": [
+        1.0301781361203706,
+        1.2201413709873388
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 4.988484074521279,
+      "speed_colour_range_cm_s": [
+        0,
+        4.988484074521279
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 5600,
+      "physical_time_s": 0.7000000000000001,
+      "pressure_surface_min_max_mmHg": [
+        1.2949155951516966,
+        1.6408271942073176
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 5.175323967601206,
+      "speed_colour_range_cm_s": [
+        0,
+        5.175323967601206
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 6000,
+      "physical_time_s": 0.75,
+      "pressure_surface_min_max_mmHg": [
+        1.0746869166308408,
+        1.39171161978159
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 4.953948607440853,
+      "speed_colour_range_cm_s": [
+        0,
+        4.953948607440853
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 6400,
+      "physical_time_s": 0.8,
+      "pressure_surface_min_max_mmHg": [
+        1.4226413073573936,
+        1.6429221638902702
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 4.691344034437439,
+      "speed_colour_range_cm_s": [
+        0,
+        4.691344034437439
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 6800,
+      "physical_time_s": 0.85,
+      "pressure_surface_min_max_mmHg": [
+        1.1445564410234779,
+        1.403386173108016
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 3.713541371523594,
+      "speed_colour_range_cm_s": [
+        0,
+        3.713541371523594
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 7200,
+      "physical_time_s": 0.9,
+      "pressure_surface_min_max_mmHg": [
+        1.7615930691134396,
+        3.6580445829038184
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.46088466474429,
+      "speed_colour_range_cm_s": [
+        0,
+        9.46088466474429
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 7600,
+      "physical_time_s": 0.9500000000000001,
+      "pressure_surface_min_max_mmHg": [
+        2.87659372626567,
+        4.59231020016082
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 22.651739539195976,
+      "speed_colour_range_cm_s": [
+        0,
+        22.651739539195976
+      ],
+      "streamline_count": 235
+    },
+    {
+      "step": 8000,
+      "physical_time_s": 1,
+      "pressure_surface_min_max_mmHg": [
+        3.9907001435436853,
+        5.196378416216412
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 30.306434516694853,
+      "speed_colour_range_cm_s": [
+        0,
+        30.306434516694853
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 8400,
+      "physical_time_s": 1.05,
+      "pressure_surface_min_max_mmHg": [
+        5.022455358192314,
+        6.057422118010433
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 33.655285859128476,
+      "speed_colour_range_cm_s": [
+        0,
+        33.655285859128476
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 8800,
+      "physical_time_s": 1.1,
+      "pressure_surface_min_max_mmHg": [
+        5.065676756125715,
+        6.08002402204846
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 31.976385618412515,
+      "speed_colour_range_cm_s": [
+        0,
+        31.976385618412515
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 9200,
+      "physical_time_s": 1.1500000000000001,
+      "pressure_surface_min_max_mmHg": [
+        4.819170690577217,
+        5.842942885039304
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 20.6646845385633,
+      "speed_colour_range_cm_s": [
+        0,
+        20.6646845385633
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 9600,
+      "physical_time_s": 1.2,
+      "pressure_surface_min_max_mmHg": [
+        5.081677421009554,
+        5.754107911437517
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 16.574773408623287,
+      "speed_colour_range_cm_s": [
+        0,
+        16.574773408623287
+      ],
+      "streamline_count": 236
+    },
+    {
+      "step": 10000,
+      "physical_time_s": 1.25,
+      "pressure_surface_min_max_mmHg": [
+        4.232986267029062,
+        5.249308932405312
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 13.264875644553484,
+      "speed_colour_range_cm_s": [
+        0,
+        13.264875644553484
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 10400,
+      "physical_time_s": 1.3,
+      "pressure_surface_min_max_mmHg": [
+        4.541046506912002,
+        4.801103700428937
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 11.68854146554341,
+      "speed_colour_range_cm_s": [
+        0,
+        11.68854146554341
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 10800,
+      "physical_time_s": 1.35,
+      "pressure_surface_min_max_mmHg": [
+        4.0313052168695895,
+        4.384630743849247
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 10.136645617937585,
+      "speed_colour_range_cm_s": [
+        0,
+        10.136645617937585
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 11200,
+      "physical_time_s": 1.4000000000000001,
+      "pressure_surface_min_max_mmHg": [
+        3.9530640718612937,
+        4.0516576677943865
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.87709075673035,
+      "speed_colour_range_cm_s": [
+        0,
+        8.87709075673035
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 11600,
+      "physical_time_s": 1.45,
+      "pressure_surface_min_max_mmHg": [
+        3.9040603863416075,
+        4.5288473682401715
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.58822453419551,
+      "speed_colour_range_cm_s": [
+        0,
+        8.58822453419551
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 12000,
+      "physical_time_s": 1.5,
+      "pressure_surface_min_max_mmHg": [
+        3.593109170261889,
+        3.829650375499924
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.33537522797827,
+      "speed_colour_range_cm_s": [
+        0,
+        8.33537522797827
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 12400,
+      "physical_time_s": 1.55,
+      "pressure_surface_min_max_mmHg": [
+        3.7080100925608797,
+        4.029877273207464
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 7.9922198227318155,
+      "speed_colour_range_cm_s": [
+        0,
+        7.9922198227318155
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 12800,
+      "physical_time_s": 1.6,
+      "pressure_surface_min_max_mmHg": [
+        3.2856410316276423,
+        3.5833894804414084
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 7.1623247652230075,
+      "speed_colour_range_cm_s": [
+        0,
+        7.1623247652230075
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 13200,
+      "physical_time_s": 1.6500000000000001,
+      "pressure_surface_min_max_mmHg": [
+        3.4547454467201475,
+        3.634241721097169
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 6.843117891608679,
+      "speed_colour_range_cm_s": [
+        0,
+        6.843117891608679
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 13600,
+      "physical_time_s": 1.7,
+      "pressure_surface_min_max_mmHg": [
+        3.1099859999559354,
+        3.266599019064966
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 5.767884159442682,
+      "speed_colour_range_cm_s": [
+        0,
+        5.767884159442682
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 14000,
+      "physical_time_s": 1.75,
+      "pressure_surface_min_max_mmHg": [
+        3.581298228563298,
+        5.610228911174016
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 12.690850933726994,
+      "speed_colour_range_cm_s": [
+        0,
+        12.690850933726994
+      ],
+      "streamline_count": 234
+    },
+    {
+      "step": 14400,
+      "physical_time_s": 1.8,
+      "pressure_surface_min_max_mmHg": [
+        4.589223550751895,
+        6.2946466761936914
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 24.6956249739188,
+      "speed_colour_range_cm_s": [
+        0,
+        24.6956249739188
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 14800,
+      "physical_time_s": 1.85,
+      "pressure_surface_min_max_mmHg": [
+        5.588131010418705,
+        6.780566254037342
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 30.358797196829503,
+      "speed_colour_range_cm_s": [
+        0,
+        30.358797196829503
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 15200,
+      "physical_time_s": 1.9000000000000001,
+      "pressure_surface_min_max_mmHg": [
+        6.5326144917984355,
+        7.559326995079892
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 34.24742533439882,
+      "speed_colour_range_cm_s": [
+        0,
+        34.24742533439882
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 15600,
+      "physical_time_s": 1.95,
+      "pressure_surface_min_max_mmHg": [
+        6.216525384030955,
+        7.453450817681058
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 31.71289986610547,
+      "speed_colour_range_cm_s": [
+        0,
+        31.71289986610547
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 16000,
+      "physical_time_s": 2,
+      "pressure_surface_min_max_mmHg": [
+        6.263264581581755,
+        7.103413861655406
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 21.40740747691176,
+      "speed_colour_range_cm_s": [
+        0,
+        21.40740747691176
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 16400,
+      "physical_time_s": 2.05,
+      "pressure_surface_min_max_mmHg": [
+        6.128506816330484,
+        6.936646040805556
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 17.016399480810076,
+      "speed_colour_range_cm_s": [
+        0,
+        17.016399480810076
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 16800,
+      "physical_time_s": 2.1,
+      "pressure_surface_min_max_mmHg": [
+        5.443728657307924,
+        6.324912431014464
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 13.202321800180108,
+      "speed_colour_range_cm_s": [
+        0,
+        13.202321800180108
+      ],
+      "streamline_count": 243
+    },
+    {
+      "step": 17200,
+      "physical_time_s": 2.15,
+      "pressure_surface_min_max_mmHg": [
+        5.5851720698875456,
+        5.845103368411227
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 11.637350669386896,
+      "speed_colour_range_cm_s": [
+        0,
+        11.637350669386896
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 17600,
+      "physical_time_s": 2.2,
+      "pressure_surface_min_max_mmHg": [
+        5.029129739554136,
+        5.370556850918857
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 10.14567938973502,
+      "speed_colour_range_cm_s": [
+        0,
+        10.14567938973502
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 18000,
+      "physical_time_s": 2.25,
+      "pressure_surface_min_max_mmHg": [
+        4.9070566373681626,
+        5.096204326090152
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.911206762832608,
+      "speed_colour_range_cm_s": [
+        0,
+        8.911206762832608
+      ],
+      "streamline_count": 244
+    },
+    {
+      "step": 18400,
+      "physical_time_s": 2.3000000000000003,
+      "pressure_surface_min_max_mmHg": [
+        4.845073413497059,
+        5.413687479792515
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.482950458857442,
+      "speed_colour_range_cm_s": [
+        0,
+        9.482950458857442
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 18800,
+      "physical_time_s": 2.35,
+      "pressure_surface_min_max_mmHg": [
+        4.4969362687537355,
+        4.708531318960468
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.954353664201188,
+      "speed_colour_range_cm_s": [
+        0,
+        8.954353664201188
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 19200,
+      "physical_time_s": 2.4,
+      "pressure_surface_min_max_mmHg": [
+        4.566166978421382,
+        4.8478868453967605
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.793633695718901,
+      "speed_colour_range_cm_s": [
+        0,
+        8.793633695718901
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 19600,
+      "physical_time_s": 2.45,
+      "pressure_surface_min_max_mmHg": [
+        4.1319800149658805,
+        4.387368301450925
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 7.787718682576805,
+      "speed_colour_range_cm_s": [
+        0,
+        7.787718682576805
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 20000,
+      "physical_time_s": 2.5,
+      "pressure_surface_min_max_mmHg": [
+        4.240906117721981,
+        4.377639200854803
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 7.619378469492575,
+      "speed_colour_range_cm_s": [
+        0,
+        7.619378469492575
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 20400,
+      "physical_time_s": 2.5500000000000003,
+      "pressure_surface_min_max_mmHg": [
+        3.9671846869573915,
+        4.110634278430835
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 6.440403084822779,
+      "speed_colour_range_cm_s": [
+        0,
+        6.440403084822779
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 20800,
+      "physical_time_s": 2.6,
+      "pressure_surface_min_max_mmHg": [
+        4.394740884381787,
+        6.489303722663691
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 14.324225860384994,
+      "speed_colour_range_cm_s": [
+        0,
+        14.324225860384994
+      ],
+      "streamline_count": 236
+    },
+    {
+      "step": 21200,
+      "physical_time_s": 2.65,
+      "pressure_surface_min_max_mmHg": [
+        5.388650591353293,
+        7.033190258268033
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 25.35127526570841,
+      "speed_colour_range_cm_s": [
+        0,
+        25.35127526570841
+      ],
+      "streamline_count": 235
+    },
+    {
+      "step": 21600,
+      "physical_time_s": 2.7,
+      "pressure_surface_min_max_mmHg": [
+        6.362779553520023,
+        7.506713663881376
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 31.460205882013877,
+      "speed_colour_range_cm_s": [
+        0,
+        31.460205882013877
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 22000,
+      "physical_time_s": 2.75,
+      "pressure_surface_min_max_mmHg": [
+        7.269041718927399,
+        8.251428213679544
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 34.90872385631557,
+      "speed_colour_range_cm_s": [
+        0,
+        34.90872385631557
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 22400,
+      "physical_time_s": 2.8000000000000003,
+      "pressure_surface_min_max_mmHg": [
+        6.714961131493799,
+        8.08295118472246
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 31.22830511047086,
+      "speed_colour_range_cm_s": [
+        0,
+        31.22830511047086
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 22800,
+      "physical_time_s": 2.85,
+      "pressure_surface_min_max_mmHg": [
+        6.994725541471787,
+        7.696967618462959
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 21.655522260711567,
+      "speed_colour_range_cm_s": [
+        0,
+        21.655522260711567
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 23200,
+      "physical_time_s": 2.9,
+      "pressure_surface_min_max_mmHg": [
+        6.573826262374189,
+        7.495448545809168
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 17.519765292365353,
+      "speed_colour_range_cm_s": [
+        0,
+        17.519765292365353
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 23600,
+      "physical_time_s": 2.95,
+      "pressure_surface_min_max_mmHg": [
+        6.063086492493808,
+        6.8472934477747245
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 13.392299496806979,
+      "speed_colour_range_cm_s": [
+        0,
+        13.392299496806979
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 24000,
+      "physical_time_s": 3,
+      "pressure_surface_min_max_mmHg": [
+        6.091044184728307,
+        6.363026842006267
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 11.711089484963319,
+      "speed_colour_range_cm_s": [
+        0,
+        11.711089484963319
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 24400,
+      "physical_time_s": 3.0500000000000003,
+      "pressure_surface_min_max_mmHg": [
+        5.528473572081403,
+        5.861896172288394
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 10.159932640710474,
+      "speed_colour_range_cm_s": [
+        0,
+        10.159932640710474
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 24800,
+      "physical_time_s": 3.1,
+      "pressure_surface_min_max_mmHg": [
+        5.401178204431274,
+        5.675770601511611
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.179720654012197,
+      "speed_colour_range_cm_s": [
+        0,
+        9.179720654012197
+      ],
+      "streamline_count": 244
+    },
+    {
+      "step": 25200,
+      "physical_time_s": 3.15,
+      "pressure_surface_min_max_mmHg": [
+        5.348098425321168,
+        5.840190298665793
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 10.36222642456847,
+      "speed_colour_range_cm_s": [
+        0,
+        10.36222642456847
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 25600,
+      "physical_time_s": 3.2,
+      "pressure_surface_min_max_mmHg": [
+        5.029795175044688,
+        5.169902655947428
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.601844800573916,
+      "speed_colour_range_cm_s": [
+        0,
+        9.601844800573916
+      ],
+      "streamline_count": 237
+    },
+    {
+      "step": 26000,
+      "physical_time_s": 3.25,
+      "pressure_surface_min_max_mmHg": [
+        5.031230213825324,
+        5.246275884136646
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.599729330167982,
+      "speed_colour_range_cm_s": [
+        0,
+        9.599729330167982
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 26400,
+      "physical_time_s": 3.3000000000000003,
+      "pressure_surface_min_max_mmHg": [
+        4.65313176915885,
+        4.819669419463185
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.367677419679126,
+      "speed_colour_range_cm_s": [
+        0,
+        8.367677419679126
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 26800,
+      "physical_time_s": 3.35,
+      "pressure_surface_min_max_mmHg": [
+        4.657388713602902,
+        4.749549715285583
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 8.265965487205882,
+      "speed_colour_range_cm_s": [
+        0,
+        8.265965487205882
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 27200,
+      "physical_time_s": 3.4,
+      "pressure_surface_min_max_mmHg": [
+        4.404621348511961,
+        4.703537263446994
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 7.101966142098414,
+      "speed_colour_range_cm_s": [
+        0,
+        7.101966142098414
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 27600,
+      "physical_time_s": 3.45,
+      "pressure_surface_min_max_mmHg": [
+        4.889121320866574,
+        7.009308469115823
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 16.332815591542033,
+      "speed_colour_range_cm_s": [
+        0,
+        16.332815591542033
+      ],
+      "streamline_count": 236
+    },
+    {
+      "step": 28000,
+      "physical_time_s": 3.5,
+      "pressure_surface_min_max_mmHg": [
+        5.876246554562691,
+        7.4793787586382425
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 26.451882464381747,
+      "speed_colour_range_cm_s": [
+        0,
+        26.451882464381747
+      ],
+      "streamline_count": 236
+    },
+    {
+      "step": 28400,
+      "physical_time_s": 3.5500000000000003,
+      "pressure_surface_min_max_mmHg": [
+        6.8307254378025375,
+        7.959370878952096
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 32.42286805493672,
+      "speed_colour_range_cm_s": [
+        0,
+        32.42286805493672
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 28800,
+      "physical_time_s": 3.6,
+      "pressure_surface_min_max_mmHg": [
+        7.717721321872082,
+        8.64071036989282
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 35.595799594939606,
+      "speed_colour_range_cm_s": [
+        0,
+        35.595799594939606
+      ],
+      "streamline_count": 238
+    },
+    {
+      "step": 29200,
+      "physical_time_s": 3.65,
+      "pressure_surface_min_max_mmHg": [
+        6.948312914782375,
+        8.431706498832343
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 31.04109500165647,
+      "speed_colour_range_cm_s": [
+        0,
+        31.04109500165647
+      ],
+      "streamline_count": 239
+    },
+    {
+      "step": 29600,
+      "physical_time_s": 3.7,
+      "pressure_surface_min_max_mmHg": [
+        7.449388543905819,
+        8.035176525635944
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 21.344022788490964,
+      "speed_colour_range_cm_s": [
+        0,
+        21.344022788490964
+      ],
+      "streamline_count": 241
+    },
+    {
+      "step": 30000,
+      "physical_time_s": 3.75,
+      "pressure_surface_min_max_mmHg": [
+        6.788407430256786,
+        7.79789224284952
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 17.52610436765009,
+      "speed_colour_range_cm_s": [
+        0,
+        17.52610436765009
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 30400,
+      "physical_time_s": 3.8000000000000003,
+      "pressure_surface_min_max_mmHg": [
+        6.439890170092446,
+        7.127273189164625
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 13.38277964368857,
+      "speed_colour_range_cm_s": [
+        0,
+        13.38277964368857
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 30800,
+      "physical_time_s": 3.85,
+      "pressure_surface_min_max_mmHg": [
+        6.344895411866535,
+        6.6444436544315195
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 11.823484156101125,
+      "speed_colour_range_cm_s": [
+        0,
+        11.823484156101125
+      ],
+      "streamline_count": 243
+    },
+    {
+      "step": 31200,
+      "physical_time_s": 3.9,
+      "pressure_surface_min_max_mmHg": [
+        5.8106941466740665,
+        6.127011156639387
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 10.186018885992487,
+      "speed_colour_range_cm_s": [
+        0,
+        10.186018885992487
+      ],
+      "streamline_count": 240
+    },
+    {
+      "step": 31600,
+      "physical_time_s": 3.95,
+      "pressure_surface_min_max_mmHg": [
+        5.680007314505932,
+        6.065848890652977
+      ],
+      "pressure_colour_range_mmHg": [
+        0,
+        6
+      ],
+      "speed_max_cm_s": 9.327837982381292,
+      "speed_colour_range_cm_s": [
+        0,
+        9.327837982381292
+      ],
+      "streamline_count": 248
+    }
+  ]
+}

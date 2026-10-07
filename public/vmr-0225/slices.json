@@ -1,0 +1,281 @@
+{
+  "case": "0225_H_AO_COA",
+  "modality": "MR",
+  "source": "cardiovascular_demo_2026-10-07/0225_H_AO_COA.vti",
+  "sourceArray": {
+    "type": "Int16",
+    "name": "Scalars_",
+    "byteOrder": "LittleEndian"
+  },
+  "dimensions": [
+    300,
+    240,
+    280
+  ],
+  "origin": [
+    -19.002200317,
+    -19.500700378,
+    -15.194999695
+  ],
+  "spacing": [
+    0.12,
+    0.12,
+    0.10999908447
+  ],
+  "coordinateNote": "rawZ is the source VTI image coordinate. The companion header labels units mm; this export does not rescale or claim correspondence to surface coordinates.",
+  "imageAxisOrder": "source x increases left-to-right in PNG; source y increases top-to-bottom; source z is slice index",
+  "display": {
+    "format": "8-bit grayscale PNG",
+    "window": {
+      "min": 0,
+      "max": 12000,
+      "clipping": "saturate"
+    },
+    "resampling": "nearest-neighbor 2x export from source 300x240 to 600x480"
+  },
+  "registrationStatus": "MR slice previews only; no MR-to-surface overlay or registration is asserted",
+  "defaultSlice": 112,
+  "defaultIndex": 4,
+  "slices": [
+    {
+      "file": "slices/mr-080.png",
+      "index": 80,
+      "rawZ": -6.3950729374,
+      "z": -6.3950729374,
+      "label": "MR slice 80",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-088.png",
+      "index": 88,
+      "rawZ": -5.51508026164,
+      "z": -5.51508026164,
+      "label": "MR slice 88",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-096.png",
+      "index": 96,
+      "rawZ": -4.635087585880001,
+      "z": -4.635087585880001,
+      "label": "MR slice 96",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-104.png",
+      "index": 104,
+      "rawZ": -3.7550949101200004,
+      "z": -3.7550949101200004,
+      "label": "MR slice 104",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-112.png",
+      "index": 112,
+      "rawZ": -2.87510223436,
+      "z": -2.87510223436,
+      "label": "MR slice 112",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-120.png",
+      "index": 120,
+      "rawZ": -1.9951095586000012,
+      "z": -1.9951095586000012,
+      "label": "MR slice 120",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-128.png",
+      "index": 128,
+      "rawZ": -1.1151168828400007,
+      "z": -1.1151168828400007,
+      "label": "MR slice 128",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-136.png",
+      "index": 136,
+      "rawZ": -0.23512420708000015,
+      "z": -0.23512420708000015,
+      "label": "MR slice 136",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-144.png",
+      "index": 144,
+      "rawZ": 0.6448684686799986,
+      "z": 0.6448684686799986,
+      "label": "MR slice 144",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-152.png",
+      "index": 152,
+      "rawZ": 1.524861144439999,
+      "z": 1.524861144439999,
+      "label": "MR slice 152",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-160.png",
+      "index": 160,
+      "rawZ": 2.4048538201999996,
+      "z": 2.4048538201999996,
+      "label": "MR slice 160",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-168.png",
+      "index": 168,
+      "rawZ": 3.28484649596,
+      "z": 3.28484649596,
+      "label": "MR slice 168",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-176.png",
+      "index": 176,
+      "rawZ": 4.164839171720001,
+      "z": 4.164839171720001,
+      "label": "MR slice 176",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-184.png",
+      "index": 184,
+      "rawZ": 5.044831847479998,
+      "z": 5.044831847479998,
+      "label": "MR slice 184",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-192.png",
+      "index": 192,
+      "rawZ": 5.924824523239998,
+      "z": 5.924824523239998,
+      "label": "MR slice 192",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    },
+    {
+      "file": "slices/mr-200.png",
+      "index": 200,
+      "rawZ": 6.804817198999999,
+      "z": 6.804817198999999,
+      "label": "MR slice 200",
+      "sourceDimensions": [
+        300,
+        240
+      ],
+      "outputDimensions": [
+        600,
+        480
+      ]
+    }
+  ]
+}

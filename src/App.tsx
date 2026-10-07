@@ -1,103 +1,62 @@
 import { useState } from 'react'
-import { Activity, ArrowRight, Check, ChevronRight, CircleHelp, Crosshair, Layers3, RotateCcw, ScanLine, SlidersHorizontal } from 'lucide-react'
-import { CartesianGrid, Line, LineChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import CTCanvas, { type CTMode } from './CTCanvas'
-import Vessel3D from './Vessel3D'
+import { Activity, ArrowDownRight, ArrowLeft, ArrowRight, Box, Check, ExternalLink, FileDown, FileText, Play, RotateCcw, ScanLine } from 'lucide-react'
+import MRViewer from './MRViewer'
+import SurfaceViewer from './SurfaceViewer'
+import SimulationVideo from './SimulationVideo'
 import vinUniversityLogo from './assets/vinuniversity-logo.png'
-import ctMetadata from './assets/vmr-p3/ct-slices.json'
-import centerlineData from './assets/vmr-p3/centerline.json'
-import { caseId, curve3D, pathLengthMm, profile, sampledPathPoints, sampleAt } from './model'
 
 const stages = [
-  { label: 'Ảnh CT', title: 'Bắt đầu từ ảnh CT', note: 'Lát cắt thực của ca P-3. Điểm vàng trên mạch được theo dõi qua cả ba bước.', icon: ScanLine },
-  { label: 'CAD model', title: 'Mô hình CAD mạch từ CT', note: 'Mô hình PolyData P007 được dựng sẵn từ phân đoạn của cùng ca CT; xem bề mặt lưới, contour và centerline.', icon: Layers3 },
-  { label: '3D tương tác', title: 'Khám phá mô hình CAD trong 3D', note: 'Xoay và kiểm tra chính P007 ở bước 2. Mặt phẳng xanh giữ vị trí lát CT đã chọn.', icon: Activity },
-]
+  { number: '01', short: 'Ảnh MR', label: 'Ảnh giải phẫu', icon: ScanLine },
+  { number: '02', short: 'Bề mặt mạch', label: 'Hình học P001', icon: Box },
+  { number: '03', short: 'Dòng chảy', label: 'Video CFD', icon: Activity },
+] as const
 
-function slicePlaneY(index: number) {
-  return (ctMetadata.origin[2] + ctMetadata.sliceIndices[index] * ctMetadata.spacing[2] - centerlineData.bounds.center[2]) * centerlineData.bounds.scale
+function StageNotes({ stage }: { stage: number }) {
+  if (stage === 0) return <>
+    <div className="note-eyebrow"><span className="tiny-line"/> BƯỚC 01 / 03</div>
+    <h2>Bắt đầu từ ảnh MR của ca 0225</h2>
+    <p className="note-lead">Các lát ảnh được trích từ volume <strong>0225_H_AO_COA.vti</strong>. Báo cáo VMR xác nhận phương thức chụp là MR.</p>
+    <div className="fact-grid"><div><span>Ca dữ liệu</span><strong>0225_H_AO_COA</strong></div><div><span>Loại ảnh</span><strong>MR · VTI</strong></div><div><span>Volume gốc</span><strong>300 × 240 × 280 voxel</strong></div><div><span>Hiển thị</span><strong>Lát cắt nguồn</strong></div></div>
+    <div className="note-callout">Ảnh MR và bề mặt ở bước sau thuộc cùng ca. Demo này chưa kiểm chứng phép căn chỉnh không gian để phủ bề mặt lên từng lát MR.</div>
+    <a className="text-link" href="/vmr-0225/0225_H_AO_COA.pdf" target="_blank" rel="noreferrer"><FileText size={16}/> Xem báo cáo ca VMR <ExternalLink size={13}/></a>
+  </>
+
+  if (stage === 1) return <>
+    <div className="note-eyebrow"><span className="tiny-line"/> BƯỚC 02 / 03</div>
+    <h2>Khám phá bề mặt mạch P001</h2>
+    <p className="note-lead">Xoay, phóng to và quan sát bề mặt <strong>P001.vtp</strong>. Đây là hình học nguồn được mô tả là đầu vào cho lưới CFD của video ở bước 3.</p>
+    <div className="fact-grid"><div><span>Điểm bề mặt</span><strong>25.108</strong></div><div><span>Tam giác</span><strong>50.212</strong></div><div><span>Định dạng</span><strong>VTK PolyData</strong></div><div><span>Thao tác</span><strong>Xoay · zoom · pan</strong></div></div>
+    <div className="cad-card"><div className="cad-card-icon"><Box size={20}/></div><div><strong>CAD STEP tham khảo</strong><p>File <code>0225_H_AO_COA_lumen_smooth.step</code> là solid CAD xấp xỉ của lòng mạch. Video CFD dùng lưới từ P001, nên STEP không được trình bày như cùng một mesh.</p><a href="/vmr-0225/0225_H_AO_COA_lumen_smooth.step" download><FileDown size={15}/> Tải STEP <ArrowDownRight size={14}/></a></div></div>
+  </>
+
+  return <>
+    <div className="note-eyebrow"><span className="tiny-line"/> BƯỚC 03 / 03</div>
+    <h2>Xem mô phỏng CFD đã cung cấp</h2>
+    <p className="note-lead">Video hiển thị <strong>áp lực trên bề mặt</strong> bên trái và <strong>đường dòng vận tốc tức thời</strong> bên phải. Thanh thời gian liên kết với metadata của 80 frame.</p>
+    <div className="fact-grid"><div><span>Thời gian vật lý</span><strong>0–3,95 s</strong></div><div><span>Thời lượng phát</span><strong>16 s</strong></div><div><span>Số frame</span><strong>80 · 5 fps</strong></div><div><span>Thang áp lực</span><strong>0–6 mmHg cố định</strong></div></div>
+    <div className="note-callout">Đây là lượt chạy nghiên cứu với lưu lượng đầu vào được giảm có chủ ý. Màu áp lực vượt 6 mmHg bị bão hòa; thang màu vận tốc thay đổi theo từng frame. Không suy ra kết luận lâm sàng từ video này.</div>
+  </>
 }
-
-function nearestPathT(index: number, previousT: number) {
-  const targetY = slicePlaneY(index)
-  let bestT = previousT, bestCost = Infinity
-  sampledPathPoints.forEach((point, i) => {
-    const t = i / (sampledPathPoints.length - 1)
-    const cost = (point.y - targetY) ** 2 + .025 * (t - previousT) ** 2
-    if (cost < bestCost) { bestCost = cost; bestT = t }
-  })
-  return bestT
-}
-
-function closestCtSlice(y: number) {
-  let bestIndex = 0, bestGap = Infinity
-  ctMetadata.sliceIndices.forEach((_, i) => {
-    const gap = Math.abs(y - slicePlaneY(i))
-    if (gap < bestGap) { bestGap = gap; bestIndex = i }
-  })
-  return bestIndex
-}
-
-function BrandMark() { return <span className="brand-mark"><img src={vinUniversityLogo} alt="Logo VinUniversity" /></span> }
-function Stat({ label, value }: { label: string; value: string }) { return <div className="workstat"><span>{label}</span><strong>{value}</strong></div> }
 
 export default function App() {
-  const [stage, setStage] = useState(1)
-  const [slice, setSlice] = useState(4)
-  const [windowWidth, setWindowWidth] = useState(700)
-  const [ctMode, setCtMode] = useState<CTMode>('overlay')
-  const [centerline, setCenterline] = useState(true)
-  const [showPlane, setShowPlane] = useState(true)
-  const [flow, setFlow] = useState(false)
-  const [inspectT, setInspectT] = useState(() => nearestPathT(4, .46))
-  const [cameraReset, setCameraReset] = useState(0)
-  const sample = sampleAt(inspectT)
-  const current = stages[stage - 1]
-  const selectedWorldPoint = curve3D.getPointAt(inspectT)
-  const halfSampleGap = (ctMetadata.sliceIndices[1] - ctMetadata.sliceIndices[0]) * ctMetadata.spacing[2] * centerlineData.bounds.scale / 2
-  const pointOnSlice = Math.abs(selectedWorldPoint.y - slicePlaneY(slice)) <= halfSampleGap + .002
-  const selectedCtPoint: [number, number] | undefined = pointOnSlice ? [
-    (selectedWorldPoint.z / centerlineData.bounds.scale + centerlineData.bounds.center[0] - ctMetadata.origin[0]) / ctMetadata.spacing[0],
-    (selectedWorldPoint.x / centerlineData.bounds.scale + centerlineData.bounds.center[1] - ctMetadata.origin[1]) / ctMetadata.spacing[1],
-  ] : undefined
+  const [stage, setStage] = useState(0)
 
-  function updateSlice(next: number) {
-    const index = Math.max(0, Math.min(ctMetadata.sliceIndices.length - 1, next))
-    setSlice(index)
-    setInspectT(previous => nearestPathT(index, previous))
-  }
-  function selectModelPoint(t: number) {
-    const index = closestCtSlice(curve3D.getPointAt(t).y)
-    setSlice(index)
-    const inCtRange = Math.abs(curve3D.getPointAt(t).y - slicePlaneY(index)) <= halfSampleGap + .002
-    setInspectT(inCtRange ? nearestPathT(index, t) : t)
-  }
-  function navigate(next: number) { setStage(next); if (next === 2) setCtMode('overlay') }
-  function reset() { setStage(1); setSlice(4); setWindowWidth(700); setCtMode('overlay'); setCenterline(true); setShowPlane(true); setFlow(false); setInspectT(nearestPathT(4, .46)); setCameraReset(n => n + 1) }
+  return <div className="app-shell">
+    <header className="topbar"><div className="brand"><img src={vinUniversityLogo} alt="VinUniversity"/><div><strong>CardioFlow <em>Lab</em></strong><small>VASCULAR RESEARCH VIEWER</small></div></div><div className="header-case"><span>ACTIVE CASE</span><strong>0225_H_AO_COA</strong></div><button className="reset-button" type="button" onClick={() => setStage(0)}><RotateCcw size={15}/> Bắt đầu lại</button></header>
 
-  return <div className="app">
-    <header className="topbar"><div className="brand"><BrandMark/><div><strong>CardioFlow <span>Lab</span></strong><small>VINUNIVERSITY · CT → CAD MODEL → 3D</small></div></div><div className="top-meta"><div><span>CA DỮ LIỆU</span><strong>P-3 · CT</strong></div><i/><div><span>MÔ HÌNH</span><strong>{caseId}</strong></div></div><div className="top-actions"><span className="synthetic-badge"><b/> CÙNG MỘT CA</span><button onClick={reset} title="Đặt lại demo"><RotateCcw size={15}/> Đặt lại</button></div></header>
     <main>
-      <section className="intro"><div><div className="eyebrow"><span className="eyebrow-line"/> CT THẬT · CAD MODEL CÙNG CA · 3D TƯƠNG TÁC</div><h1>Một mạch máu, một luồng phân tích liên tục.</h1><p>Từ lát CT ca P-3, xem mô hình PolyData P007 cùng ca dưới góc nhìn kỹ thuật, rồi khám phá chính mô hình đó trong 3D. Lát cắt và điểm đã chọn được giữ xuyên suốt.</p></div><a className="source-link" href="https://purl.stanford.edu/hh073fw2871" target="_blank" rel="noreferrer">Nguồn ca P-3 <ArrowRight size={15}/></a></section>
-      <nav className="stepper" aria-label="Luồng CT đến CAD model và xem 3D">{stages.map((item, i) => { const Icon = item.icon; return <div className="stepper-item" key={item.label}><button className={stage === i + 1 ? 'active' : ''} onClick={() => navigate(i + 1)} aria-current={stage === i + 1 ? 'step' : undefined}><span className="step-circle">{stage > i + 1 ? <Check size={14}/> : String(i + 1).padStart(2, '0')}</span><Icon size={17}/><span><strong>{item.label}</strong><small>{i === 0 ? 'CT volume P-3' : i === 1 ? 'PolyData · P007.vtp' : 'Cùng mô hình P007'}</small></span></button>{i < 2 && <ChevronRight size={15} className="step-arrow"/>}</div> })}</nav>
-      <section className="workstation"><div className={`continuous-view stage-${stage}`}>
-        <div className="viewer-status"><span className="live-dot"/> {caseId} <b>·</b> CT {ctMetadata.sliceIndices[slice]} / 872 <b>·</b> {stage === 1 ? 'SOURCE IMAGE' : stage === 2 ? 'CT ↔ CAD MODEL P007' : 'CT ↔ CAD ↔ 3D · SAME GEOMETRY'}</div>
-        <div className="continuous-ct">
-          <CTCanvas slice={slice} windowWidth={windowWidth} mode={stage === 1 ? 'ct' : stage === 2 ? ctMode : 'overlay'} onSlice={updateSlice} selectedPoint={selectedCtPoint}/>
-          {stage >= 2 && <div className="pane-caption">01 · CT {ctMetadata.sliceIndices[slice]} · ROI PHÓNG ĐẠI{!pointOnSlice && ' · ĐIỂM 3D NGOÀI LÁT MẪU'}</div>}
-        </div>
-        {stage >= 2 && <div className="continuous-cad"><Vessel3D flow={false} selectedT={inspectT} onSelect={selectModelPoint} resetKey={cameraReset} interactive centerline={centerline} segmentationView sliceIndex={slice} showSlicePlane/><div className="mesh-tag">02 · CAD POLYDATA P007 · LÁT {ctMetadata.sliceIndices[slice]}</div></div>}
-        {stage === 3 && <div className="continuous-mesh"><Vessel3D flow={flow} selectedT={inspectT} onSelect={selectModelPoint} resetKey={cameraReset} interactive sliceIndex={slice} showSlicePlane={showPlane}/><div className="mesh-tag">03 · 3D CÙNG P007 · LÁT {ctMetadata.sliceIndices[slice]}</div></div>}
-        {stage === 2 && <div className="bridge-label"><span>CT + MASK</span><ArrowRight size={15}/><span>POLYDATA P007</span></div>}
-      </div><aside className="workstation-side"><div className="side-heading"><div className="eyebrow">BƯỚC 0{stage} / 03</div><h2>{current.title}</h2><p>{current.note}</p></div>
-        {stage === 1 && <div className="side-content"><div className="case-pill"><ScanLine size={17}/> ẢNH GỐC · P-3 · CT</div><Stat label="Nguồn ảnh" value="0227_H_AO_COA.vti"/><Stat label="Bề mặt sẽ dùng" value="P007.vtp"/><Stat label="Lát đang xem" value={`${ctMetadata.sliceIndices[slice]} / 872`}/><p className="side-explain">Thanh lát cắt này chỉ hiển thị 9 lát đã trích quanh quai động mạch chủ. Sang bước 2, chính lát hiện tại sẽ giữ nguyên và được phủ đường bao mạch.</p></div>}
-        {stage === 2 && <div className="side-content"><div className="case-pill"><Layers3 size={17}/> CAD MODEL · POLYDATA P007</div><div className="viewer-modes">{(['ct','overlay','mask'] as const).map(mode => <button key={mode} className={ctMode === mode ? 'active' : ''} onClick={() => setCtMode(mode)}>{mode === 'ct' ? 'CT' : mode === 'overlay' ? 'CT + Mask' : 'Mask'}</button>)}</div><label className="check-row"><input type="checkbox" checked={centerline} onChange={e => setCenterline(e.target.checked)}/> Hiện centerline trên mô hình</label><Stat label="Dạng hình học" value="PolyData · 74.572 tam giác"/><Stat label="Mặt cắt liên kết" value={`CT ${ctMetadata.sliceIndices[slice]} ↔ P007`}/><p className="side-explain">Vùng màu trên CT và vòng vàng trên CAD là cùng giao tuyến của P007 với lát đang chọn. Đổi lát để cả hai cập nhật. P007 là mô hình có sẵn của ca P-3, không phải STEP/BREP tham số hay kết quả dựng mới ngay trên web.</p></div>}
-        {stage === 3 && <div className="side-content"><div className="case-pill"><Activity size={17}/> CT ↔ CAD ↔ 3D · CÙNG P007</div><div className="viewer-modes"><button className={!flow ? 'active' : ''} onClick={() => setFlow(false)}>Anatomy</button><button className={flow ? 'active' : ''} onClick={() => setFlow(true)}>Velocity demo</button></div><label className="check-row"><input type="checkbox" checked={showPlane} onChange={e => setShowPlane(e.target.checked)}/> Hiện mặt phẳng của lát CT trên 3D</label><button className="camera-reset" onClick={() => setCameraReset(n => n + 1)}><RotateCcw size={14}/> Đặt lại góc nhìn</button><Stat label="Lát liên kết" value={pointOnSlice ? `CT ${ctMetadata.sliceIndices[slice]} ↔ P007` : 'Điểm ngoài 9 lát CT mẫu'}/><Stat label="Vị trí trên centerline" value={`${sample.distance} mm`}/><Stat label="Vận tốc giả lập*" value={`${sample.velocity.toFixed(2)} cm/s`}/></div>}
-        <div className="side-bottom"><div className="range-heading"><label htmlFor="slice">LÁT CT CÙNG CA</label><strong>{ctMetadata.sliceIndices[slice]} <span>/ 872</span></strong></div><input id="slice" type="range" min="0" max={ctMetadata.sliceIndices.length - 1} value={slice} onChange={e => updateSlice(+e.target.value)}/><div className="control-foot"><span>9 lát gần quai mạch</span><span>CT thật</span></div>{stage < 3 && <div className="secondary-range"><label htmlFor="width"><SlidersHorizontal size={13}/> Window width</label><input id="width" type="range" min="350" max="1200" step="10" value={windowWidth} onChange={e => setWindowWidth(+e.target.value)}/><span>{windowWidth} HU</span></div>}<button className="primary-action" onClick={() => stage === 3 ? reset() : navigate(stage + 1)}>{stage === 1 ? 'Xem mô hình từ CT' : stage === 2 ? 'Xoay mô hình trong 3D' : 'Chạy lại luồng'} <ArrowRight size={17}/></button><p className="source-note">CT và geometry cùng ca P-3. Chỉ giá trị có dấu * là mô phỏng.</p></div>
-      </aside></section>
-      <div className="continuity-strip"><span className={stage >= 1 ? 'lit' : ''}><ScanLine size={15}/> CT {ctMetadata.sliceIndices[slice]}</span><ArrowRight size={14}/><span className={stage >= 2 ? 'lit' : ''}><Layers3 size={15}/> CAD model · PolyData P007</span><ArrowRight size={14}/><span className={stage >= 3 ? 'lit' : ''}><Activity size={15}/> 3D tương tác cùng P007</span></div>
-      {stage === 3 && <section className="profile-section"><div className="profile-chart"><div className="profile-head"><div><div className="eyebrow">ILLUSTRATIVE FLOW PROFILE</div><h3>Hồ sơ mô phỏng dọc theo mạch</h3></div><span><Crosshair size={14}/> Di chuột để dời điểm trên 3D</span></div><div className="chart-legend"><span><i className="diameter-key"/> Đường kính minh họa (mm)</span><span><i className="index-key"/> Vận tốc giả lập (cm/s)</span><span><i className="lesion-key"/> Vùng hẹp minh họa</span></div><div className="chart-wrap"><ResponsiveContainer width="100%" height="100%"><LineChart data={profile} margin={{top:9,right:20,bottom:0,left:-13}} onMouseMove={state => { if (state.activeLabel !== undefined) selectModelPoint(Math.max(0, Math.min(1, Number(state.activeLabel) / pathLengthMm))) }}><CartesianGrid vertical={false} stroke="#e8eef0" strokeDasharray="3 4"/><XAxis dataKey="distance" type="number" domain={[0,pathLengthMm]} ticks={[0,67,135,202,269]} tick={{fontSize:10,fill:'#91a3ad'}} axisLine={{stroke:'#dbe5e8'}} tickLine={false} unit=" mm"/><YAxis yAxisId="diameter" domain={[0,30]} tick={{fontSize:10,fill:'#91a3ad'}} axisLine={false} tickLine={false}/><YAxis yAxisId="velocity" orientation="right" domain={[0,5]} tick={{fontSize:10,fill:'#91a3ad'}} axisLine={false} tickLine={false}/><Tooltip contentStyle={{border:'1px solid #d9e5e9',borderRadius:6,fontSize:11}} labelFormatter={v => `${v} mm`}/><ReferenceArea yAxisId="diameter" x1={105} x2={158} fill="#f6ddc5" fillOpacity={.45} strokeOpacity={0}/><ReferenceLine yAxisId="diameter" x={sample.distance} stroke="#357c94" strokeDasharray="4 4"/><Line yAxisId="diameter" type="monotone" dataKey="diameter" name="Đường kính minh họa" stroke="#c98776" strokeWidth={2.3} dot={false} isAnimationActive={false}/><Line yAxisId="velocity" type="monotone" dataKey="velocity" name="Vận tốc giả lập" stroke="#3c9fae" strokeWidth={2.2} dot={false} isAnimationActive={false}/></LineChart></ResponsiveContainer></div></div><div className="measurement-card"><div className="eyebrow">ĐIỂM ĐO · DEMO</div><div className="measurement-value"><span>{sample.distance}</span> mm <b>dọc centerline P-3</b></div><div className="measure-row"><span>Đường kính minh họa*</span><strong>{sample.diameter.toFixed(1)} mm</strong></div><div className="measure-row"><span>Áp lực tương đối giả lập*</span><strong>{sample.pressure.toFixed(2)} mmHg</strong></div><div className="measure-row"><span>Vận tốc giả lập*</span><strong>{sample.velocity.toFixed(2)} cm/s</strong></div><div className="measure-note"><CircleHelp size={15}/> CT và mesh là cùng ca. Giá trị * chỉ minh họa, không phải kết quả lâm sàng.</div></div></section>}
-      <footer><span>CardioFlow Lab <b>·</b> VMR P-3</span><span>CT <ArrowRight size={12}/> CAD MODEL P007 <ArrowRight size={12}/> 3D TƯƠNG TÁC</span><span><a href="https://purl.stanford.edu/hh073fw2871" target="_blank" rel="noreferrer">Stanford VMR source</a> · RESEARCH DEMO</span></footer>
+      <section className="hero"><div><div className="hero-kicker"><span/> MỘT CA DỮ LIỆU · BA GÓC NHÌN</div><h1>Từ ảnh MR đến <span>dòng chảy trong động mạch chủ.</span></h1><p>Đi qua ảnh nguồn, hình học lòng mạch và video mô phỏng của ca coarctation <strong>0225_H_AO_COA</strong>. Mỗi bước dùng đúng asset trong thư mục bạn cung cấp.</p><div className="hero-tags"><span>MR SOURCE</span><span>P001 SURFACE</span><span>CFD VIDEO</span></div></div><div className="hero-index"><span>CASE STUDY</span><strong>0225</strong><small>VMR · AORTA / COA</small></div></section>
+
+      <nav className="flow-nav" aria-label="Các bước của flow">{stages.map((item, index) => { const Icon = item.icon; return <button type="button" key={item.number} className={`flow-step ${stage === index ? 'active' : ''} ${stage > index ? 'passed' : ''}`} aria-current={stage === index ? 'step' : undefined} onClick={() => setStage(index)}><span className="step-number">{stage > index ? <Check size={16}/> : item.number}</span><span className="step-copy"><small>{item.label}</small><strong>{item.short}</strong></span><Icon className="step-icon" size={19}/>{index < stages.length - 1 && <ArrowRight className="step-chevron" size={17}/>}</button> })}</nav>
+
+      <section className={`workstation${stage === 2 ? ' cfd' : ''}`} aria-label={stages[stage].label}>
+        <div className="visual-column"><div className="visual-head"><div><span className="visual-live"/> <strong>{stages[stage].label}</strong><span className="visual-sep">/</span><span>VMR 0225_H_AO_COA</span></div><span className="visual-stage">{stages[stage].number} / 03</span></div><div className={`visual-body visual-body-${stage + 1}`}>{stage === 0 && <MRViewer/>}{stage === 1 && <SurfaceViewer active/>}{stage === 2 && <SimulationVideo active/>}</div></div>
+        <aside className="stage-notes"><div className="stage-notes-main"><StageNotes stage={stage}/></div><div className="stage-actions"><span>{stage === 0 ? 'Ảnh nguồn' : stage === 1 ? 'Hình học nguồn' : 'Mô phỏng đã kết xuất'}</span><div><button className="secondary-button" type="button" disabled={stage === 0} onClick={() => setStage(value => value - 1)}><ArrowLeft size={16}/> Trước</button><button className="primary-button" type="button" onClick={() => setStage(value => value === 2 ? 0 : value + 1)}>{stage === 2 ? <><RotateCcw size={15}/> Xem lại flow</> : <>Bước tiếp <ArrowRight size={16}/></>}</button></div></div></aside>
+      </section>
+
+      <section className="provenance"><div className="provenance-title"><span>DATA LINEAGE</span><h2>Quan hệ giữa các file</h2></div><div className="provenance-track"><div className={stage === 0 ? 'selected' : ''}><ScanLine size={17}/><span><strong>MR volume</strong><small>0225_H_AO_COA.vti</small></span></div><ArrowRight size={17}/><div className={stage === 1 ? 'selected' : ''}><Box size={17}/><span><strong>Bề mặt P001</strong><small>P001.vtp</small></span></div><ArrowRight size={17}/><div className={stage === 2 ? 'selected' : ''}><Play size={17}/><span><strong>Video CFD</strong><small>áp lực + đường dòng</small></span></div></div><div className="provenance-branch"><span>Nhánh CAD từ hình học ca này</span><ArrowDownRight size={15}/><strong>STEP xấp xỉ</strong><span>· file tham khảo riêng, không phải mesh của video</span></div></section>
+
+      <footer><div><strong>CardioFlow Lab</strong><span> · VinUniversity demo · Nghiên cứu và phát triển</span></div><div><a href="https://purl.stanford.edu/rm095dp9056" target="_blank" rel="noreferrer">VMR case source <ExternalLink size={12}/></a><a href="/vmr-0225/LICENSE.txt" target="_blank" rel="noreferrer">License</a><a href="/vmr-0225/README-COPYRIGHT" target="_blank" rel="noreferrer">Copyright</a></div></footer>
     </main>
   </div>
 }

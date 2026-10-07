@@ -1,0 +1,91 @@
+{
+  "case": "0225_H_AO_COA",
+  "units": "normalized viewer world (source values are cm as stored)",
+  "source": {
+    "surface": "cardiovascular_demo_2026-10-07/P001.vtp",
+    "geometryRole": "surface used by the supplied CFD movie",
+    "relationToStep": "P001.vtp and the supplied STEP are related case geometry; exact registration/equality is not asserted",
+    "sourceCoordinateUnits": "cm (as stored in the supplied surface/handoff)",
+    "sourceCoordinateSystem": "VTK XYZ; no source coordinates were modified"
+  },
+  "format": {
+    "file": "surface.bin",
+    "header": "uint32le vertexCount, uint32le indexCount",
+    "positions": "vertexCount * 3 float32le viewer xyz",
+    "indices": "indexCount uint32le triangle indices",
+    "indexCountMeaning": "number of scalar indices, divisible by three"
+  },
+  "counts": {
+    "vertices": 25108,
+    "triangles": 50212,
+    "indices": 150636
+  },
+  "sourceBounds": {
+    "min": [
+      -3.0950686931610107,
+      -6.563312530517578,
+      -11.108582496643066
+    ],
+    "max": [
+      5.127909183502197,
+      0.29471781849861145,
+      7.458180904388428
+    ]
+  },
+  "sourceCenter": [
+    1.0164202451705933,
+    -3.1342973560094833,
+    -1.8252007961273193
+  ],
+  "sourceSize": [
+    8.222977876663208,
+    6.85803034901619,
+    18.566763401031494
+  ],
+  "center": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "size": [
+    0.8857739713757943,
+    2.0,
+    0.7387426877680991
+  ],
+  "bounds": {
+    "min": [
+      -0.44288698568789714,
+      -1.0,
+      -0.3693713438840496
+    ],
+    "max": [
+      0.44288698568789714,
+      1.0,
+      0.3693713438840496
+    ]
+  },
+  "viewerBounds": {
+    "min": [
+      -0.44288698568789714,
+      -1.0,
+      -0.3693713438840496
+    ],
+    "max": [
+      0.44288698568789714,
+      1.0,
+      0.3693713438840496
+    ]
+  },
+  "viewerTransform": {
+    "formula": "viewer = [(rawX-centerX)*scale, (rawZ-centerZ)*scale, -(rawY-centerY)*scale]",
+    "scale": 0.10771936695702646,
+    "rawAxisToViewer": {
+      "viewerX": "rawX+",
+      "viewerY": "rawZ+",
+      "viewerZ": "rawY-"
+    },
+    "recommendedUp": "raw Z positive / viewer Y positive",
+    "recommendedFront": "raw Y negative / viewer Z positive",
+    "registrationStatus": "surface transform is display normalization only; it is not an MR registration"
+  }
+}
