@@ -1,235 +1,18 @@
-import { Canvas, ThreeEvent, useFrame } from '@react-three/fiber'
-import { Line, OrbitControls } from '@react-three/drei'
 import { Activity, AlertTriangle, ExternalLink, MousePointer2, Rotate3D, RotateCcw, Target } from 'lucide-react'
-import { useMemo, useRef, useState } from 'react'
-import * as THREE from 'three'
+import { useMemo, useState } from 'react'
+import CoronaryModelView from './CoronaryModelView'
 import {
   DEMO_CASE,
   DEMO_LESIONS,
   DEMO_PLAQUE_TOTAL_MM3,
   getDemoLesion,
-  type DemoLesion,
-  type LesionSelectionProps,
+  DEMO_LESIONS as PROFILE_LESIONS, demoRatioAt, LESION_POSITION, BRANCH_LENGTH_MM,
+  type ProbeSelectionProps,
 } from './coronaryDemoData'
 import './CoronaryPhysiologyDemo.css'
 
-type BranchSpec = {
-  id: DemoLesion['branch']
-  label: string
-  lesionT: number
-  path: readonly [number, number, number][]
-}
-
-const BRANCH_SPECS: readonly BranchSpec[] = [
-  {
-    id: 'lad',
-    label: 'LAD',
-    lesionT: .56,
-    path: [
-      [0, .02, .02], [-.08, .19, .04], [-.11, .42, .02], [-.14, .67, .03], [-.20, .91, .08], [-.31, 1.13, .10], [-.37, 1.34, .04],
-    ],
-  },
-  {
-    id: 'lcx',
-    label: 'LCx',
-    lesionT: .42,
-    path: [
-      [0, .02, .02], [.20, .05, .03], [.41, .02, .05], [.63, -.05, .04], [.85, -.18, .08], [1.02, -.38, .13], [1.10, -.59, .08],
-    ],
-  },
-  {
-    id: 'rca',
-    label: 'RCA',
-    lesionT: .52,
-    path: [
-      [-.15, -.08, -.04], [-.36, -.18, -.02], [-.58, -.34, .02], [-.77, -.53, .07], [-.83, -.74, .11], [-.74, -.95, .08], [-.56, -1.10, .02],
-    ],
-  },
-]
-
-const TRUNK_PATH: readonly [number, number, number][] = [
-  [-.15, -.08, -.04], [-.11, -.01, -.01], [-.03, .02, .02], [0, .02, .02],
-]
-
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
-
-function ratioColor(ratio: number) {
-  if (ratio < .8) return '#ef8b78'
-  if (ratio < .88) return '#e5c46b'
-  return '#61d1c0'
-}
-
-function ratioLabel(ratio: number) {
-  if (ratio < .8) return 'thấp hơn trong preset'
-  if (ratio < .88) return 'trung gian trong preset'
-  return 'cao hơn trong preset'
-}
-
-function makeCurve(points: readonly [number, number, number][]) {
-  return new THREE.CatmullRomCurve3(points.map(([x, y, z]) => new THREE.Vector3(x, y, z)), false, 'catmullrom', .22)
-}
-
-function makeSubCurve(curve: THREE.CatmullRomCurve3, start: number, end: number) {
-  const samples = 28
-  const points = Array.from({ length: samples + 1 }, (_, index) => curve.getPointAt(start + ((end - start) * index) / samples))
-  return new THREE.CatmullRomCurve3(points, false, 'catmullrom', .1)
-}
-
-function FlowDots({ curve, color }: { curve: THREE.CatmullRomCurve3; color: string }) {
-  const dots = useRef<Array<THREE.Mesh | null>>([])
-
-  useFrame(({ clock }) => {
-    dots.current.forEach((dot, index) => {
-      if (!dot) return
-      const t = (clock.getElapsedTime() * .075 + index * .26) % 1
-      dot.position.copy(curve.getPointAt(t))
-    })
-  })
-
-  return (
-    <group>
-      {[0, 1, 2].map(index => (
-        <mesh key={index} ref={node => { dots.current[index] = node }}>
-          <sphereGeometry args={[.024, 8, 8]} />
-          <meshBasicMaterial color={color} transparent opacity={.9} />
-        </mesh>
-      ))}
-    </group>
-  )
-}
-
-function LesionPin({
-  lesion,
-  position,
-  selected,
-  onSelect,
-}: {
-  lesion: DemoLesion
-  position: THREE.Vector3
-  selected: boolean
-  onSelect: (id: DemoLesion['id']) => void
-}) {
-  const group = useRef<THREE.Group>(null)
-  const pinColor = selected ? '#ffbd73' : '#ee9b7c'
-
-  useFrame(({ clock }) => {
-    if (!group.current) return
-    const pulse = selected ? 1 + Math.sin(clock.getElapsedTime() * 3.5) * .08 : 1
-    group.current.scale.setScalar(pulse)
-  })
-
-  function select(event: ThreeEvent<MouseEvent>) {
-    event.stopPropagation()
-    onSelect(lesion.id)
-  }
-
-  return (
-    <group
-      ref={group}
-      position={position}
-      onClick={select}
-      onPointerOver={() => { document.body.style.cursor = 'pointer' }}
-      onPointerOut={() => { document.body.style.cursor = '' }}
-    >
-      <mesh>
-        <sphereGeometry args={[selected ? .075 : .06, 18, 18]} />
-        <meshBasicMaterial color={pinColor} transparent opacity={.95} />
-      </mesh>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[selected ? .13 : .095, .012, 10, 32]} />
-        <meshBasicMaterial color={pinColor} transparent opacity={selected ? .9 : .55} />
-      </mesh>
-    </group>
-  )
-}
-
-function CoronaryBranch({
-  spec,
-  lesion,
-  selected,
-  onSelect,
-}: {
-  spec: BranchSpec
-  lesion: DemoLesion
-  selected: boolean
-  onSelect: (id: DemoLesion['id']) => void
-}) {
-  const curves = useMemo(() => {
-    const whole = makeCurve(spec.path)
-    const lesionStart = clamp(spec.lesionT - .045, .05, .92)
-    const lesionEnd = clamp(spec.lesionT + .045, .08, .97)
-    return {
-      whole,
-      proximal: makeSubCurve(whole, 0, lesionStart),
-      lesion: makeSubCurve(whole, lesionStart, lesionEnd),
-      distal: makeSubCurve(whole, lesionEnd, 1),
-      marker: whole.getPointAt(spec.lesionT),
-    }
-  }, [spec])
-  const distalColor = ratioColor(lesion.distalRatio)
-
-  function pickBranch(event: ThreeEvent<MouseEvent>) {
-    event.stopPropagation()
-    onSelect(lesion.id)
-  }
-
-  return (
-    <group>
-      <mesh onClick={pickBranch}>
-        <tubeGeometry args={[curves.proximal, 30, .052, 10, false]} />
-        <meshStandardMaterial color="#70b8bc" roughness={.44} metalness={.06} />
-      </mesh>
-      <mesh onClick={pickBranch}>
-        <tubeGeometry args={[curves.lesion, 16, .058, 10, false]} />
-        <meshStandardMaterial color="#db8d75" roughness={.4} metalness={.05} emissive="#4a1e1e" emissiveIntensity={.35} />
-      </mesh>
-      <mesh onClick={pickBranch}>
-        <tubeGeometry args={[curves.distal, 34, .046, 10, false]} />
-        <meshStandardMaterial color={distalColor} roughness={.4} metalness={.06} emissive={distalColor} emissiveIntensity={selected ? .2 : .06} />
-      </mesh>
-      <FlowDots curve={curves.whole} color={distalColor} />
-      <LesionPin lesion={lesion} position={curves.marker} selected={selected} onSelect={onSelect} />
-    </group>
-  )
-}
-
-function CoronaryTree({ selectedLesionId, onSelectLesion, resetKey }: LesionSelectionProps & { resetKey: number }) {
-  const trunk = useMemo(() => makeCurve(TRUNK_PATH), [])
-  const origin = useMemo(() => new THREE.Vector3(-.02, .02, .02), [])
-
-  return (
-    <>
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[2, 3, 4]} intensity={2.2} color="#effdff" />
-      <directionalLight position={[-3, -2, 1]} intensity={1.15} color="#68b9d3" />
-      <mesh>
-        <tubeGeometry args={[trunk, 24, .073, 12, false]} />
-        <meshStandardMaterial color="#8ac9c6" roughness={.35} metalness={.08} />
-      </mesh>
-      <mesh position={origin}>
-        <sphereGeometry args={[.1, 18, 18]} />
-        <meshStandardMaterial color="#b7ede0" emissive="#459d9b" emissiveIntensity={.45} roughness={.26} />
-      </mesh>
-      {BRANCH_SPECS.map(spec => {
-        const lesion = getDemoLesion(spec.id === 'lad' ? 'L1' : spec.id === 'lcx' ? 'L2' : 'L3')
-        return <CoronaryBranch key={spec.id} spec={spec} lesion={lesion} selected={selectedLesionId === lesion.id} onSelect={onSelectLesion} />
-      })}
-      <Line points={[[0, -.03, -.01], [0, .02, .02]]} color="#d7f5ec" transparent opacity={.5} lineWidth={1} />
-      <OrbitControls
-        key={resetKey}
-        makeDefault
-        enableDamping
-        dampingFactor={.08}
-        enablePan={false}
-        minDistance={2.25}
-        maxDistance={5.3}
-        minPolarAngle={.35}
-        maxPolarAngle={2.7}
-        target={[0, .06, 0]}
-      />
-    </>
-  )
-}
+function ratioColor(value: number) { return value < .8 ? '#ef8b78' : value < .88 ? '#e5c46b' : '#61d1c0' }
+function ratioLabel(value: number) { return value < .8 ? 'thấp hơn trong preset' : 'giá trị preset' }
 
 function RatioLegend() {
   return (
@@ -242,9 +25,14 @@ function RatioLegend() {
   )
 }
 
-export default function CoronaryPhysiologyDemo({ selectedLesionId, onSelectLesion }: LesionSelectionProps) {
+export default function CoronaryPhysiologyDemo({ selectedLesionId, onSelectLesion, probeT, onProbeTChange }: ProbeSelectionProps) {
   const [resetKey, setResetKey] = useState(0)
   const selected = getDemoLesion(selectedLesionId)
+  function updateProbe(t: number) {
+    const nearest = DEMO_LESIONS.filter(l => l.branch === selected.branch).reduce((a,b) => Math.abs(LESION_POSITION[a.id]-t) < Math.abs(LESION_POSITION[b.id]-t) ? a : b)
+    onSelectLesion(nearest.id)
+    onProbeTChange(t)
+  }
   const rankedLesions = useMemo(() => [...DEMO_LESIONS].sort((a, b) => b.severityPct - a.severityPct), [])
 
   return (
@@ -269,14 +57,22 @@ export default function CoronaryPhysiologyDemo({ selectedLesionId, onSelectLesio
             <span><i aria-hidden="true" /> CÂY MẠCH VÀNH · PROCEDURAL VIEW</span>
             <span><Rotate3D size={13} /> kéo để xoay · cuộn để zoom</span>
           </div>
-          <div className="coronary-physiology-demo__canvas-wrap" role="img" aria-label="Cây mạch vành giả lập 3D với ba ghim tổn thương có thể chọn">
-            <Canvas camera={{ position: [0, .32, 3.4], fov: 34, near: .1, far: 20 }} dpr={[1, 1.7]} gl={{ antialias: true, alpha: true }}>
-              <color attach="background" args={['#071d2a']} />
-              <CoronaryTree selectedLesionId={selectedLesionId} onSelectLesion={onSelectLesion} resetKey={resetKey} />
-            </Canvas>
+          <div className="coronary-physiology-demo__canvas-wrap" role="img" aria-label="Cây mạch vành giả lập 3D với các ghim tổn thương và điểm thăm dò tự do">
+            <CoronaryModelView selectedLesionId={selectedLesionId} onSelectLesion={onSelectLesion} probeT={probeT} onProbeTChange={onProbeTChange} resetKey={resetKey} height={450} />
             <div className="coronary-physiology-demo__canvas-hint"><MousePointer2 size={12} /> Chọn ghim trên cây mạch hoặc danh sách bên cạnh</div>
           </div>
           <RatioLegend />
+          <div className="coronary-extra-panel">
+            <label htmlFor="coronary-probe">Ghim dọc {selected.branchLabel} · {(probeT * BRANCH_LENGTH_MM[selected.branch]).toFixed(1)} mm</label>
+            <input id="coronary-probe" aria-label="Vị trí ghim dọc nhánh" type="range" min="0" max="100" value={Math.round(probeT*100)} onChange={e=>updateProbe(Number(e.target.value)/100)}/>
+            <strong aria-live="polite">Tỷ lệ tại ghim: {demoRatioAt(selected.branch,probeT).toFixed(2)} · preset</strong>
+            <svg viewBox="0 0 620 140" role="img" aria-label="Đường tỷ lệ preset dọc nhánh">
+              <path d={Array.from({length:101},(_,i)=>`${i?'L':'M'} ${20+i*5.8} ${15+(1-demoRatioAt(selected.branch,i/100))*280}`).join(' ')} fill="none" stroke="#3b9e9e" strokeWidth="3"/>
+              {PROFILE_LESIONS.filter(l=>l.branch===selected.branch).map(l=><g key={l.id}><line x1={20+LESION_POSITION[l.id]*580} x2={20+LESION_POSITION[l.id]*580} y1="8" y2="115" stroke="#c09060" strokeDasharray="4 4"/><text x={20+LESION_POSITION[l.id]*580} y="133" textAnchor="middle" fill="#795637" fontSize="12">{l.id}</text></g>)}
+              <circle cx={20+probeT*580} cy={15+(1-demoRatioAt(selected.branch,probeT))*280} r="5" fill="#163e53"/>
+            </svg>
+            <small>{selected.branch==='lad'?'LAD có L1 và L4 nối tiếp: đường preset giảm qua từng vị trí.':'Chạm lên mạch 3D hoặc kéo thanh để đặt ghim tại vị trí bất kỳ.'} Các giá trị được nội suy từ preset.</small>
+          </div>
         </div>
 
         <aside className="coronary-physiology-demo__side" aria-label="Bảng dữ liệu mô phỏng mạch vành">
@@ -305,7 +101,7 @@ export default function CoronaryPhysiologyDemo({ selectedLesionId, onSelectLesio
 
           <div className="coronary-physiology-demo__side-section coronary-physiology-demo__detail-grid">
             <div><span>MẢNG BÁM · PRESET</span><strong>{selected.plaqueMm3.nonCalcified + selected.plaqueMm3.calcified + selected.plaqueMm3.lowAttenuation} mm³</strong><small>tổn thương đang chọn</small></div>
-            <div><span>TỔNG MẢNG BÁM</span><strong>{DEMO_PLAQUE_TOTAL_MM3} mm³</strong><small>ba preset cộng lại</small></div>
+            <div><span>TỔNG MẢNG BÁM</span><strong>{DEMO_PLAQUE_TOTAL_MM3} mm³</strong><small>tổng các preset</small></div>
           </div>
 
           <div className="coronary-physiology-demo__side-section coronary-physiology-demo__plan-card">

@@ -15,10 +15,11 @@ import {
   DEMO_CASE,
   DEMO_LESIONS,
   type DemoLesion,
-  type LesionSelectionProps,
+  type PlanSelectionProps, LESION_POSITION, defaultDemoPlan,
   getDemoLesion,
 } from './coronaryDemoData'
 import './CoronaryPlanDemo.css'
+import CoronaryModelView from './CoronaryModelView'
 
 type PlanExtent = 'focal' | 'balanced' | 'long'
 
@@ -178,18 +179,18 @@ function RatioCard({ lesion }: { lesion: DemoLesion }) {
   )
 }
 
-export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: LesionSelectionProps) {
+export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion, plans, onPlanChange }: PlanSelectionProps) {
   const lengthId = useId()
   const selectedLesion = getDemoLesion(selectedLesionId)
-  const [stentLength, setStentLength] = useState(selectedLesion.lengthMm + 8)
-  const [extent, setExtent] = useState<PlanExtent>('balanced')
+  const plan = plans[selectedLesionId]
+  const stentLength = plan.stentLength
+  const extent = getExtentFromLength(selectedLesion, stentLength)
+  const setStentLength = (value: number) => onPlanChange(selectedLesionId, { ...plan, stentLength: value })
   const [compareOpen, setCompareOpen] = useState(false)
   const [compareIds, setCompareIds] = useState<DemoLesion['id'][]>([selectedLesionId])
 
   useEffect(() => {
-    setStentLength(selectedLesion.lengthMm + 8)
-    setExtent('balanced')
-    setCompareIds((current) => current.includes(selectedLesion.id) ? current : [selectedLesion.id, ...current].slice(0, 3))
+    setCompareIds((current) => current.includes(selectedLesion.id) ? current : [selectedLesion.id, ...current].slice(0, DEMO_LESIONS.length))
   }, [selectedLesion.id, selectedLesion.lengthMm])
 
   const minLength = selectedLesion.lengthMm + 4
@@ -200,18 +201,15 @@ export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: L
   )
 
   const changeExtent = (nextExtent: PlanExtent) => {
-    setExtent(nextExtent)
     setStentLength(selectedLesion.lengthMm + EXTENT_COPY[nextExtent].offset)
   }
 
   const changeLength = (value: number) => {
     setStentLength(value)
-    setExtent(getExtentFromLength(selectedLesion, value))
   }
 
   const reset = () => {
-    setStentLength(selectedLesion.lengthMm + 8)
-    setExtent('balanced')
+    onPlanChange(selectedLesionId, defaultDemoPlan(selectedLesion))
     setCompareOpen(false)
     setCompareIds([selectedLesion.id])
   }
@@ -219,7 +217,7 @@ export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: L
   const toggleCompare = (id: DemoLesion['id']) => {
     setCompareIds((current) => {
       if (current.includes(id)) return current.length === 1 ? current : current.filter((item) => item !== id)
-      return current.length >= 3 ? current : [...current, id]
+      return current.length >= DEMO_LESIONS.length ? current : [...current, id]
     })
   }
 
@@ -259,6 +257,14 @@ export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: L
 
       <div className="coronary-plan__workspace">
         <div className="coronary-plan__main-column">
+          <CoronaryModelView selectedLesionId={selectedLesionId} onSelectLesion={onSelectLesion} probeT={LESION_POSITION[selectedLesionId]} onProbeTChange={()=>undefined} mode="plan" plan={plan}/>
+          <div className="coronary-extra-panel">
+            <label htmlFor="carm-lao">Góc ngang C-arm: {plan.lao >= 0 ? 'LAO' : 'RAO'} {Math.abs(plan.lao)}°</label>
+            <input id="carm-lao" aria-label="Góc ngang C-arm" type="range" min="-90" max="90" value={plan.lao} onChange={e=>onPlanChange(selectedLesionId,{...plan,lao:Number(e.target.value)})}/>
+            <label htmlFor="carm-cranial">Góc dọc: {plan.cranial >= 0 ? 'cranial' : 'caudal'} {Math.abs(plan.cranial)}°</label>
+            <input id="carm-cranial" aria-label="Góc dọc C-arm" type="range" min="-45" max="45" value={plan.cranial} onChange={e=>onPlanChange(selectedLesionId,{...plan,cranial:Number(e.target.value)})}/>
+            <small>Hai thanh đổi góc nhìn 3D thực tế. Lưới sáng đánh dấu stent ảo và hai đầu của vùng phủ. Kế hoạch được giữ khi đổi tab và đưa vào báo cáo.</small>
+          </div>
           <VesselPlanGraphic lesion={selectedLesion} stentLength={stentLength} />
           <RatioCard lesion={selectedLesion} />
         </div>
@@ -287,7 +293,7 @@ export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: L
           <div className="coronary-plan__planning-card">
             <div className="coronary-plan__panel-label"><Layers3 size={14} /> LANDING ZONES</div>
             <div className="coronary-plan__planning-row"><span><i className="is-zone" /> Mốc đáp lành giả lập</span><strong>{selectedLesion.planning.landingZoneMm} mm</strong></div>
-            <div className="coronary-plan__planning-row"><span><i className="is-angle" /> Góc C-arm mẫu</span><strong>{selectedLesion.planning.cArmAngle}</strong></div>
+            <div className="coronary-plan__planning-row"><span><i className="is-angle" /> Góc C-arm mẫu</span><strong>{plan.lao >= 0 ? 'LAO' : 'RAO'} {Math.abs(plan.lao)}° · {plan.cranial >= 0 ? 'cranial' : 'caudal'} {Math.abs(plan.cranial)}°</strong></div>
             <p>Hai vùng đáp được đánh dấu để giải thích phạm vi phủ trong kế hoạch ảo.</p>
           </div>
 
@@ -296,7 +302,7 @@ export default function CoronaryPlanDemo({ selectedLesionId, onSelectLesion }: L
           </button>
           {compareOpen && (
             <div className="coronary-plan__compare-panel">
-              <p>Chọn tối đa 3 đoạn để đặt cạnh nhau.</p>
+              <p>Chọn các đoạn để đặt cạnh nhau, gồm L1 và L4 nối tiếp trên LAD.</p>
               {DEMO_LESIONS.map((lesion) => (
                 <label key={lesion.id} className="coronary-plan__compare-option">
                   <input type="checkbox" checked={compareIds.includes(lesion.id)} onChange={() => toggleCompare(lesion.id)} />

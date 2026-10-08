@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from 'react'
 import { Activity, ArrowRight, ClipboardList, ExternalLink, GitBranch, Layers3, ScanLine, ShieldCheck } from 'lucide-react'
-import { DEMO_CASE, getDemoLesion, type DemoLesion } from './coronaryDemoData'
+import { DEMO_CASE, getDemoLesion, LESION_POSITION, initialDemoPlans, type DemoPlan, type DemoLesion } from './coronaryDemoData'
 import './CoronarySuite.css'
 
 const CoronaryPhysiologyDemo = lazy(() => import('./CoronaryPhysiologyDemo'))
@@ -22,8 +22,12 @@ type ViewKey = typeof views[number]['key']
 export default function CoronarySuite() {
   const [view, setView] = useState<ViewKey>('physiology')
   const [selectedLesionId, setSelectedLesionId] = useState<DemoLesion['id']>('L1')
+  const [probeT, setProbeT] = useState(LESION_POSITION.L1)
+  const [plans, setPlans] = useState(initialDemoPlans)
+  function selectLesion(id: DemoLesion['id']) { setSelectedLesionId(id); setProbeT(LESION_POSITION[id]) }
+  function changePlan(id: DemoLesion['id'], plan: DemoPlan) { setPlans(current => ({ ...current, [id]: plan })) }
   const selectedLesion = getDemoLesion(selectedLesionId)
-  const shared = { selectedLesionId, onSelectLesion: setSelectedLesionId }
+  const shared = { selectedLesionId, onSelectLesion: selectLesion, probeT, onProbeTChange: setProbeT }
 
   return (
     <section className="coronary-suite" id="coronary-suite" aria-labelledby="coronary-suite-title">
@@ -60,8 +64,8 @@ export default function CoronarySuite() {
           {view === 'physiology' && <CoronaryPhysiologyDemo {...shared} />}
           {view === 'roadmap' && <CoronaryRoadmapDemo {...shared} />}
           {view === 'plaque' && <CoronaryPlaqueDemo {...shared} />}
-          {view === 'plan' && <CoronaryPlanDemo {...shared} />}
-          {view === 'report' && <CoronaryReportDemo {...shared} />}
+          {view === 'plan' && <CoronaryPlanDemo {...shared} plans={plans} onPlanChange={changePlan} />}
+          {view === 'report' && <CoronaryReportDemo {...shared} plans={plans} />}
         </Suspense>
         <div className="coronary-suite__workspace-foot"><span>Giá trị giả lập · chỉ để trải nghiệm giao diện</span><button type="button" onClick={() => setView(views[(views.findIndex(item => item.key === view) + 1) % views.length].key)}>Góc xem tiếp theo <ArrowRight size={14} /></button></div>
       </div>

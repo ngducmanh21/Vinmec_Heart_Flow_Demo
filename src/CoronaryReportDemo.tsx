@@ -12,16 +12,18 @@ import {
   ShieldCheck,
   Sparkles,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   DEMO_CASE,
   DEMO_LESIONS,
   DEMO_PLAQUE_TOTAL_MM3,
   getDemoLesion,
   type DemoLesion,
-  type LesionSelectionProps,
+  type LesionSelectionProps, type DemoPlans, TPV_BANDS, tpvBandIndex,
 } from './coronaryDemoData'
 import './CoronaryReportDemo.css'
+import './CoronaryEnhancements.css'
+import { createCoronaryReportPdf } from './coronaryReportPdf'
 
 type WorkflowStep = {
   number: string
@@ -45,7 +47,7 @@ function plaqueTotal(lesion: DemoLesion) {
   return lesion.plaqueMm3.nonCalcified + lesion.plaqueMm3.calcified + lesion.plaqueMm3.lowAttenuation
 }
 
-function reportText(selected: DemoLesion) {
+function reportText(selected: DemoLesion, plans: DemoPlans) {
   const lines = [
     'CARDIOFLOW LAB · CASE SUMMARY',
     '================================',
@@ -72,6 +74,10 @@ function reportText(selected: DemoLesion) {
     ...DEMO_LESIONS.map(
       lesion => `${lesion.id} · ${lesion.branchLabel} · ${lesion.location} · ${lesion.severityPct}% illustrative narrowing`,
     ),
+    '',
+    'SAVED VIRTUAL PLANS',
+    ...DEMO_LESIONS.map(l => `${l.id}: ${plans[l.id].stentLength} mm stent | horizontal ${plans[l.id].lao} deg | vertical ${plans[l.id].cranial} deg`),
+    `Total plaque: ${DEMO_PLAQUE_TOTAL_MM3} mm3 | TPV band: ${TPV_BANDS[tpvBandIndex(DEMO_PLAQUE_TOTAL_MM3)].label}`,
     '',
     'WORKFLOW STATUS',
     'CCTA concept → anatomy/physiology demo → lesion review → report',
@@ -132,11 +138,19 @@ function LesionRow({ lesion, selected, onSelect }: { lesion: DemoLesion; selecte
   )
 }
 
-export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }: LesionSelectionProps) {
+export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion, plans }: LesionSelectionProps & {plans: DemoPlans}) {
   const [activeStep, setActiveStep] = useState(0)
   const [downloaded, setDownloaded] = useState(false)
+  const [delivery, setDelivery] = useState(0)
+  const [pdfUrl, setPdfUrl] = useState('')
+  useEffect(() => {
+    const bytes = createCoronaryReportPdf(selectedLesionId, plans)
+    const url = URL.createObjectURL(new Blob([bytes.slice().buffer as ArrayBuffer], {type:'application/pdf'}))
+    setPdfUrl(url)
+    return () => URL.revokeObjectURL(url)
+  }, [selectedLesionId, plans])
   const selected = useMemo(() => getDemoLesion(selectedLesionId), [selectedLesionId])
-  const plainReport = useMemo(() => reportText(selected), [selected])
+  const plainReport = useMemo(() => reportText(selected, plans), [selected, plans])
   const downloadHref = useMemo(() => `data:text/plain;charset=utf-8,${encodeURIComponent(plainReport)}`, [plainReport])
 
   const jumpToLesion = (id: DemoLesion['id']) => {
@@ -161,7 +175,7 @@ export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }:
         <div className="coronary-report__hero-status">
           <div className="coronary-report__status-icon"><ShieldCheck size={21} /></div>
           <strong>Không kết nối hệ thống</strong>
-          <span>PACS / EMR · OFF</span>
+          <span>PACS / EMR · LOCAL DEMO</span>
         </div>
       </header>
 
@@ -171,6 +185,12 @@ export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }:
       </div>
 
       <WorkflowRail activeStep={activeStep} onStepChange={setActiveStep} />
+      <div className="coronary-extra-panel" aria-live="polite">{[
+        'Đầu vào demo: hình học dựng sẵn, không cần tải ảnh bệnh nhân.',
+        'Mô hình dùng chung các nhánh LAD, LCx, RCA và các preset tỷ lệ, mức hẹp, mảng bám.',
+        'Chọn tổn thương trong danh sách để xem đúng số liệu và kế hoạch được lưu.',
+        'Mở hoặc tải PDF tổng hợp; có thể thử trạng thái giao nhận PACS/EMR ở panel bên dưới.'
+      ][activeStep]}</div>
 
       <div className="coronary-report__summary-grid">
         <article className="coronary-report__summary-card">
@@ -183,7 +203,7 @@ export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }:
             <div><span>Nhánh review</span><strong>03</strong><small>LAD · LCx · RCA</small></div>
             <div><span>Plaque tổng</span><strong>{DEMO_PLAQUE_TOTAL_MM3}</strong><small>mm³ · quy ước</small></div>
           </div>
-          <div className="coronary-report__input-note"><Layers3 size={14} /><span><strong>CCTA concept</strong> · volume procedural để diễn giải cách một case workspace có thể nối hình học, physiology và report.</span></div>
+          <div className="coronary-report__input-note"><Layers3 size={14} /><span><strong>CCTA concept</strong> · hình học tổng hợp để diễn giải cách một case workspace có thể nối hình học, physiology và report.</span></div>
         </article>
 
         <article className="coronary-report__selected-card">
@@ -197,6 +217,7 @@ export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }:
             <RatioBar label="Distal" value={selected.distalRatio} tone="violet" />
             <RatioBar label="Planning" value={selected.plannedRatio} tone="gold" />
           </div>
+          <div className="coronary-extra-panel"><strong>Kế hoạch PCI đã chọn</strong><span>{plans[selected.id].stentLength} mm · {plans[selected.id].lao >= 0 ? 'LAO' : 'RAO'} {Math.abs(plans[selected.id].lao)}° · góc dọc {plans[selected.id].cranial}°</span></div>
           <div className="coronary-report__selected-foot"><span><strong>{selected.severityPct}%</strong> mức hẹp hình học</span><span><strong>{plaqueTotal(selected)} mm³</strong> plaque demo</span></div>
         </article>
       </div>
@@ -208,17 +229,19 @@ export default function CoronaryReportDemo({ selectedLesionId, onSelectLesion }:
           <div className="coronary-report__lesion-list">
             {DEMO_LESIONS.map(lesion => <LesionRow key={lesion.id} lesion={lesion} selected={lesion.id === selected.id} onSelect={() => jumpToLesion(lesion.id)} />)}
           </div>
-          <div className="coronary-report__review-note"><Sparkles size={14} /><span><strong>Gợi ý demo:</strong> đổi L1 → L2 → L3 để thấy selected lesion và report context cập nhật theo.</span></div>
+          <div className="coronary-report__review-note"><Sparkles size={14} /><span><strong>Gợi ý demo:</strong> đổi L1 → L2 → L3 → L4 để thấy selected lesion và report context cập nhật theo.</span></div>
         </article>
 
         <aside className="coronary-report__report-card">
-          <div className="coronary-report__report-card-top"><span className="coronary-report__heading-icon is-green"><FileText size={16} /></span><div><small>REPORT WORKFLOW</small><strong>Xuất bản tóm tắt</strong></div><span className="coronary-report__report-state">{downloaded ? 'READY' : 'LOCAL'}</span></div>
-          <p>Snapshot hiện tại gồm lesion đang chọn, ba dòng register và caveat của dataset. File được tạo ngay trong trình duyệt.</p>
+          <div className="coronary-report__report-card-top"><span className="coronary-report__heading-icon is-green"><FileText size={16} /></span><div><small>REPORT WORKFLOW</small><strong>Xuất bản tóm tắt</strong></div><span className="coronary-report__report-state">{downloaded ? 'YÊU CẦU TẢI' : 'LOCAL'}</span></div>
+          <p>Báo cáo gồm các tổn thương, tổng plaque và chiều dài stent/góc C-arm bạn đã chọn. PDF được tạo tại trình duyệt.</p>
           <div className="coronary-report__report-preview">
             <div><span>Selected</span><strong>{selected.id} · {selected.branchLabel}</strong></div>
-            <div><span>Output</span><strong>TXT · {DEMO_CASE.id.toLowerCase()}-case-summary</strong></div>
+            <div><span>Output</span><strong>PDF + TXT · {DEMO_CASE.id.toLowerCase()}</strong></div>
             <div><span>Transport</span><strong>Local browser only</strong></div>
           </div>
+          <div className="coronary-pdf-actions"><a href={pdfUrl} download={`${DEMO_CASE.id.toLowerCase()}-report.pdf`} onClick={handleDownload}>Tải báo cáo PDF</a><a href={pdfUrl} target="_blank" rel="noreferrer">Mở PDF</a></div>
+          <div className="coronary-case-delivery"><strong>Giao nhận mô phỏng</strong><p aria-live="polite">{['Chưa chuẩn bị gói demo','Đã đóng gói báo cáo demo','PACS mô phỏng đã nhận','EMR mô phỏng đã nhận'][delivery]}</p><button type="button" onClick={()=>setDelivery(value=>(value+1)%4)}>{['Chuẩn bị gói demo','Chuyển tới PACS mô phỏng','Chuyển tới EMR mô phỏng','Đặt lại giao nhận'][delivery]}</button><p>Trạng thái chạy cục bộ, không gửi dữ liệu ra hệ thống ngoài.</p></div>
           <a className="coronary-report__download" href={downloadHref} download={`${DEMO_CASE.id.toLowerCase()}-case-summary.txt`} onClick={handleDownload}><Download size={15} /> {downloaded ? 'Tải lại bản tóm tắt' : 'Tải case summary'}</a>
           <details className="coronary-report__text-preview"><summary>Xem nội dung bản tóm tắt</summary><pre>{plainReport}</pre></details>
           <div className="coronary-report__report-foot"><Check size={13} /><span>Không gửi dữ liệu ra ngoài · không PACS/EMR integration</span></div>

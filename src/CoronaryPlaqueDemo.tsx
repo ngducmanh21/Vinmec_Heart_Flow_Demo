@@ -1,26 +1,19 @@
 import { BarChart3, Info, Layers3, MapPin, ShieldCheck, Sparkles } from 'lucide-react'
-import { useId, useMemo } from 'react'
-import { DEMO_CASE, DEMO_LESIONS, DEMO_PLAQUE_TOTAL_MM3, type DemoLesion, type LesionSelectionProps } from './coronaryDemoData'
+import { useId, useMemo, useState } from 'react'
+import { DEMO_CASE, DEMO_LESIONS, DEMO_PLAQUE_TOTAL_MM3, LESION_POSITION, BRANCH_LENGTH_MM, TPV_BANDS, tpvBandIndex, demoSeverityAt, type ProbeSelectionProps, type DemoLesion, type LesionSelectionProps } from './coronaryDemoData'
 import './CoronaryPlaqueDemo.css'
+import CoronaryModelView from './CoronaryModelView'
 
 type PlaqueComposition = DemoLesion['plaqueMm3']
 
 const COMPOSITION_ITEMS: Array<{ key: keyof PlaqueComposition; label: string; shortLabel: string; color: string }> = [
-  { key: 'nonCalcified', label: 'Không vôi hóa', shortLabel: 'Non-calcified', color: '#72c8bd' },
+  { key: 'nonCalcified', label: 'Không vôi hóa khác', shortLabel: 'Non-calcified', color: '#72c8bd' },
   { key: 'calcified', label: 'Vôi hóa', shortLabel: 'Calcified', color: '#e6b36f' },
   { key: 'lowAttenuation', label: 'Giảm đậm độ', shortLabel: 'Low attenuation', color: '#c696bd' },
 ]
 
 function plaqueTotal(composition: PlaqueComposition) {
   return composition.nonCalcified + composition.calcified + composition.lowAttenuation
-}
-
-function stageForPlaque(composition: PlaqueComposition, severity: number) {
-  const total = plaqueTotal(composition)
-  const lowAttenuationShare = composition.lowAttenuation / total
-  if (lowAttenuationShare > .12) return { label: 'Pha C · hỗn hợp có vùng giảm đậm độ', tone: 'is-violet', detail: 'Nhãn giáo dục dựa trên cấu phần synthetic' }
-  if (severity >= 60) return { label: 'Pha B · mảng phối hợp tại vùng hẹp', tone: 'is-amber', detail: 'Nhãn giáo dục dựa trên cấu phần synthetic' }
-  return { label: 'Pha A · mảng nhẹ trong mô hình', tone: 'is-teal', detail: 'Nhãn giáo dục dựa trên cấu phần synthetic' }
 }
 
 function CompositionRing({ composition, titleId }: { composition: PlaqueComposition; titleId: string }) {
@@ -46,49 +39,22 @@ function CompositionRing({ composition, titleId }: { composition: PlaqueComposit
   )
 }
 
-function StraightenedVessel({ lesion, titleId }: { lesion: DemoLesion; titleId: string }) {
-  const plaqueWidth = 86 + lesion.lengthMm * 5
-  const plaqueX = 425 - plaqueWidth / 2
-  const plaqueHeight = 26 + lesion.severityPct * .26
-  return (
-    <svg className="coronary-plaque__longitudinal" viewBox="0 0 900 270" role="img" aria-labelledby={`${titleId}-vessel-title ${titleId}-vessel-desc`}>
-      <title id={`${titleId}-vessel-title`}>Mạch vành duỗi thẳng với vùng mảng bám đang chọn</title>
-      <desc id={`${titleId}-vessel-desc`}>Một đoạn mạch duỗi thẳng được chia thành đầu gần, vùng tổn thương và đầu xa. Vùng cam là vị trí được liên kết với các mặt cắt phía dưới trong mô hình.</desc>
-      <defs>
-        <linearGradient id={`${titleId}-vessel-bg`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#092634" />
-          <stop offset="1" stopColor="#123d49" />
-        </linearGradient>
-        <linearGradient id={`${titleId}-wall`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#7bd1c6" stopOpacity=".86" />
-          <stop offset=".5" stopColor="#367f8d" stopOpacity=".9" />
-          <stop offset="1" stopColor="#62b5b5" stopOpacity=".82" />
-        </linearGradient>
-        <filter id={`${titleId}-soft-glow`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-      </defs>
-      <rect width="900" height="270" rx="10" fill={`url(#${titleId}-vessel-bg)`} />
-      <g className="coronary-plaque__vessel-grid" aria-hidden="true">
-        <line x1="30" y1="48" x2="870" y2="48" /><line x1="30" y1="221" x2="870" y2="221" />
-        {Array.from({ length: 9 }, (_, index) => <line key={index} x1={58 + index * 100} y1="38" x2={58 + index * 100} y2="231" />)}
-      </g>
-      <text x="34" y="27" className="coronary-plaque__vessel-kicker">STRAIGHTENED VESSEL · DEMO CO-REGISTRATION</text>
-      <text x="866" y="27" textAnchor="end" className="coronary-plaque__vessel-kicker">LONGITUDINAL VIEW</text>
-      <path d="M 56 91 C 180 91 242 91 323 91 C 365 91 375 70 425 70 C 475 70 485 91 527 91 C 608 91 720 91 844 91 L 844 180 C 720 180 608 180 527 180 C 485 180 475 201 425 201 C 375 201 365 180 323 180 C 242 180 180 180 56 180 Z" fill="#0c3442" stroke="url(#${titleId}-wall)" strokeWidth="4" />
-      <path d="M 58 135 C 210 135 297 135 844 135" fill="none" stroke="#cbf6df" strokeWidth="2" strokeDasharray="2 15" strokeLinecap="round" opacity=".72" />
-      <path d={`M ${plaqueX} ${135 - plaqueHeight / 2} C ${plaqueX + plaqueWidth * .24} ${135 - plaqueHeight / 2 - 8} ${plaqueX + plaqueWidth * .72} ${135 - plaqueHeight / 2 - 8} ${plaqueX + plaqueWidth} ${135 - plaqueHeight / 2} L ${plaqueX + plaqueWidth} ${135 + plaqueHeight / 2} C ${plaqueX + plaqueWidth * .72} ${135 + plaqueHeight / 2 + 8} ${plaqueX + plaqueWidth * .24} ${135 + plaqueHeight / 2 + 8} ${plaqueX} ${135 + plaqueHeight / 2} Z`} fill="#e5a86d42" stroke="#f4c98c" strokeWidth="1.5" filter={`url(#${titleId}-soft-glow)`} />
-      <path d={`M ${plaqueX + 13} ${135 - plaqueHeight / 2 + 9} C ${plaqueX + plaqueWidth * .29} ${135 - plaqueHeight / 2 + 3} ${plaqueX + plaqueWidth * .68} ${135 - plaqueHeight / 2 + 3} ${plaqueX + plaqueWidth - 12} ${135 - plaqueHeight / 2 + 9}`} fill="none" stroke="#c894bf" strokeWidth="6" strokeLinecap="round" opacity=".74" />
-      <path d={`M ${plaqueX + 13} ${135 + plaqueHeight / 2 - 9} C ${plaqueX + plaqueWidth * .29} ${135 + plaqueHeight / 2 - 3} ${plaqueX + plaqueWidth * .68} ${135 + plaqueHeight / 2 - 3} ${plaqueX + plaqueWidth - 12} ${135 + plaqueHeight / 2 - 9}`} fill="none" stroke="#e7b56e" strokeWidth="7" strokeLinecap="round" opacity=".75" />
-      <path d={`M 425 50 V 219`} stroke="#edbf7d" strokeWidth="1" strokeDasharray="3 6" />
-      <circle cx="425" cy="48" r="5" fill="#ffe0a4" />
-      <text x="425" y="244" textAnchor="middle" className="coronary-plaque__vessel-label">{lesion.id} · {lesion.branchLabel} · {lesion.lengthMm} mm vùng chọn</text>
-      <text x="58" y="205" className="coronary-plaque__vessel-end-label">ĐẦU GẦN</text>
-      <text x="844" y="205" textAnchor="end" className="coronary-plaque__vessel-end-label">ĐẦU XA</text>
-    </svg>
-  )
+function StraightenedVessel({lesion,probeT,onProbeTChange}: {lesion:DemoLesion;probeT:number;onProbeTChange:(t:number)=>void}) {
+  const branchLesions=DEMO_LESIONS.filter(l=>l.branch===lesion.branch)
+  return <svg className="coronary-plaque__longitudinal" viewBox="0 0 900 250" role="img" aria-label="Mạch duỗi thẳng liên kết với ghim 3D và mặt cắt">
+    <rect width="900" height="250" rx="10" fill="#0b2937"/>
+    <text x="28" y="30" fill="#acd9d4" fontSize="12">{lesion.branchLabel} · STRAIGHTENED VESSEL · DEMO</text>
+    <rect x="45" y="84" width="810" height="96" rx="15" fill="#1b505d" stroke="#72c8bd" strokeWidth="3"/>
+    {branchLesions.map(l=>{const x=45+LESION_POSITION[l.id]*810,w=l.lengthMm/BRANCH_LENGTH_MM[l.branch]*810;return <g key={l.id}><rect x={x-w/2} y="86" width={w} height="92" rx="7" fill="#e6b36f" opacity=".6"/><rect x={x-w/2} y={132-46*(1-l.severityPct/100)} width={w} height={92*(1-l.severityPct/100)} fill="#0c2937"/><text x={x} y="207" textAnchor="middle" fill="#eac589" fontSize="13">{l.id}</text></g>})}
+    <line x1={45+probeT*810} x2={45+probeT*810} y1="55" y2="215" stroke="#fff6c7" strokeWidth="2" strokeDasharray="4 4"/>
+    <circle cx={45+probeT*810} cy="57" r="6" fill="#ffe09b"/>
+    <rect x="45" y="55" width="810" height="165" fill="transparent" onClick={e=>{const r=e.currentTarget.getBoundingClientRect();onProbeTChange(Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)))}} style={{cursor:'crosshair'}}/>
+    <text x="450" y="237" textAnchor="middle" fill="#b9d9d8" fontSize="12">Bấm dọc mạch hoặc kéo thanh để đổi mặt cắt</text>
+  </svg>
 }
 
 function CrossSection({ label, severity, composition, tone, selected, titleId }: { label: string; severity: number; composition: PlaqueComposition; tone: 'reference' | 'lesion' | 'distal'; selected?: boolean; titleId: string }) {
-  const lumen = Math.max(19, 41 - severity * .17)
+  const lumen = Math.max(5, 41 * (1 - severity / 100))
   const outer = 57
   const plaque = Math.max(4, outer - lumen - 18)
   const total = plaqueTotal(composition)
@@ -108,7 +74,7 @@ function CrossSection({ label, severity, composition, tone, selected, titleId }:
         <circle cx="95" cy="78" r="4" fill="#a8e6d8" opacity=".75" />
         <text x="95" y="146" textAnchor="middle" className="coronary-plaque__cross-axis">MẶT CẮT NGANG</text>
       </svg>
-      <div className="coronary-plaque__cross-foot"><span><i className={`is-${tone}`} /> {selected ? 'đồng bộ với vùng chọn' : 'mốc tham chiếu'}</span><strong>{Math.round(lumen * 2)} px lumen</strong></div>
+      <div className="coronary-plaque__cross-foot"><span><i className={`is-${tone}`} /> {selected ? 'đồng bộ với vùng chọn' : 'mốc tham chiếu'}</span><strong>MINH HỌA</strong></div>
     </div>
   )
 }
@@ -129,11 +95,17 @@ function LesionSelector({ selectedLesionId, onSelectLesion }: LesionSelectionPro
   </div>
 }
 
-export default function CoronaryPlaqueDemo({ selectedLesionId, onSelectLesion }: LesionSelectionProps) {
+export default function CoronaryPlaqueDemo({ selectedLesionId, onSelectLesion, probeT, onProbeTChange }: ProbeSelectionProps) {
   const titleId = useId()
   const selected = useMemo(() => DEMO_LESIONS.find(lesion => lesion.id === selectedLesionId) ?? DEMO_LESIONS[0], [selectedLesionId])
+  function updateProbe(t: number) {
+    const nearest = DEMO_LESIONS.filter(l => l.branch === selected.branch).reduce((a,b) => Math.abs(LESION_POSITION[a.id]-t) < Math.abs(LESION_POSITION[b.id]-t) ? a : b)
+    onSelectLesion(nearest.id)
+    onProbeTChange(t)
+  }
   const selectedTotal = plaqueTotal(selected.plaqueMm3)
-  const stage = stageForPlaque(selected.plaqueMm3, selected.severityPct)
+  const [stagingVolume, setStagingVolume] = useState(DEMO_PLAQUE_TOTAL_MM3)
+  const stageIndex = tpvBandIndex(stagingVolume)
   const referenceComposition: PlaqueComposition = { nonCalcified: Math.max(8, Math.round(selected.plaqueMm3.nonCalcified * .2)), calcified: Math.max(3, Math.round(selected.plaqueMm3.calcified * .2)), lowAttenuation: 2 }
   const distalComposition: PlaqueComposition = { nonCalcified: Math.max(7, Math.round(selected.plaqueMm3.nonCalcified * .48)), calcified: Math.max(3, Math.round(selected.plaqueMm3.calcified * .42)), lowAttenuation: Math.max(1, Math.round(selected.plaqueMm3.lowAttenuation * .35)) }
 
@@ -153,8 +125,10 @@ export default function CoronaryPlaqueDemo({ selectedLesionId, onSelectLesion }:
 
       <div className="coronary-plaque__workspace">
         <div className="coronary-plaque__visual-column">
-          <div className="coronary-plaque__visual-card"><div className="coronary-plaque__card-head"><span><span className="coronary-plaque__live-dot" /> CO-REGISTRATION THEO DEMO</span><small>{selected.id} · {selected.branchLabel}</small></div><div className="coronary-plaque__longitudinal-wrap"><StraightenedVessel lesion={selected} titleId={titleId} /></div><div className="coronary-plaque__longitudinal-legend"><span><i className="is-wall" /> Thành mạch mô hình</span><span><i className="is-noncalcified" /> Mảng không vôi hóa</span><span><i className="is-calcified" /> Mảng vôi hóa</span><span><i className="is-low" /> Vùng giảm đậm độ</span></div></div>
-          <div className="coronary-plaque__section-card"><div className="coronary-plaque__section-head"><div><span className="coronary-plaque__section-kicker"><MapPin size={13} /> CÙNG VỊ TRÍ · BA MẶT CẮT</span><h3>Nhìn thành mạch từ ba điểm</h3></div><span className="coronary-plaque__linked-label"><Sparkles size={12} /> linked view</span></div><div className="coronary-plaque__cross-grid"><CrossSection label="Đầu gần" severity={Math.round(selected.severityPct * .25)} composition={referenceComposition} tone="reference" titleId={titleId} /><CrossSection label="Vùng chọn" severity={selected.severityPct} composition={selected.plaqueMm3} tone="lesion" selected titleId={titleId} /><CrossSection label="Đầu xa" severity={Math.round(selected.severityPct * .48)} composition={distalComposition} tone="distal" titleId={titleId} /></div></div>
+          <CoronaryModelView selectedLesionId={selectedLesionId} onSelectLesion={onSelectLesion} probeT={probeT} onProbeTChange={onProbeTChange} mode="plaque"/>
+          <div className="coronary-extra-panel"><label htmlFor="plaque-probe">Mặt cắt trên {selected.branchLabel} · {(probeT*BRANCH_LENGTH_MM[selected.branch]).toFixed(1)} mm</label><input id="plaque-probe" aria-label="Vị trí mặt cắt mảng bám" type="range" min="0" max="100" value={Math.round(probeT*100)} onChange={e=>updateProbe(Number(e.target.value)/100)}/><small>Ghim 3D, đường trên mạch duỗi thẳng và mặt cắt giữa dùng cùng vị trí.</small></div>
+          <div className="coronary-plaque__visual-card"><div className="coronary-plaque__card-head"><span><span className="coronary-plaque__live-dot" /> CO-REGISTRATION THEO DEMO</span><small>{selected.id} · {selected.branchLabel}</small></div><div className="coronary-plaque__longitudinal-wrap"><StraightenedVessel lesion={selected} probeT={probeT} onProbeTChange={updateProbe} /></div><div className="coronary-plaque__longitudinal-legend"><span><i className="is-wall" /> Thành mạch mô hình</span><span><i className="is-noncalcified" /> Không vôi hóa khác</span><span><i className="is-calcified" /> Mảng vôi hóa</span><span><i className="is-low" /> Vùng giảm đậm độ</span></div></div>
+          <div className="coronary-plaque__section-card"><div className="coronary-plaque__section-head"><div><span className="coronary-plaque__section-kicker"><MapPin size={13} /> CÙNG VỊ TRÍ · BA MẶT CẮT</span><h3>Nhìn thành mạch từ ba điểm</h3></div><span className="coronary-plaque__linked-label"><Sparkles size={12} /> linked view</span></div><div className="coronary-plaque__cross-grid"><CrossSection label="Đầu gần" severity={Math.round(demoSeverityAt(selected.branch, Math.max(0,probeT-.12)))} composition={referenceComposition} tone="reference" titleId={titleId} /><CrossSection label="Vùng chọn" severity={Math.round(demoSeverityAt(selected.branch,probeT))} composition={selected.plaqueMm3} tone="lesion" selected titleId={titleId} /><CrossSection label="Đầu xa" severity={Math.round(demoSeverityAt(selected.branch,Math.min(1,probeT+.12)))} composition={distalComposition} tone="distal" titleId={titleId} /></div></div>
         </div>
 
         <aside className="coronary-plaque__controls" aria-label="Thông tin plaque synthetic">
@@ -162,7 +136,15 @@ export default function CoronaryPlaqueDemo({ selectedLesionId, onSelectLesion }:
           <div className="coronary-plaque__selected-heading"><div><span className="coronary-plaque__selected-dot" /><h3>{selected.id} · {selected.branchLabel}</h3></div><small>{selected.location}</small></div>
           <div className="coronary-plaque__total-card"><div><span>PLAQUE VOLUME · VÙNG CHỌN</span><strong>{selectedTotal} mm³</strong><small>tổng ba cấu phần trong mô hình</small></div><CompositionRing composition={selected.plaqueMm3} titleId={titleId} /></div>
           <CompositionBars composition={selected.plaqueMm3} />
-          <div className={`coronary-plaque__stage-card ${stage.tone}`}><div className="coronary-plaque__stage-heading"><ShieldCheck size={15} /><span>PLAQUE STAGING · GIÁO DỤC</span></div><strong>{stage.label}</strong><small>{stage.detail}</small></div>
+          <div className="coronary-extra-panel">
+            <div><ShieldCheck size={15}/> PLAQUE STAGING · TPV</div>
+            <strong>{stagingVolume} mm³ → {TPV_BANDS[stageIndex].label}</strong>
+            <div className="coronary-tpv-bands">{TPV_BANDS.map((band,i)=><span key={band.label} className={i===stageIndex?'is-active':''}><b>{band.label}</b>{band.range} mm³</span>)}</div>
+            <label htmlFor="tpv-demo">Thử TPV khác (minh họa độc lập)</label><input id="tpv-demo" aria-label="TPV minh họa" type="range" min="0" max="1000" value={stagingVolume} onChange={e=>setStagingVolume(Number(e.target.value))}/>
+            <button type="button" onClick={()=>setStagingVolume(DEMO_PLAQUE_TOTAL_MM3)}>Về TPV ca demo: {DEMO_PLAQUE_TOTAL_MM3} mm³</button>
+            <small>Phân nhóm theo tổng thể tích toàn ca, không theo độ hẹp của một tổn thương. Thanh thử không thay đổi dữ liệu ca hoặc báo cáo.</small>
+            <a className="coronary-extra-link" href="https://www.heartflow.com/heartflow-one/plaque/plaque-staging/" target="_blank" rel="noreferrer">Nguồn các khoảng TPV: Heartflow</a>
+          </div>
           <div className="coronary-plaque__case-total"><span>Tổng plaque trong cả ca demo</span><strong>{DEMO_PLAQUE_TOTAL_MM3} mm³</strong></div>
         </aside>
       </div>

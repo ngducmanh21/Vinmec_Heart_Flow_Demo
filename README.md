@@ -22,7 +22,7 @@ Khu tương tác riêng đi từ ảnh nguồn đến mô hình và các câu h�
 
 ## Ca mạch vành giả lập SIM-COR-01
 
-Khu `#coronary-suite` là một showcase **hoàn toàn giả lập** và tách khỏi ca 0225. Nó đi qua năm góc xem: cây mạch vành 3D với màu và pin minh họa sinh lý, bản đồ nhiều tổn thương, mảng bám và mặt cắt, lập kế hoạch PCI ảo, cùng báo cáo demo tải cục bộ. Các tổn thương và giá trị dùng chung từ `src/coronaryDemoData.ts`, để lựa chọn ở một góc xem được giữ khi chuyển sang góc khác.
+Khu `#coronary-suite` là một showcase **hoàn toàn giả lập** và tách khỏi ca 0225. Nó đi qua năm góc xem: cây mạch vành 3D với màu và pin minh họa sinh lý, bản đồ nhiều tổn thương, mảng bám và mặt cắt, lập kế hoạch PCI ảo, cùng báo cáo demo tải cục bộ. Bốn tổn thương (L1 và L4 nối tiếp trên LAD) và các giá trị dùng chung từ `src/coronaryDemoData.ts`, để lựa chọn ở một góc xem được giữ khi chuyển sang góc khác. Ghim tự do trên mạch 3D và thanh vị trí dùng cùng trục mạch với view duỗi thẳng/mặt cắt. Kế hoạch PCI lưu theo từng tổn thương, gồm chiều dài stent và hai góc C-arm điều khiển camera 3D; các giá trị này đi vào báo cáo PDF/TXT.
 
 Không có ảnh CCTA, kết quả solver FFR_CT, phép đo mảng bám hay tích hợp PACS/EMR thật trong khu này. Các tỷ lệ, độ hẹp, thể tích và thông số kế hoạch đều được đặt sẵn để trình diễn giao diện, không dùng cho bệnh nhân, chẩn đoán hoặc quyết định điều trị. Tài liệu tham khảo về nhóm tính năng: [FFR_CT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/), [Roadmap](https://www.heartflow.com/heartflow-one/roadmap/), [Plaque Analysis](https://www.heartflow.com/heartflow-one/plaque/), [Plaque Staging](https://www.heartflow.com/heartflow-one/plaque-staging/) và [PCI Navigator](https://www.heartflow.com/heartflow-one/pci-navigator/).
 
@@ -46,3 +46,19 @@ Script dùng Python standard library, đọc VTI/VTP và xuất ảnh MR axial/c
 ## Nguồn và quyền sử dụng
 
 Dữ liệu ca từ [Vascular Model Repository](https://purl.stanford.edu/rm095dp9056). Xem [LICENSE.txt](public/vmr-0225/LICENSE.txt) và [README-COPYRIGHT](public/vmr-0225/README-COPYRIGHT) trước khi tái sử dụng. The data used herein was provided in whole or in part with Federal funds from the National Library of Medicine under Grant No. R01LM013120, and the National Heart, Lung, and Blood Institute, National Institutes of Health, Department of Health and Human Services, under Contract No. HHSN268201100035C.
+
+
+## Đối chiếu feature demo với Heartflow (2026-10-08)
+
+Đã fetch lại các trang sản phẩm công khai. Bảng này đối chiếu khả năng showcase, không khẳng định tương đương phần mềm lâm sàng hoặc mọi chức năng phía sau đăng nhập.
+
+| Nhóm công khai | Tương tác trong demo |
+| --- | --- |
+| FFR_CT: 3D, giá trị theo vị trí, nhiều tổn thương nối tiếp | Cây mạch dùng chung, bấm/di chuyển ghim tự do, đường preset theo khoảng cách, L1 + L4 cùng LAD |
+| Roadmap: capsule chiều dài, mức hẹp, vị trí hẹp nhất | Capsule đúng vị trí trên cây mạch; chiều dài theo mm giả lập; màu 30–49 / 50–69 / 70–99%; mũi tên tại tâm hẹp |
+| Plaque: 3D + duỗi thẳng + mặt cắt | Cùng hình học và vị trí ghim giữa ba view; thành phần plaque được gắn nhãn giả lập |
+| Plaque Staging: phân nhóm TPV | Tổng toàn ca 165 mm³; các dải 0, 1–100, 101–250, 251–750, >750 theo [trang Heartflow](https://www.heartflow.com/heartflow-one/plaque/plaque-staging/); thanh thử TPV độc lập, không sinh khuyến nghị điều trị |
+| PCI Navigator: góc nhìn, landing zones, kế hoạch | Góc C-arm đổi camera 3D; lưới stent và hai đầu vùng phủ; lưu kế hoạch mỗi tổn thương, xem lại trong report |
+| Báo cáo và workflow | PDF A4 vector và TXT tạo cục bộ; xem nội dung trên trang; các bước PACS/EMR là trạng thái mô phỏng cục bộ |
+
+Các ngưỡng TPV được dùng để minh họa cách đọc thể tích, không tái tạo công cụ phân tầng nguy cơ độc quyền. “Không vôi hóa khác” trong dataset là phần không chứa lượng giảm đậm độ đã liệt kê riêng, tránh cộng trùng tổng plaque. Report PDF dùng nhãn tiếng Anh và font PDF chuẩn để hoạt động không cần tải font ngoài.
