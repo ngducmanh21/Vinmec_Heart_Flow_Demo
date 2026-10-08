@@ -15,7 +15,6 @@ import {
   Layers3,
   MousePointer2,
   Play,
-  Ruler,
   ScanLine,
   ShieldCheck,
   Stethoscope,
@@ -126,30 +125,6 @@ const researchExamples = [
     icon: FlaskConical,
   },
 ]
-
-const roadmap = [
-  {
-    label: 'Hiện tại',
-    title: 'Prototype nghiên cứu',
-    copy: 'Video ca 0225 hiện cho xem áp lực và vận tốc trong mô hình thành cố định. Lưu lượng từng nhánh cần asset riêng.',
-    icon: Activity,
-    tone: 'current',
-  },
-  {
-    label: 'Kế tiếp',
-    title: 'Đo và so sánh',
-    copy: 'Kiểm chứng sinh lý cần ghép đầu ra mô hình với phép đo catheter theo cùng một endpoint; so sánh hình học ảo cần các lần chạy thay thế.',
-    icon: Ruler,
-    tone: 'next',
-  },
-  {
-    label: 'Tương lai',
-    title: 'Mở rộng mô hình',
-    copy: 'Thành mạch chuyển động, van, thiết bị quay và mô hình tổn thương máu đã kiểm chứng cần phát triển riêng.',
-    icon: ShieldCheck,
-    tone: 'future',
-  },
-] as const
 
 function StepRail({ activeStep, onSelect }: { activeStep: number; onSelect: (index: number) => void }) {
   return (
@@ -359,28 +334,6 @@ function CheckStage() {
   )
 }
 
-function Roadmap() {
-  return (
-    <section className="slide-flow__roadmap" aria-labelledby="slide-flow-roadmap-title">
-      <div className="slide-flow__section-heading">
-        <div><span className="slide-flow__eyebrow"><BarChart3 size={13} /> TRẠNG THÁI PHÁT TRIỂN</span><h2 id="slide-flow-roadmap-title">Ranh giới rõ giữa prototype và câu hỏi kế tiếp</h2></div>
-        <p>Lộ trình phát triển và kiểm chứng mô hình</p>
-      </div>
-      <div className="slide-flow__roadmap-grid">
-        {roadmap.map(item => {
-          const Icon = item.icon
-          return <article key={item.label} className={`slide-flow__roadmap-card slide-flow__roadmap-card--${item.tone}`}>
-            <div className="slide-flow__roadmap-label"><span>{item.label}</span><Icon size={16} /></div>
-            <h3>{item.title}</h3>
-            <p>{item.copy}</p>
-          </article>
-        })}
-      </div>
-      <div className="slide-flow__roadmap-note"><Info size={14} /> Prototype nghiên cứu. Ứng dụng lâm sàng cần một quy trình kiểm chứng riêng.</div>
-    </section>
-  )
-}
-
 export default function SlideFlow() {
   const [activeStep, setActiveStep] = useState(0)
   const [modelView, setModelView] = useState<ModelView>('surface')
@@ -443,12 +396,7 @@ export default function SlideFlow() {
 
       <CoronarySuite />
 
-      <Roadmap />
 
-      <section className="slide-flow__sources" aria-label="Provenance and scope">
-        <div><span className="slide-flow__eyebrow"><ShieldCheck size={13} /> NGUỒN VÀ PHẠM VI</span><h2>Mỗi lớp dữ liệu có một ranh giới bằng chứng riêng</h2></div>
-        <div className="slide-flow__source-columns"><p><strong>Ca 0225</strong> Lát MR, bề mặt P001, STEP, huyết áp catheter tóm tắt trong báo cáo và metadata MP4/frame CFD đã lưu đến từ bundle cục bộ `public/vmr-0225`.</p><p><strong>Ca SIM-COR-01</strong> Hình học và toàn bộ chỉ số mạch vành được tạo để minh họa tương tác; không xuất phát từ ảnh CCTA hoặc kết quả bệnh nhân.</p><p><strong>Kiểm chứng</strong> Video CFD ca 0225 chưa có phép đối chiếu tương ứng; khu mạch vành giả lập không đưa ra kết luận lâm sàng.</p></div>
-      </section>
     </div>
   )
 }
