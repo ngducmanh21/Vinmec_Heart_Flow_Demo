@@ -1,6 +1,7 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { Activity, ArrowLeft, ArrowRight, CircleHelp, ExternalLink, FlaskConical, Layers3, ScanLine, Waves } from 'lucide-react'
 import './SlideLab.css'
+import { useFeatureNavigation } from './useFeatureNavigation'
 
 const ImageStackDemo = lazy(() => import('./ImageStackDemo'))
 const SimulationVideo = lazy(() => import('./SimulationVideo'))
@@ -57,7 +58,7 @@ function Questions({ onChoose }: { onChoose: (key: ModuleKey) => void }) {
 }
 
 export default function SlideLab() {
-  const [active, setActive] = useState<ModuleKey>('image')
+  const { active, select: setActive, navigationRef, workspaceRef } = useFeatureNavigation<ModuleKey>('image')
   const index = modules.findIndex(item => item.key === active)
   const current = modules[index]
 
@@ -75,19 +76,22 @@ export default function SlideLab() {
         </div>
       </div>
 
+      <div className="slide-lab__switcher" ref={navigationRef}>
+        <div className="feature-switcher-label"><strong>CHỌN GÓC XEM</strong><span>{index + 1} / {modules.length} · {current.label}</span></div>
       <nav className="slide-lab__nav" aria-label="Chọn góc xem mô phỏng">
         {modules.map(item => {
           const Icon = item.icon
           return (
-            <button type="button" key={item.key} className={active === item.key ? 'is-active' : ''} aria-current={active === item.key ? 'step' : undefined} onClick={() => setActive(item.key)}>
+            <button type="button" key={item.key} className={active === item.key ? 'is-active' : ''} aria-pressed={active === item.key} onClick={() => setActive(item.key)}>
               <Icon size={17} />
               <span><strong>{item.label}</strong><small>{item.status}</small></span>
             </button>
           )
         })}
       </nav>
+      </div>
 
-      <div className="slide-lab__workspace">
+      <div className="slide-lab__workspace" ref={workspaceRef}>
         <div className="slide-lab__workspace-head">
           <div><span>{current.status.toUpperCase()}</span><h3>{current.label}</h3></div>
           <div>

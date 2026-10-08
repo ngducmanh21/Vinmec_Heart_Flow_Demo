@@ -22,6 +22,8 @@ Khu tương tác riêng đi từ ảnh nguồn đến mô hình và các câu h�
 
 ## Ca mạch vành giả lập SIM-COR-01
 
+Thanh chọn tính năng được giữ ở đầu màn hình khi cuộn trong mỗi khu demo. Trên điện thoại, tất cả nút hiện thành lưới; chuyển mục đưa người xem về đầu nội dung, có thêm nút Trước/Tiếp ở cuối và các liên kết nhanh giữa ba khu ở đầu trang.
+
 Khu `#coronary-suite` là một showcase **hoàn toàn giả lập** và tách khỏi ca 0225. Nó đi qua năm góc xem: cây mạch vành 3D với màu và pin minh họa sinh lý, bản đồ nhiều tổn thương, mảng bám và mặt cắt, lập kế hoạch PCI ảo, cùng báo cáo demo tải cục bộ. Bốn tổn thương (L1 và L4 nối tiếp trên LAD) và các giá trị dùng chung từ `src/coronaryDemoData.ts`, để lựa chọn ở một góc xem được giữ khi chuyển sang góc khác. Ghim tự do trên mạch 3D và thanh vị trí dùng cùng trục mạch với view duỗi thẳng/mặt cắt. Kế hoạch PCI lưu theo từng tổn thương, gồm chiều dài stent và hai góc C-arm điều khiển camera 3D; các giá trị này đi vào báo cáo PDF/TXT.
 
 Không có ảnh CCTA, kết quả solver FFR_CT, phép đo mảng bám hay tích hợp PACS/EMR thật trong khu này. Các tỷ lệ, độ hẹp, thể tích và thông số kế hoạch đều được đặt sẵn để trình diễn giao diện, không dùng cho bệnh nhân, chẩn đoán hoặc quyết định điều trị. Tài liệu tham khảo về nhóm tính năng: [FFR_CT Analysis](https://www.heartflow.com/heartflow-one/ffrct-analysis/), [Roadmap](https://www.heartflow.com/heartflow-one/roadmap/), [Plaque Analysis](https://www.heartflow.com/heartflow-one/plaque/), [Plaque Staging](https://www.heartflow.com/heartflow-one/plaque-staging/) và [PCI Navigator](https://www.heartflow.com/heartflow-one/pci-navigator/).

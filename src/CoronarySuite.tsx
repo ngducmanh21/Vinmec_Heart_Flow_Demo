@@ -1,7 +1,8 @@
 import { lazy, Suspense, useState } from 'react'
-import { Activity, ArrowRight, ClipboardList, ExternalLink, GitBranch, Layers3, ScanLine, ShieldCheck } from 'lucide-react'
+import { Activity, ArrowLeft, ArrowRight, ClipboardList, ExternalLink, GitBranch, Layers3, ScanLine, ShieldCheck } from 'lucide-react'
 import { DEMO_CASE, getDemoLesion, LESION_POSITION, initialDemoPlans, type DemoPlan, type DemoLesion } from './coronaryDemoData'
 import './CoronarySuite.css'
+import { useFeatureNavigation } from './useFeatureNavigation'
 
 const CoronaryPhysiologyDemo = lazy(() => import('./CoronaryPhysiologyDemo'))
 const CoronaryRoadmapDemo = lazy(() => import('./CoronaryRoadmapDemo'))
@@ -20,7 +21,8 @@ const views = [
 type ViewKey = typeof views[number]['key']
 
 export default function CoronarySuite() {
-  const [view, setView] = useState<ViewKey>('physiology')
+  const { active: view, select: setView, navigationRef, workspaceRef } = useFeatureNavigation<ViewKey>('physiology')
+  const viewIndex = views.findIndex(item => item.key === view)
   const [selectedLesionId, setSelectedLesionId] = useState<DemoLesion['id']>('L1')
   const [probeT, setProbeT] = useState(LESION_POSITION.L1)
   const [plans, setPlans] = useState(initialDemoPlans)
@@ -46,16 +48,19 @@ export default function CoronarySuite() {
 
       <div className="coronary-suite__boundary" role="note"><ShieldCheck size={16} /><span>Toàn bộ hình học, tỷ lệ áp lực, mức hẹp và mảng bám trong khu này là <strong>dữ liệu giả lập</strong>. Không có CCTA, phép giải FFR₍CT₎, dự đoán hiệu quả can thiệp hoặc kết luận lâm sàng.</span></div>
 
+      <div className="coronary-suite__switcher" ref={navigationRef}>
+        <div className="feature-switcher-label"><strong>CHỌN TÍNH NĂNG</strong><span>{viewIndex + 1} / {views.length} · {views[viewIndex].label}</span></div>
       <nav className="coronary-suite__nav" aria-label="Chọn tính năng mô phỏng mạch vành">
         {views.map(item => {
           const Icon = item.icon
-          return <button key={item.key} type="button" className={view === item.key ? 'is-active' : ''} aria-current={view === item.key ? 'step' : undefined} onClick={() => setView(item.key)}>
+          return <button key={item.key} type="button" className={view === item.key ? 'is-active' : ''} aria-pressed={view === item.key} onClick={() => setView(item.key)}>
             <Icon size={18} aria-hidden="true" /><span><strong>{item.label}</strong><small>{item.detail}</small></span>
           </button>
         })}
       </nav>
+      </div>
 
-      <div className="coronary-suite__workspace">
+      <div className="coronary-suite__workspace" ref={workspaceRef}>
         <div className="coronary-suite__workspace-head">
           <div><span>CA GIẢ LẬP · {DEMO_CASE.id}</span><h3>{views.find(item => item.key === view)?.label}</h3></div>
           <div className="coronary-suite__selection"><span>Đang xem</span><strong>{selectedLesion.id} · {selectedLesion.location}</strong></div>
@@ -67,7 +72,14 @@ export default function CoronarySuite() {
           {view === 'plan' && <CoronaryPlanDemo {...shared} plans={plans} onPlanChange={changePlan} />}
           {view === 'report' && <CoronaryReportDemo {...shared} plans={plans} />}
         </Suspense>
-        <div className="coronary-suite__workspace-foot"><span>Giá trị giả lập · chỉ để trải nghiệm giao diện</span><button type="button" onClick={() => setView(views[(views.findIndex(item => item.key === view) + 1) % views.length].key)}>Góc xem tiếp theo <ArrowRight size={14} /></button></div>
+        <div className="coronary-suite__workspace-foot">
+          <span>Giá trị giả lập · chỉ để trải nghiệm giao diện</span>
+          <div className="coronary-suite__pager">
+            <button type="button" disabled={viewIndex === 0} onClick={() => setView(views[viewIndex - 1].key)}><ArrowLeft size={14} /> Mục trước</button>
+            <span>{viewIndex + 1} / {views.length}</span>
+            <button type="button" disabled={viewIndex === views.length - 1} onClick={() => setView(views[viewIndex + 1].key)}>Mục tiếp <ArrowRight size={14} /></button>
+          </div>
+        </div>
       </div>
 
       <div className="coronary-suite__references"><span>Tham khảo nhóm tính năng:</span><a href="https://www.heartflow.com/heartflow-one/ffrct-analysis/" target="_blank" rel="noreferrer">FFR₍CT₎ <ExternalLink size={11} /></a><a href="https://www.heartflow.com/heartflow-one/roadmap/" target="_blank" rel="noreferrer">Roadmap <ExternalLink size={11} /></a><a href="https://www.heartflow.com/heartflow-one/plaque/" target="_blank" rel="noreferrer">Plaque <ExternalLink size={11} /></a><a href="https://www.heartflow.com/heartflow-one/plaque-staging/" target="_blank" rel="noreferrer">Plaque Staging <ExternalLink size={11} /></a><a href="https://www.heartflow.com/heartflow-one/pci-navigator/" target="_blank" rel="noreferrer">PCI Navigator <ExternalLink size={11} /></a></div>
